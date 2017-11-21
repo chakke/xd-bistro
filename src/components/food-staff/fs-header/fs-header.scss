@@ -1,0 +1,75 @@
+fs-header {
+    $headerRowHeight: 45px;
+    width: 100%;
+    .fs-header {
+        color: map-get($FSColors, white);
+        background-color: map-get($FSColors, primary);
+        background-image: url('../assets/food-staff/images/icon/top_bar_3.png');
+        background-position: 0 0;
+        background-size: 100% auto;
+        background-repeat: no-repeat;
+        font-size: .8em;
+        .header-title {
+            width: 100%;
+            height: $headerRowHeight;
+            .title {
+                font-size: 1.3em;
+                text-transform: uppercase;
+                width: 100%;
+                min-height: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                white-space: nowrap;
+            }
+            .header-button {
+                width: auto;
+                height: $headerRowHeight;
+                line-height: $headerRowHeight;
+                font-size: 1.8em;
+                padding: 0 map-get($FSSizes, defaultPadding);
+                position: absolute;
+                top: 0;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                ion-icon {
+                    vertical-align: text-bottom;
+                }
+                .icon {
+                    font-size: 1em;
+                }
+                &.button-left {
+                    left: 0;
+                }
+                &.button-right {
+                    right: 0;
+                    .order-number {
+                        font-size: .5em;
+                        display: block;
+                        padding: .2em .4em;
+                        position: absolute;
+                        left: 50%;
+                        top: 50%;
+                        border-radius: 20px;
+                        background-color: map-get($FSColors, yellow);
+                        line-height: 1em;
+                        text-align: center;
+                        transform: translate3d(20%, -120%, 0);
+                        color: #000;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.search-bar {
+    .searchbar {
+        background: none !important;
+        padding: 0 map-get($FSSizes, defaultPadding);
+        .searchbar-input {
+            border-radius: 20px;
+        }
+    }
+}

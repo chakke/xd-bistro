@@ -1,16 +1,352 @@
-// http://ionicframework.com/docs/theming/
-
-
-// App Global Sass
-// --------------------------------------------------
-// Put style rules here that you want to apply globally. These
-// styles are for the entire app and not just one component.
-// Additionally, this file can be also used as an entry point
-// to import other Sass files to be included in the output CSS.
-//
-// Shared Sass variables, which can be used to adjust Ionic's
-// default Sass variables, belong in "theme/variables.scss".
-//
-// To declare rules for a specific mode, create a child rule
-// for the .md, .ios, or .wp mode classes. The mode class is
-// automatically applied to the <body> element in the app.
+    // http://ionicframework.com/docs/theming/
+    // App Global Sass
+    // --------------------------------------------------
+    // Put style rules here that you want to apply globally. These
+    // styles are for the entire app and not just one component.
+    // Additionally, this file can be also used as an entry point
+    // to import other Sass files to be included in the output CSS.
+    //
+    // Shared Sass variables, which can be used to adjust Ionic's
+    // default Sass variables, belong in "theme/variables.scss".
+    //
+    // To declare rules for a specific mode, create a child rule
+    // for the .md, .ios, or .wp mode classes. The mode class is
+    // automatically applied to the <body> element in the app.
+    //Icon font
+    @font-face {
+        font-family: 'icomoon';
+        src: url('../assets/food-staff/fonts/icomoon.eot?10fi95');
+        src: url('../assets/food-staff/fonts/icomoon.eot?10fi95#iefix') format('embedded-opentype'), url('../assets/food-staff/fonts/icomoon.ttf?10fi95') format('truetype'), url('../assets/food-staff/fonts/icomoon.woff?10fi95') format('woff'), url('../assets/food-staff/fonts/icomoon.svg?10fi95#icomoon') format('svg');
+        font-weight: normal;
+        font-style: normal;
+    }
+    
+    [class^="icon-fs-"],
+    [class*="icon-fs-"],
+    [class*="ion-fs-"] {
+        /* use !important to prevent issues with browser extensions that change fonts */
+        font-family: 'icomoon' !important;
+        speak: none;
+        font-style: normal;
+        font-weight: normal;
+        font-variant: normal;
+        text-transform: none;
+        line-height: 1;
+        /* Better Font Rendering =========== */
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+    
+    [class*="icon-fs-list-o"]:before {
+        content: "\e91f";
+    }
+    
+    [class*="icon-fs-map-o"]:before {
+        content: "\e920";
+    }
+    
+    [class*="icon-fs-order-number-o"]:before {
+        content: "\e921";
+    }
+    
+    [class*="icon-fs-phone-o"]:before {
+        content: "\e900";
+    }
+    
+    [class*="icon-fs-food-menu-o"]:before {
+        content: "\e901";
+    }
+    
+    [class*="icon-fs-menu-o"]:before {
+        content: "\e902";
+    }
+    
+    [class*="icon-fs-order-o"]:before {
+        content: "\e903";
+    }
+    
+    [class*="icon-fs-password-o"]:before {
+        content: "\e904";
+    }
+    
+    [class*="icon-fs-re-pass-o"]:before {
+        content: "\e905";
+    }
+    
+    [class*="icon-fs-table-3-o"]:before {
+        content: "\e906";
+    }
+    
+    [class*="icon-fs-bar"]:before {
+        content: "\e907";
+    }
+    
+    [class*="icon-fs-bell-o"]:before {
+        content: "\e908";
+    }
+    
+    [class*="icon-fs-book-table-o"]:before {
+        content: "\e909";
+    }
+    
+    [class*="icon-fs-couple-table"]:before {
+        content: "\e90a";
+    }
+    
+    [class*="icon-fs-family-table"]:before {
+        content: "\e90b";
+    }
+    
+    [class*="icon-fs-group-o"]:before {
+        content: "\e90c";
+    }
+    
+    [class*="icon-fs-home-2-o"]:before {
+        content: "\e90d";
+    }
+    
+    [class*="icon-fs-individual-o"]:before {
+        content: "\e90e";
+    }
+    
+    [class*="icon-fs-kitchen"]:before {
+        content: "\e90f";
+    }
+    
+    [class*="icon-fs-like"]:before {
+        content: "\e910";
+    }
+    
+    [class*="icon-fs-location-1-o"]:before {
+        content: "\e911";
+    }
+    
+    [class*="icon-fs-location-2-o"]:before {
+        content: "\e912";
+    }
+    
+    [class*="icon-fs-logo-dancer"]:before {
+        content: "\e913";
+        color: #000;
+    }
+    
+    [class*="icon-fs-note-o"]:before {
+        content: "\e914";
+    }
+    
+    [class*="icon-fs-question-o"]:before {
+        content: "\e915";
+    }
+    
+    [class*="icon-fs-sale-o"]:before {
+        content: "\e916";
+    }
+    
+    [class*="icon-fs-service-o"]:before {
+        content: "\e917";
+    }
+    
+    [class*="icon-fs-shipper-o"]:before {
+        content: "\e918";
+    }
+    
+    [class*="icon-fs-stairs-o"]:before {
+        content: "\e919";
+    }
+    
+    [class*="icon-fs-table"]:before {
+        content: "\e91a";
+    }
+    
+    [class*="icon-fs-table-o"]:before {
+        content: "\e91b";
+    }
+    
+    [class*="icon-fs-taxi-o"]:before {
+        content: "\e91c";
+    }
+    
+    [class*="icon-fs-fs--time-o"]:before {
+        content: "\e91d";
+    }
+    
+    [class*="icon-fs-triangle"]:before {
+        content: "\e91e";
+    }
+    
+    //End icon font
+    .fs-content {
+        font-size: .8em;
+        color: map-get($FSColors, black);
+        min-height: 100%;
+        overflow: hidden;
+    }
+    
+    [nowrap] {
+        white-space: nowrap;
+    }
+    
+    .italic {
+        font-style: italic;
+    }
+    
+    .fs-big {
+        font-size: map-get($FSSizes, big);
+    }
+    
+    .fs-little-big {
+        font-size: map-get($FSSizes, littleBig);
+    }
+    
+    .fs-small {
+        font-size: map-get($FSSizes, small);
+    }
+    
+    .fs-black {
+        color: map-get($FSColors, black);
+    }
+    
+    .fs-gray {
+        color: map-get($FSColors, gray);
+    }
+    
+    .fs-green {
+        color: map-get($FSColors, green);
+    }
+    
+    .fs-blue {
+        color: map-get($FSColors, blue);
+    }
+    
+    .fs-bold {
+        font-weight: 500;
+    }
+    
+    .bold {
+        font-weight: bold;
+    }
+    
+    .fs-textarea {
+        .text-input {
+            border-radius: 10px;
+            border: solid 1px map-get($FSColors, lightgray);
+            padding: 8px;
+            width: 100%;
+        }
+    }
+    
+    .fs-price {
+        font-weight: 500;
+        color: map-get($FSColors, orange);
+    }
+    
+    .fs-button {
+        padding: 8px 16px;
+        border-radius: 20px;
+        color: map-get($FSColors, white);
+        background-color: map-get($FSColors, primary);
+    }
+    
+    .fs-button-outline {
+        padding: 8px 16px;
+        border-radius: 20px;
+        color: map-get($FSColors, primary);
+        background-color: map-get($FSColors, white);
+        border: solid 1px;
+    }
+    
+    .error-message {
+        width: 100%;
+        padding: 10px map-get($FSSizes, defaultPadding);
+        text-align: center;
+        color: map-get($FSColors, gray);
+        &:empty {
+            display: none;
+        }
+    }
+    
+    .fs-form {
+        padding: 15px map-get($FSSizes, defaultPadding);
+        $inputHeight: 2.5em;
+        $divPadding: 6px;
+        background-color: #f9f9f9;
+        margin: 0 0 20px 0;
+        .validate-message {
+            margin-top: 5px;
+            display: block;
+            color: map-get($FSColors, gray);
+            text-align: center;
+        }
+        ion-datetime {
+            position: absolute;
+            top: $divPadding;
+            left: $divPadding;
+            height: $inputHeight;
+            width: 1.5*$inputHeight;
+            z-index: 10;
+            .datetime-text {
+                display: none;
+            }
+        }
+        .input-div {
+            display: flex;
+            position: relative;
+            padding: $divPadding;
+        }
+        .text-input {
+            width: 100%;
+            border: solid 1px map-get($FSColors, lightgray);
+            border-radius: 20px;
+            line-height: $inputHeight;
+            text-align: center;
+            color: map-get($FSColors, black);
+            margin: 0;
+            padding-right: 10px;
+            background-color: map-get($FSColors, white);
+        }
+        ion-textarea {
+            .text-input {
+                border-radius: 10px !important;
+                height: 3 * $inputHeight !important;
+            }
+        }
+        .icon {
+            position: absolute;
+            // top: $divPadding;
+            // left: $divPadding;
+            height: $inputHeight;
+            color: map-get($FSColors, primary);
+            width: 1.5*$inputHeight;
+            line-height: $inputHeight;
+            text-align: center;
+            z-index: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            img {
+                width: 0.5 * $inputHeight;
+                height: 0.5 * $inputHeight;
+                margin: auto;
+            }
+        }
+        .button-right {
+            position: absolute;
+            top: $divPadding;
+            right: $divPadding;
+            height: $inputHeight;
+            color: map-get($FSColors, primary);
+            width: 1.5*$inputHeight;
+            line-height: $inputHeight;
+            text-align: center;
+            z-index: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .ng-invalid:not(form) {
+            border-color: rgba(187, 42, 50, 0.69);
+            .text-input {
+                border-color: rgba(187, 42, 50, 0.69);
+            }
+        }
+    }

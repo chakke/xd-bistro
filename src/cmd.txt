@@ -1,0 +1,4 @@
+Google plus plugin:
+cordova plugin add https://github.com/adriano-di-giovanni/cordova-plugin-googleplus --save --variable REVERSED_CLIENT_ID=your_reserved_id
+npm install --save @ionic-native/google-plus
+Không dùng plugin trong docs của Ionic vì nó ko trả về access token. Fuck that.

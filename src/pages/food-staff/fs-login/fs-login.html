@@ -1,0 +1,68 @@
+<ion-header>
+    <fs-header [showBackButton]="true"></fs-header>
+</ion-header>
+
+
+<ion-content>
+    <div class="fs-content">
+        <div class="logo-image">
+            <img src="assets/food-staff/images/logo/logo.png" alt="">
+        </div>
+        <div class="login-form" [class.social]="loginType == 2">
+            <div class="account-form">
+                <form (ngSubmit)="login()" [formGroup]="loginForm">
+                    <div class="fs-form">
+                        <div class="input-div">
+                            <span class="icon"> 
+                                <ion-icon name="icon-fs-individual-o"></ion-icon>
+                            </span>
+                            <ion-input type="text" [(ngModel)]="account" formControlName="account" placeholder="Tài khoản" (ionChange)="checkForm()"></ion-input>
+                        </div>
+                        <span *ngIf="!loginForm.controls.account.valid && isSubmitted" class="validate-message">{{accountErrorMessage}}</span>
+                        <div class="input-div">
+                            <span class="icon">
+                                <ion-icon name="icon-fs-password-o"></ion-icon>
+                            </span>
+                            <ion-input type="password" [(ngModel)]="password" formControlName="password" placeholder="Mật khẩu" (ionChange)="checkForm()">
+                            </ion-input>
+                        </div>
+                        <span *ngIf="!loginForm.controls.password.valid && isSubmitted" class="validate-message">{{passwordErrorMessage}}</span>
+                    </div>
+                    <div class="login-button">
+                        <button ion-button class="fs-button" type="submit">
+                            Đăng nhập
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <div class="social-form">
+                <div class="divider">
+                    <div class="line"></div>
+                    <span class="divider-text">Đăng nhập với</span>
+                </div>
+                <div class="social-login">
+                    <button class="social-button facebook-button" (click)="loginWithFacebook()">
+                        <span class="icon">
+                            <i class="fa fa-facebook" aria-hidden="true"></i>
+                        </span> 
+                    </button>
+                    <button class="social-button google-button" (click)="loginWithGoogle()">
+                        <span class="icon">
+                            <i class="fa fa-google" aria-hidden="true"></i>
+                        </span> 
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="register-button">
+            <button [class.outline]="loginType == 2" (click)="changeLoginForm()" tappale>
+                <span> 
+                    Khác
+                </span>
+            </button>
+        </div>
+        <div class="copyright">
+            Developed by AppInAsia
+        </div>
+    </div>
+</ion-content>

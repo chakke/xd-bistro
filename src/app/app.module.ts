@@ -4,27 +4,53 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 
+import { AngularFireModule } from 'angularfire2';
+import { AngularFireDatabaseModule, AngularFireDatabase } from 'angularfire2/database';
+import { AngularFireAuthModule } from 'angularfire2/auth';
+
+import { Facebook } from '@ionic-native/facebook';
+import { GooglePlus } from '@ionic-native/google-plus';
+
 import { MyApp } from './app.component';
-import { HomePage } from '../pages/home/home';
+
+import { AppControllerProvider } from '../providers/food-staff/app-controller/app-controller';
+
+export const firebaseConfig = {
+  apiKey: "AIzaSyDMEZoEtmor-T166lP9bGCR9FxqQP4eGik",
+  authDomain: "bistrodancerapp.firebaseapp.com",
+  databaseURL: "https://bistrodancerapp.firebaseio.com",
+  projectId: "bistrodancerapp",
+  storageBucket: "bistrodancerapp.appspot.com",
+  messagingSenderId: "773087969883"
+};
 
 @NgModule({
   declarations: [
-    MyApp,
-    HomePage
+    MyApp
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp, {
+      scrollPadding: false,
+      scrollAssist: false,
+      autoFocusAssist: false
+    }),
+    AngularFireModule.initializeApp(firebaseConfig),
+    AngularFireDatabaseModule,
+    AngularFireAuthModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    MyApp,
-    HomePage
+    MyApp
   ],
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    AngularFireDatabase,
+    { provide: ErrorHandler, useClass: IonicErrorHandler },
+    AppControllerProvider,
+    Facebook,
+    GooglePlus
   ]
 })
-export class AppModule {}
+export class AppModule { }
