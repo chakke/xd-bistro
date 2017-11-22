@@ -1,0 +1,39 @@
+{
+    "result": 1,
+    "content": [{
+            "id": 1,
+            "name": "Order",
+            "icon": "fs-food-menu-o",
+            "page": "FsOrdersPage",
+            "link": "fs-orders"
+        },
+        {
+            "id": 2,
+            "name": "Danh sách bàn",
+            "icon": "fs-table-3-o",
+            "page": "FsTablesPage",
+            "link": "fs-tables"
+        },
+        {
+            "id": 3,
+            "name": "Trả món",
+            "icon": "fs-order-o",
+            "page": "FsServePage",
+            "link": "fs-serve"
+        },
+        {
+            "id": 4,
+            "name": "Thông báo",
+            "icon": "fs-bell-o",
+            "page": "FsNotificationPage",
+            "link": "fs-notification"
+        },
+        {
+            "id": 5,
+            "name": "Cài đặt",
+            "icon": "ios-cog",
+            "page": "FsSettingPage",
+            "link": "fs-setting"
+        }
+    ]
+}

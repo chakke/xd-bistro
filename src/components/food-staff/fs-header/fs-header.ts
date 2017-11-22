@@ -19,7 +19,7 @@ export class FsHeaderComponent {
   @Input()
   title = "Bistro Dancer";
   @Input()
-  showBackButton = false;
+  showBackButton: number = 0;//0 == Không hiển thị; 1 == nút back; 2 == nút menu
   @Input()
   showOrder = false;
 

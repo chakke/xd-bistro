@@ -1,6 +1,3 @@
-import { clamp } from "ionic-angular/util/util";
-
-
 /**
  * Quy định chung cho các class:
  * - Mỗi class có 1 id riêng. Id này sẽ được truyền vào trong construtor. 
@@ -20,4 +17,26 @@ export class UserContant {
         GOOGLE: 2,
         ACCOUNT: 3
     }
+    public static USER_TYPE = {
+        USER: 1,
+        STAFF: 2,
+        MANAGER: 3,
+        BARTENDER: 4,
+        CHEF: 5,
+        WAITER: 6
+    }
+    public static AVATAR_IMAGE = "https://i.pinimg.com/originals/7c/c7/a6/7cc7a630624d20f7797cb4c8e93c09c1.png";
+}
+
+export class AssetsUrl {
+    public static BASE_URL: string = "assets/food-staff";
+}
+
+export class FakeApiUrl {
+    public static MENU: string = "/data/menu.json";
+}
+
+export class ResponseCode {
+    public static ERROR_CODE: number = 0;
+    public static SUCCESS_CODE: number = 1;
 }

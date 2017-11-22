@@ -13,6 +13,7 @@ import { UserContant } from "../app-constant";
 
 export class User {
     private _id: number;
+    private _type: number;
     private _isLoggedIn: boolean;
     private _loginMethod: number;
     private _firstName: string;
@@ -23,18 +24,10 @@ export class User {
     private _phone: string;
     private _address: string;
     private _province: Province;
+    private _avatarImg: string;
 
-    constructor(id: number, firstName: string, lastName: string, isLoggedIn?: boolean,
-        loginMethod?: number, email?: string, phone?: string, address?: string, province?: Province) {
-        this._id = id;
-        this._firstName = firstName;
-        this._lastName = lastName;
-        this._isLoggedIn = (isLoggedIn ? isLoggedIn : false);
-        this._loginMethod = (loginMethod ? loginMethod : 0);
-        this._email = (email ? email : "");
-        this._phone = (phone ? phone : "");
-        this._address = (address ? address : "");
-        this._province = (province ? province : new Province(0, ""));
+    constructor() {
+        this.reset();
     }
 
     public get id(): number {
@@ -44,6 +37,15 @@ export class User {
     public set id(value: number) {
         this._id = value;
     }
+
+    public get type(): number {
+        return this._type;
+    }
+
+    public set type(value: number) {
+        this._type = value;
+    }
+
 
     public get isLoggedIn(): boolean {
         return this._isLoggedIn;
@@ -76,7 +78,6 @@ export class User {
     public set googleId(value: string) {
         this._googleId = value;
     }
-
 
     public get firstName(): string {
         return this._firstName;
@@ -126,6 +127,14 @@ export class User {
         this._province = value;
     }
 
+    public get avatarImg(): string {
+        return this._avatarImg;
+    }
+
+    public set avatarImg(value: string) {
+        this._avatarImg = value;
+    }
+
     public login(facebookId?: string, googleId?: string) {
         this._isLoggedIn = true;
         if (this.facebookId) {
@@ -139,6 +148,7 @@ export class User {
     }
 
     public reset() {
+        this.type = UserContant.USER_TYPE.USER;
         this._address = "";
         this._email = "";
         this._facebookId = "";
@@ -150,6 +160,7 @@ export class User {
         this._loginMethod = 0;
         this._phone = "";
         this._province = new Province(0, "");
+        this._avatarImg = UserContant.AVATAR_IMAGE;
     }
 }
 
@@ -162,14 +173,58 @@ export class Staff extends User {
     private _password: string;
 
 
-    constructor(id: number, firstName: string, lastName: string, role?: number, staffId?: number, restId?: number, vendorId?: number,
-        isLoggedIn?: boolean, loginMethod?: number, email?: string, phone?: string, address?: string, province?: Province) {
-        super(id, firstName, lastName, isLoggedIn, loginMethod, email, phone, address, province);
-        this._role = (role ? role : 0);
-        this._staffId = (staffId ? staffId : 0)
-        this._restId = (restId ? restId : 0)
-        this._vendorId = (vendorId ? vendorId : 0)
+    constructor() {
+        super();
     }
+
+    public get role(): number {
+        return this._role;
+    }
+
+    public set role(value: number) {
+        this._role = value;
+    }
+
+    public get staffId(): number {
+        return this._staffId;
+    }
+
+    public set staffId(value: number) {
+        this._staffId = value;
+    }
+
+    public get restId(): number {
+        return this._restId;
+    }
+
+    public set restId(value: number) {
+        this._restId = value;
+    }
+
+    public get vendorId(): number {
+        return this._vendorId;
+    }
+
+    public set vendorId(value: number) {
+        this._vendorId = value;
+    }
+
+    public get userName(): string {
+        return this._userName;
+    }
+
+    public set userName(value: string) {
+        this._userName = value;
+    }
+
+    public get password(): string {
+        return this._password;
+    }
+
+    public set password(value: string) {
+        this._password = value;
+    }
+
 
     login(userName: string, password: string) {
         this.isLoggedIn = true;
@@ -177,30 +232,53 @@ export class Staff extends User {
         this._password = password;
         this.loginMethod = UserContant.LOGIN_METHOD.ACCOUNT;
     }
+
+    reset() {
+        super.reset();
+        this.role = 0;
+        this.staffId = 0;
+        this.restId = 0;
+        this.vendorId = 0;
+        this.userName = "";
+        this.password = "";
+        this.type = UserContant.USER_TYPE.STAFF;
+    }
 }
 
 export class Manager extends Staff {
-    constructor(id: number, firstName: string, lastName: string, role?: number, staffId?: number, restId?: number, vendorId?: number,
-        isLoggedIn?: boolean, loginMethod?: number, email?: string, phone?: string, address?: string, province?: Province) {
-        super(id, firstName, lastName, role, staffId, restId, vendorId, isLoggedIn, loginMethod, email, phone, address, province);
+    constructor() {
+        super();
+    }
+    reset() {
+        super.reset();
+        this.type = UserContant.USER_TYPE.MANAGER;
     }
 }
 
 export class Waiter extends Staff {
-    constructor(id: number, firstName: string, lastName: string, role?: number, staffId?: number, restId?: number, vendorId?: number,
-        isLoggedIn?: boolean, loginMethod?: number, email?: string, phone?: string, address?: string, province?: Province) {
-        super(id, firstName, lastName, role, staffId, restId, vendorId, isLoggedIn, loginMethod, email, phone, address, province);
+    constructor() {
+        super();
+    }
+    reset() {
+        super.reset();
+        this.type = UserContant.USER_TYPE.WAITER;
     }
 }
 export class Chef extends Staff {
-    constructor(id: number, firstName: string, lastName: string, role?: number, staffId?: number, restId?: number, vendorId?: number,
-        isLoggedIn?: boolean, loginMethod?: number, email?: string, phone?: string, address?: string, province?: Province) {
-        super(id, firstName, lastName, role, staffId, restId, vendorId, isLoggedIn, loginMethod, email, phone, address, province);
+    constructor() {
+        super();
+    }
+    reset() {
+        super.reset();
+        this.type = UserContant.USER_TYPE.CHEF;
     }
 }
 export class Bartender extends Staff {
-    constructor(id: number, firstName: string, lastName: string, role?: number, staffId?: number, restId?: number, vendorId?: number,
-        isLoggedIn?: boolean, loginMethod?: number, email?: string, phone?: string, address?: string, province?: Province) {
-        super(id, firstName, lastName, role, staffId, restId, vendorId, isLoggedIn, loginMethod, email, phone, address, province);
+    constructor() {
+        super();
+    }
+    reset() {
+        super.reset();
+        this.type = UserContant.USER_TYPE.BARTENDER;
     }
 }

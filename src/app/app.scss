@@ -21,9 +21,7 @@
         font-style: normal;
     }
     
-    [class^="icon-fs-"],
-    [class*="icon-fs-"],
-    [class*="ion-fs-"] {
+    [class*="icon"][class*="fs-"] {
         /* use !important to prevent issues with browser extensions that change fonts */
         font-family: 'icomoon' !important;
         speak: none;
@@ -37,140 +35,140 @@
         -moz-osx-font-smoothing: grayscale;
     }
     
-    [class*="icon-fs-list-o"]:before {
+    [class*="icon"][class$="fs-list-o"]:before {
         content: "\e91f";
     }
     
-    [class*="icon-fs-map-o"]:before {
+    [class*="icon"][class$="fs-map-o"]:before {
         content: "\e920";
     }
     
-    [class*="icon-fs-order-number-o"]:before {
+    [class*="icon"][class$="fs-order-number-o"]:before {
         content: "\e921";
     }
     
-    [class*="icon-fs-phone-o"]:before {
+    [class*="icon"][class$="fs-phone-o"]:before {
         content: "\e900";
     }
     
-    [class*="icon-fs-food-menu-o"]:before {
+    [class*="icon"][class$="fs-food-menu-o"]:before {
         content: "\e901";
     }
     
-    [class*="icon-fs-menu-o"]:before {
+    [class*="icon"][class$="fs-menu-o"]:before {
         content: "\e902";
     }
     
-    [class*="icon-fs-order-o"]:before {
+    [class*="icon"][class$="fs-order-o"]:before {
         content: "\e903";
     }
     
-    [class*="icon-fs-password-o"]:before {
+    [class*="icon"][class$="fs-password-o"]:before {
         content: "\e904";
     }
     
-    [class*="icon-fs-re-pass-o"]:before {
+    [class*="icon"][class$="fs-re-pass-o"]:before {
         content: "\e905";
     }
     
-    [class*="icon-fs-table-3-o"]:before {
+    [class*="icon"][class$="fs-table-3-o"]:before {
         content: "\e906";
     }
     
-    [class*="icon-fs-bar"]:before {
+    [class*="icon"][class$="fs-bar"]:before {
         content: "\e907";
     }
     
-    [class*="icon-fs-bell-o"]:before {
+    [class*="icon"][class$="fs-bell-o"]:before {
         content: "\e908";
     }
     
-    [class*="icon-fs-book-table-o"]:before {
+    [class*="icon"][class$="fs-book-table-o"]:before {
         content: "\e909";
     }
     
-    [class*="icon-fs-couple-table"]:before {
+    [class*="icon"][class$="fs-couple-table"]:before {
         content: "\e90a";
     }
     
-    [class*="icon-fs-family-table"]:before {
+    [class*="icon"][class$="fs-family-table"]:before {
         content: "\e90b";
     }
     
-    [class*="icon-fs-group-o"]:before {
+    [class*="icon"][class$="fs-group-o"]:before {
         content: "\e90c";
     }
     
-    [class*="icon-fs-home-2-o"]:before {
+    [class*="icon"][class$="fs-home-2-o"]:before {
         content: "\e90d";
     }
     
-    [class*="icon-fs-individual-o"]:before {
+    [class*="icon"][class$="fs-individual-o"]:before {
         content: "\e90e";
     }
     
-    [class*="icon-fs-kitchen"]:before {
+    [class*="icon"][class$="fs-kitchen"]:before {
         content: "\e90f";
     }
     
-    [class*="icon-fs-like"]:before {
+    [class*="icon"][class$="fs-like"]:before {
         content: "\e910";
     }
     
-    [class*="icon-fs-location-1-o"]:before {
+    [class*="icon"][class$="fs-location-1-o"]:before {
         content: "\e911";
     }
     
-    [class*="icon-fs-location-2-o"]:before {
+    [class*="icon"][class$="fs-location-2-o"]:before {
         content: "\e912";
     }
     
-    [class*="icon-fs-logo-dancer"]:before {
+    [class*="icon"][class$="fs-logo-dancer"]:before {
         content: "\e913";
         color: #000;
     }
     
-    [class*="icon-fs-note-o"]:before {
+    [class*="icon"][class$="fs-note-o"]:before {
         content: "\e914";
     }
     
-    [class*="icon-fs-question-o"]:before {
+    [class*="icon"][class$="fs-question-o"]:before {
         content: "\e915";
     }
     
-    [class*="icon-fs-sale-o"]:before {
+    [class*="icon"][class$="fs-sale-o"]:before {
         content: "\e916";
     }
     
-    [class*="icon-fs-service-o"]:before {
+    [class*="icon"][class$="fs-service-o"]:before {
         content: "\e917";
     }
     
-    [class*="icon-fs-shipper-o"]:before {
+    [class*="icon"][class$="fs-shipper-o"]:before {
         content: "\e918";
     }
     
-    [class*="icon-fs-stairs-o"]:before {
+    [class*="icon"][class$="fs-stairs-o"]:before {
         content: "\e919";
     }
     
-    [class*="icon-fs-table"]:before {
+    [class*="icon"][class$="fs-table"]:before {
         content: "\e91a";
     }
     
-    [class*="icon-fs-table-o"]:before {
+    [class*="icon"][class$="fs-table-o"]:before {
         content: "\e91b";
     }
     
-    [class*="icon-fs-taxi-o"]:before {
+    [class*="icon"][class$="fs-taxi-o"]:before {
         content: "\e91c";
     }
     
-    [class*="icon-fs-fs--time-o"]:before {
+    [class*="icon"][class$="fs-fs--time-o"]:before {
         content: "\e91d";
     }
     
-    [class*="icon-fs-triangle"]:before {
+    [class*="icon"][class$="fs-triangle"]:before {
         content: "\e91e";
     }
     
@@ -253,6 +251,94 @@
         color: map-get($FSColors, primary);
         background-color: map-get($FSColors, white);
         border: solid 1px;
+    }
+    
+    .fs-shadow {
+        box-shadow: 0px 1px 20px 0px rgba(17, 34, 51, 0.5);
+    }
+    
+    $menuItemHeight: 4em;
+    .fs-menu {
+        height: 100%;
+        overflow: auto;
+        background-color: map-get($map: $FSColors, $key: primary);
+        .profile-item {
+            height: 2.5*$menuItemHeight;
+            overflow: hidden;
+            background-image: url(../assets/food-staff/images/icon/top_bar_3.png);
+            background-position: 0 0;
+            background-size: cover;
+            background-repeat: no-repeat;
+            font-size: .8em;
+            .avatar {
+                width: 1.5 * $menuItemHeight;
+                height: 1.5 * $menuItemHeight;
+                border-radius: 50%;
+                margin: 10px auto;
+                display: flex;
+                border: solid 2px map-get($map: $FSColors, $key: primary);
+                img {
+                    object-fit: cover;
+                }
+            }
+            .name {
+                text-align: center;
+                color: map-get($map: $FSColors, $key: white);
+                font-size: 1.1em;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                overflow: hidden;
+            }
+            .button-edit {
+                position: absolute;
+                right: 5px;
+                top: 5px;
+                color: map-get($map: $FSColors, $key: yellow);
+            }
+        }
+        .menu-item {
+            height: 1.3*$menuItemHeight;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            align-items: center;
+            color: map-get($map: $FSColors, $key: white);
+            position: relative;
+            .icon {
+                color: map-get($map: $FSColors, $key: yellow);
+            }
+            &::after {
+                display: block;
+                content: "";
+                position: absolute;
+                bottom: 0;
+                left: 30px;
+                right: 30px;
+                background-color: rgba(246, 216, 13, 0.21);
+                height: 1px;
+            }
+            &:last-child {
+                &::after {
+                    display: none;
+                }
+            }
+            &.active,
+            &:hover {
+                background-color: #98262e;
+                &::before {
+                    position: absolute;
+                    content: "";
+                    top: 0;
+                    left: 0;
+                    bottom: 0;
+                    width: 7px;
+                    background-color: map-get($map: $FSColors, $key: yellow);
+                }
+                &::after {
+                    display: none;
+                }
+            }
+        }
     }
     
     .error-message {

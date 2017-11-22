@@ -27,16 +27,14 @@ export class FsLoginPage {
     public formBuilder: FormBuilder,
     private appController: AppControllerProvider,
   ) {
+    console.log("login page constructor");
     this.loginForm = this.formBuilder.group({
       account: ["", Validators.compose([Validators.maxLength(100), Validators.minLength(6), Validators.required])],
       password: ["", Validators.compose([Validators.minLength(6), Validators.required])]
     });
 
   }
-
-  ionViewDidEnter() {
-  }
-
+ 
   loginWithFacebook() {
     this.appController.loginWithFacebook().then(success => {
       this.appController.showToast(success);
@@ -70,7 +68,7 @@ export class FsLoginPage {
   }
 
   loginSuccess() {
-    this.appController.setRootPage(this.rootPage); 
+    // this.appController.setRootPage(this.rootPage); 
   }
 
   checkForm() {

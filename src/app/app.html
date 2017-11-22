@@ -1,1 +1,20 @@
-<ion-nav [root]="rootPage"></ion-nav>
+<ion-menu [content]="content" swipeEnabled="false" class="dc-menu" type="reveal" width="100px">
+    <div class="fs-menu">
+        <div *ngIf="user" class="profile-item fs-shadow">
+            <div class="avatar">
+                <img src="{{user.avatarImg}}" alt="avatar image">
+            </div>
+            <div class="name">{{user.lastName + " " + user.firstName}}</div>
+            <span class="button-edit">
+                <ion-icon name="fs-note-o"></ion-icon>
+            </span>
+        </div>
+        <div class="menu-item" [class.active]="item.active" *ngFor="let item of menuItems" (click)="gotoMenu(item)" tappable>
+            <ion-icon name="{{item.icon}}"></ion-icon>
+            <span class="text">
+                {{item.name}}
+            </span>
+        </div>
+    </div>
+</ion-menu>
+<ion-nav id="nav" #content [root]="rootPage"></ion-nav>

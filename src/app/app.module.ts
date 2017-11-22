@@ -1,4 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { HttpModule } from '@angular/http'
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -14,6 +15,9 @@ import { GooglePlus } from '@ionic-native/google-plus';
 import { MyApp } from './app.component';
 
 import { AppControllerProvider } from '../providers/food-staff/app-controller/app-controller';
+import { FoodStaffHttpServiceProvider } from '../providers/food-staff/food-staff-http-service/food-staff-http-service';
+import { HttpService } from "../providers/http-service";
+import { ProgressControllerProvider } from "../providers/food-staff/progress-controller/progress-controller";
 
 export const firebaseConfig = {
   apiKey: "AIzaSyDMEZoEtmor-T166lP9bGCR9FxqQP4eGik",
@@ -30,6 +34,7 @@ export const firebaseConfig = {
   ],
   imports: [
     BrowserModule,
+    HttpModule,
     IonicModule.forRoot(MyApp, {
       scrollPadding: false,
       scrollAssist: false,
@@ -50,7 +55,10 @@ export const firebaseConfig = {
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     AppControllerProvider,
     Facebook,
-    GooglePlus
+    GooglePlus,
+    FoodStaffHttpServiceProvider,
+    HttpService,
+    ProgressControllerProvider
   ]
 })
 export class AppModule { }
