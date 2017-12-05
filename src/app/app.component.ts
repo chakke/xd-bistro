@@ -63,7 +63,8 @@ export class MyApp {
       console.log("page name", event.id);
       if(this.rootPages.indexOf(event.id) == -1){
         if(!this.user){
-          this.appController.setRootPage(this.rootPage);
+          //Un-comment this for production
+          // this.appController.setRootPage(this.rootPage);
         }
       }
     })

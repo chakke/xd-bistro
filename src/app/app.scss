@@ -178,6 +178,7 @@
         color: map-get($FSColors, black);
         min-height: 100%;
         overflow: hidden;
+        background-color: map-get($map: $FSColors, $key: background);
     }
     
     [nowrap] {
@@ -222,6 +223,16 @@
     
     .bold {
         font-weight: bold;
+    }
+    
+    .fs-divider {
+        width: 90%;
+        margin-left: 5%;
+        height: 10px;
+        background-image: url(../assets/food-staff/images/icon/line.png);
+        background-repeat: repeat-x;
+        background-size: auto 3px;
+        background-position: center;
     }
     
     .fs-textarea {
@@ -337,6 +348,31 @@
                 &::after {
                     display: none;
                 }
+            }
+        }
+    }
+    
+    .fs-segment {
+        .segment-button {
+            font-size: 1em;
+            font-weight: normal;
+            color: map-get($map: $FSColors, $key: gray);
+            border: none;
+            text-transform: none;
+            padding: 0;
+            &.segment-activated {
+                color: map-get($map: $FSColors, $key: black);
+                font-weight: 500;
+            }
+        }
+    }
+    
+    .search-bar {
+        .searchbar {
+            background: none !important;
+            padding: 0 map-get($FSSizes, defaultPadding);
+            .searchbar-input {
+                border-radius: 20px;
             }
         }
     }

@@ -58,6 +58,14 @@ export class FoodStaffHttpServiceProvider {
     // return this.requestGet(this.serviceUrl + APIUrl.PROVINCE, "");
   }
 
-  
+  //Lấy danh sách các bàn cùng thông tin order
+  getTableInOrder(restId: number): Promise<any> {
+    if (this.isUseFakeData) return this.requestGet(AssetsUrl.BASE_URL + FakeApiUrl.TABLE_IN_ORDER, "");
+  }
+
+  //Lấy các Order hiện tại
+  getCUrrentOrder(restId: number): Promise<any> {
+    if (this.isUseFakeData) return this.requestGet(AssetsUrl.BASE_URL + FakeApiUrl.CURRENT_ORDER, "");
+  }
 
 }

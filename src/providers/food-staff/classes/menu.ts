@@ -62,7 +62,4 @@ export class Menu {
     public set link(value: string) {
         this._link = value;
     }
-
-
-
 }

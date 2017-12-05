@@ -63,13 +63,3 @@ fs-header {
         }
     }
 }
-
-.search-bar {
-    .searchbar {
-        background: none !important;
-        padding: 0 map-get($FSSizes, defaultPadding);
-        .searchbar-input {
-            border-radius: 20px;
-        }
-    }
-}

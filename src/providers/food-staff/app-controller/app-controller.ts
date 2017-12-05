@@ -15,12 +15,23 @@ import { UserPool } from "../object-pools/user-pool";
 
 import { Subject } from 'rxjs/Subject';
 import { UserContant } from '../app-constant';
+import { TableInOrderPool } from '../object-pools/table-pool';
+import { TableInOrder } from '../classes/table';
+import { Order } from '../classes/order';
+import { OrderPool } from '../object-pools/order-pool';
 @Injectable()
 export class AppControllerProvider {
+  isTesting = true;
+
   toast: Toast;
   menuItems: Array<Menu> = [];
   user: User;
   userPool: UserPool;
+  tableInOrders: Array<TableInOrder>;
+  tableInOrderPool: TableInOrderPool;
+  orders: Array<Order>;
+  orderPool: OrderPool;
+
 
   menuSubject: Subject<Array<Menu>> = new Subject<Array<Menu>>();
   userSubject: Subject<User> = new Subject<User>();
@@ -32,6 +43,19 @@ export class AppControllerProvider {
     private httpService: FoodStaffHttpServiceProvider) {
     // initialize pools
     this.userPool = new UserPool();
+    this.tableInOrderPool = new TableInOrderPool();
+    this.tableInOrderPool.initialize(200);
+    this.orderPool = new OrderPool();
+    this.orderPool.initialize(200);
+
+    //Test
+    if (this.isTesting) {
+      this.loadOrder();
+      this.loadTableInOrder();
+      this.user = this.userPool.getItem(1);
+      this.user.id = 1;
+      this.getMenu();
+    }
   }
 
   pushPage(page: any) {
@@ -67,7 +91,6 @@ export class AppControllerProvider {
     }
     return false;
   }
-
 
   loginWithFacebook(): Promise<any> {
     return new Promise((resolve, reject) => {
@@ -164,6 +187,48 @@ export class AppControllerProvider {
       this.toast.dismiss();
       this.toast = null;
     }
+  }
+
+  loadTableInOrder() {
+    this.httpService.getTableInOrder(0).then(data => {
+      if (data && data.result == 1 && data.content) {
+        this.tableInOrders = [];
+        data.content.forEach(element => {
+          let table = this.tableInOrderPool.getItemWithData(element);
+          this.tableInOrders.push(table);
+        });
+      }
+    })
+  }
+
+  getAllTableInOrder() {
+    return this.tableInOrders;
+  }
+
+  loadOrder() {
+    this.httpService.getCUrrentOrder(0).then(data => {
+      if (data && data.result == 1 && data.content) {
+        this.orders = [];
+        data.content.forEach(element => {
+          let order = this.orderPool.getItemWithData(element);
+          this.orders.push(order);
+        });
+      }
+    })
+  }
+
+  getAllOrders() {
+    return this.orders;
+  }
+
+  getOrderById(orderId: string): Order {
+    let index = this.orders.findIndex(elm => {
+      return elm.id == orderId;
+    })
+    if (index > -1) {
+      return this.orders[index];
+    }
+    return null;
   }
 
 }

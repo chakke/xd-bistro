@@ -1,4 +1,7 @@
 page-fs-login {
+    .fs-content {
+        background-color: map-get($map: $FSColors, $key: white);
+    }
     .logo-image {
         width: 100%;
         padding: 3em;
@@ -102,12 +105,13 @@ page-fs-login {
             padding: 0;
             position: relative;
             font-weight: 500;
+            $borderTrasitionTime: 300ms;
             &.outline {
                 &::before {
                     border: solid 1px map-get($map: $FSColors, $key: primary);
                     width: 100%;
                     height: 100%;
-                    transition: width 300ms ease-in-out, height 300ms 300ms ease-in-out, border-color 0ms 0ms ease-in-out;
+                    transition: width $borderTrasitionTime ease-in-out, height $borderTrasitionTime $borderTrasitionTime ease-in-out, border-color 0ms 0ms ease-in-out;
                 }
             }
             &::before {
@@ -119,8 +123,8 @@ page-fs-login {
                 top: -1px;
                 left: -1px;
                 border: solid 1px transparent;
-                transition: width 300ms ease-in-out, height 300ms 300ms ease-in-out, border-color 250ms 100ms ease-in-out;
-                z-index: -1;
+                transition: width $borderTrasitionTime ease-in-out, height $borderTrasitionTime $borderTrasitionTime ease-in-out, border-color $borderTrasitionTime/6*5 $borderTrasitionTime/3 ease-in-out;
+                z-index: 1;
                 border-radius: 20px;
             }
             span {
@@ -131,6 +135,8 @@ page-fs-login {
                 border-radius: 20px;
                 color: map-get($map: $FSColors, $key: primary);
                 font-size: .9em;
+                z-index: 2;
+                position: relative;
             }
         }
     }

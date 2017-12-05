@@ -34,9 +34,55 @@ export class AssetsUrl {
 
 export class FakeApiUrl {
     public static MENU: string = "/data/menu.json";
+    public static TABLE_IN_ORDER = "/data/table-in-order.json";
+    public static CURRENT_ORDER  = "/data/order.json";
 }
 
 export class ResponseCode {
     public static ERROR_CODE: number = 0;
     public static SUCCESS_CODE: number = 1;
 }
+
+export const TABLE_STATUS = {
+    ALL: {
+        id: 0,
+        name: "Tất cả"
+    },
+    IN_USE: {
+        id: 1,
+        name: "Đang phục vụ",
+        shortName: "Đang PV"
+    },
+    ORDERED: {
+        id: 2,
+        name: "Đã đặt"
+    },
+    EMPTY: {
+        id: 3,
+        name: "Còn trống"
+    },
+}
+
+export const ORDER_STATUS = {
+    UN_CONFIRM: {
+        id: 0,
+        name: "Chưa xác nhận"
+    },
+    IN_USE: {
+        id: 1,
+        name: "Đang sử dụng"
+    },
+    PENDING: {
+        id: 2,
+        name: "Chờ thanh toán"
+    },
+    PAYED: {
+        id: 3,
+        name: "Đã thanh toán"
+    },
+    CANCELED: {
+        id: 4,
+        name: "Hủy"
+    }
+}
+

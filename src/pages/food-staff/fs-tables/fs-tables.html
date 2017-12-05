@@ -1,10 +1,69 @@
 <ion-header>
     <fs-header [showBackButton]="2" [title]="'Danh sách bàn'"></fs-header>
+    <div class="custom-toggle" (click)="onClickToggleView()" tappale>
+        <span class="custom-toggle-left-button custom-toggle-button" [class.active]="viewMode == 0"> <i class="fa fa-list-ul" aria-hidden="true"></i></span>
+        <span class="custom-toggle-right-button custom-toggle-button" [class.active]="viewMode == 1"> <i class="fa fa-map-o" aria-hidden="true"></i></span>
+    </div>
 </ion-header>
 
 
 <ion-content>
     <div class="fs-content">
-        Hello. Its me
+        <div class="search-bar">
+            <ion-searchbar class="searchbar-ios" [class.searchbar-md]="false" placeholder="{{placholder}}" [(ngModel)]="searchKeyword" (ionInput)="search()"></ion-searchbar>
+        </div>
+        <div class="fs-segment">
+            <ion-segment class="segment-md" [class.segment-ios]="false" [(ngModel)]="tableStatus" (ionChange)="filterTable()">
+                <ion-segment-button value="{{status.id}}" *ngFor="let status of tableStatusData">
+                    <span class="number status-{{status.id}}">{{tableCollection.get(status.id)?.length}}</span>
+                    <span class="text"> {{status.shortName || status.name}} </span>
+                </ion-segment-button>
+            </ion-segment>
+        </div>
+        <div class="segment-content">
+            <div class="owner-zone">
+                <ion-row class="item" *ngFor="let table of userTables">
+                    <ion-col class="col-table">
+                        <div class="content-block status-{{table.status}}">
+                            <span class="order-number" *ngIf="table?.missingFoods">{{table?.missingFoods}}</span>
+                            <ion-icon name="fs-table"></ion-icon>
+                            <span class="table-number">{{table.name}}</span>
+                        </div>
+                    </ion-col>
+                    <ion-col class="col-detail">
+                        <div class="identify">
+                            <ion-icon name="fs-order-number-o"></ion-icon>
+                            <span>{{getOrderIds(table.orders)}}</span>
+                        </div>
+                        <div class="guests">
+                            <ion-icon name="fs-group-o"></ion-icon>
+                            <span>{{table.currentPerson}} người</span>
+                        </div>
+                    </ion-col>
+                    <ion-col class="col-action">
+                        <div>
+                            <button class="fs-button fs-button-outline">Xem hóa đơn</button>
+                        </div>
+                        <div class="status" [ngClass]="{'fs-green': !table?.missingFoods, 'fs-blue': table?.missingFoods}">
+                            <span *ngIf="!table?.missingFoods && table.status == 1"> Đã đủ món</span>
+                            <span *ngIf="table?.missingFoods"> Đang chờ món</span>
+                        </div>
+                    </ion-col>
+                </ion-row>
+
+                <div class="fs-divider"></div>
+            </div>
+            <div class="all-zone">
+                <div class="item status-{{table.status}}" *ngFor="let table of showTables">
+                    <div class="content-block">
+                        <ion-icon name="fs-table"></ion-icon>
+                        <span class="table-number">{{table.name}}</span>
+                    </div>
+                </div>
+                <div *ngIf="showTables.length == 0" padding text-center>
+                    Không có dữ liệu
+                </div>
+            </div>
+        </div>
     </div>
 </ion-content>

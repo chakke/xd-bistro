@@ -1,3 +1,198 @@
 page-fs-tables {
-
+    $customToggleHeight: 2em;
+    .custom-toggle {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        height: $customToggleHeight;
+        border-radius: 20px;
+        padding: 2px;
+        background-color: #760d14;
+        .icon,
+        i,
+        {
+            margin: auto;
+        }
+        .custom-toggle-button {
+            height: 100%;
+            padding: 0 10px;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-display: flex;
+            border-radius: 20px;
+            background-color: transparent;
+            -webkit-transition: all 1s;
+            transition: all 1s;
+            color: map-get($map: $FSColors, $key: white);
+        }
+        span.active {
+            background-color: map-get($FSColors, primary)
+        }
+    }
+    .custom-toggle-left-button {
+        float: left;
+    }
+    .custom-toggle-right-button {
+        float: right;
+    }
+    .search-bar {
+        .searchbar-ios {
+            border: none;
+        }
+        .searchbar-input {
+            border: solid 1px lightgray;
+        }
+    }
+    .fs-segment {
+        .number {
+            font-size: 0.8em;
+            padding: 4px;
+            border-radius: 20px;
+            box-sizing: content-box;
+        }
+        .segment-button {
+            color: map-get($map: $FSColors, $key: black);
+            &.segment-activated {
+                background-color: map-get($map: $FSColors, $key: white);
+                font-weight: bold;
+            }
+            .status-1 {
+                background-color: map-get($map: $FSColors, $key: primary);
+                color: map-get($map: $FSColors, $key: white);
+            }
+            .status-2 {
+                background-color: map-get($map: $FSColors, $key: yellow);
+                color: map-get($map: $FSColors, $key: black);
+            }
+            .status-3 {
+                background-color: map-get($map: $FSColors, $key: gray);
+                color: map-get($map: $FSColors, $key: black);
+            }
+            .status-0 {
+                border: solid 1px;
+            }
+        }
+    }
+    .segment-content {
+        background-color: map-get($map: $FSColors, $key: white);
+        $iconSize: 4em;
+        position: relative;
+        .content-block {
+            width: $iconSize;
+            height: $iconSize;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            .icon {
+                color: map-get($map: $FSColors, $key: primary);
+                font-size: 4em;
+                z-index: 1;
+            }
+            .table-number {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                font-weight: bold;
+                text-transform: uppercase;
+                color: map-get($map: $FSColors, $key: white);
+                z-index: 2;
+                font-size: map-get($map: $FSSizes, $key: big);
+            }
+            .order-number {
+                padding: 3px 4px;
+                border-radius: 50%;
+                background-color: map-get($map: $FSColors, $key: yellow);
+                color: map-get($map: $FSColors, $key: black);
+                font-size: .8em;
+                display: block;
+                position: absolute;
+                top: -2px;
+                right: -2px;
+                text-align: center;
+                line-height: 1em;
+            }
+        }
+        .owner-zone {
+            .item {
+                padding: 10px;
+                border-bottom: solid 1px map-get($map: $FSColors, $key: lightgray);
+                &:last-of-type {
+                    border-bottom: 0;
+                }
+                .col-table {
+                    min-width: $iconSize;
+                    min-height: $iconSize;
+                    padding: 0;
+                    flex: 0;
+                }
+                .col-detail {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-evenly;
+                    flex: 1;
+                    padding-left: 10px;
+                    .icon {
+                        color: map-get($map: $FSColors, $key: primary);
+                        vertical-align: text-bottom;
+                    }
+                    .identify {
+                        color: map-get($map: $FSColors, $key: black);
+                        font-size: map-get($map: $FSSizes, $key: big);
+                    }
+                    .guests {
+                        color: map-get($map: $FSColors, $key: gray);
+                    }
+                }
+                .col-action {
+                    flex: 0;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-evenly;
+                    align-items: center;
+                    .fs-button {
+                        font-size: 1em;
+                        padding: 4px 10px;
+                        font-weight: bold;
+                        white-space: nowrap;
+                        padding-right: 10px;
+                    }
+                }
+            }
+        }
+        .all-zone {
+            .item {
+                width: 25%;
+                height: 25vw;
+                float: left;
+            }
+        }
+        .status-1 {
+            .table-number {
+                color: map-get($map: $FSColors, $key: white);
+            }
+            .icon {
+                color: map-get($map: $FSColors, $key: primary);
+            }
+        }
+        .status-2 {
+            .table-number {
+                color: map-get($map: $FSColors, $key: orange);
+            }
+            .icon {
+                color: map-get($map: $FSColors, $key: yellow);
+            }
+        }
+        .status-3 {
+            .table-number {
+                color: map-get($map: $FSColors, $key: black);
+            }
+            .icon {
+                color: map-get($map: $FSColors, $key: gray);
+            }
+        }
+    }
 }

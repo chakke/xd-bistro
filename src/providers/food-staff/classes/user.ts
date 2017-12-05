@@ -25,6 +25,7 @@ export class User {
     private _address: string;
     private _province: Province;
     private _avatarImg: string;
+    private _status: number;
 
     constructor() {
         this.reset();
@@ -135,6 +136,14 @@ export class User {
         this._avatarImg = value;
     }
 
+    public get status(): number {
+        return this._status;
+    }
+
+    public set status(value: number) {
+        this._status = value;
+    }
+
     public login(facebookId?: string, googleId?: string) {
         this._isLoggedIn = true;
         if (this.facebookId) {
@@ -161,6 +170,7 @@ export class User {
         this._phone = "";
         this._province = new Province(0, "");
         this._avatarImg = UserContant.AVATAR_IMAGE;
+        this._status = 1;
     }
 }
 
