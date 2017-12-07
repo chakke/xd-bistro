@@ -8,7 +8,13 @@
         "foods": [],
         "table_ids": [
             1
-        ]
+        ],
+        "staffs": [{
+            "id": 1,
+            "name": "Nguyễn Văn A",
+            "type": 2
+        }],
+        "time": 1512635986413
     }, {
         "id": 2,
         "code": "124",
@@ -42,9 +48,13 @@
                 "orderTime": 1234567889
             }
         ],
-        "table_ids": [
-            2
-        ]
+        "staffs": [{
+            "id": 2,
+            "name": "Nguyễn Thị B",
+            "type": 2
+        }],
+        "table_ids": [2],
+        "time": 1512635986413
     }, {
         "id": 3,
         "code": "125",
@@ -80,7 +90,13 @@
         ],
         "table_ids": [
             3
-        ]
+        ],
+        "staffs": [{
+            "id": 3,
+            "name": "Phạm Văn C",
+            "type": 2
+        }],
+        "time": 1512635986413
     }, {
         "id": 4,
         "code": "#680",

@@ -21,7 +21,7 @@ export class FsTablesPage {
   @ViewChild("sizeHolder") sizeHolderRef: ElementRef;
   sizeHolder: HTMLElement;
 
-  viewMode: number = 1;
+  viewMode: number = 0;
   searchKeyword: string = "";
   placholder = "Tìm kiếm bàn";
   tableStatus: string = "0";
@@ -67,7 +67,6 @@ export class FsTablesPage {
 
       }
     }
-
     this.selectedMap = new MyMap(0, 0, "Map 1", []);
   }
 

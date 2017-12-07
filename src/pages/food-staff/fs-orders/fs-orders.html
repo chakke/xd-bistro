@@ -2,9 +2,63 @@
     <fs-header [showBackButton]="2" [title]="'Order'"></fs-header>
 </ion-header>
 
-
 <ion-content>
-    <div class="fs-content">
-        Hello. Its me
+    <div class="fs-content list-zone">
+        <div class="search-bar">
+            <ion-searchbar class="searchbar-ios" [class.searchbar-md]="false" placeholder="{{placholder}}" [(ngModel)]="searchKeyword" (ionInput)="search()"></ion-searchbar>
+        </div>
+        <div class="fs-segment">
+            <ion-segment class="segment-md" [class.segment-ios]="false" [(ngModel)]="selectedOrderStatus" (ionChange)="filterOrders()">
+                <ion-segment-button value="{{status.id}}" *ngFor="let status of orderStatusData">
+                    <span class="number status-{{status.id}}">{{ orderCollection.get(status.id)?.length}}</span>
+                    <span class="text"> {{status.shortName || status.name}} </span>
+                </ion-segment-button>
+            </ion-segment>
+        </div>
+        <div class="segment-content">
+            <div class="order-list">
+                <div class="order-item" *ngFor="let order of showOrders">
+                    <ion-row class="item-detail">
+                        <ion-col class="col-table status-{{order.status}}">
+                            <ion-icon name="fs-table"></ion-icon>
+                            <span class="table-number">{{order.tableName}}</span>
+                        </ion-col>
+                        <ion-col class="col-detail">
+                            <div class="staff">
+                                <ion-icon name="fs-service-o"></ion-icon>
+                                <span class="staff-name">(NV{{order.staffs[0]?.id}}) {{order.staffs[0]?.name}}</span>
+                            </div>
+                            <div class="detail">
+                                <div class="person">
+                                    <ion-icon name="fs-group-o"></ion-icon>
+                                    <span>{{order.totalPersons}} người</span>
+                                </div>
+                                <div class="time">
+                                    <ion-icon name="fs-time-o"></ion-icon>
+                                    <span>{{order.time?.toLocaleTimeString()}}</span>
+                                </div>
+                            </div>
+                        </ion-col>
+                        <ion-col class="col-price">
+                            <span class="price">{{formatPrice(order.totalCost)}} đ</span>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row class="item-action">
+                        <ion-col class="col-id">
+                            <span> #123 </span>
+                        </ion-col>
+                        <ion-col class="col-button">
+                            <button class="fs-button fs-button-outline">Đặt món</button>
+                            <button class="fs-button fs-button-outline">Kiểm đồ</button>
+                            <button class="fs-button">Thanh toán</button>
+                        </ion-col>
+                    </ion-row>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="fab-button" ion-fixed (click)="addNewOrders()">
+        <i class="fa fa-plus"></i>
     </div>
 </ion-content>

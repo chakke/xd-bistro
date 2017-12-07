@@ -181,7 +181,6 @@ export class AppControllerProvider {
             let menu = new Menu(element.id, element.name, element.icon, false, element.page, element.link);
             this.menuItems.push(menu);
           });
-          this.setRootPage(this.menuItems[0].page);
           this.menuSubject.next(this.menuItems);
         }
       })
@@ -205,6 +204,7 @@ export class AppControllerProvider {
     }
   }
 
+
   loadTableInOrder() {
     this.httpService.getTableInOrder(0).then(data => {
       if (data && data.result == 1 && data.content) {
@@ -213,12 +213,25 @@ export class AppControllerProvider {
           let table = this.tableInOrderPool.getItemWithData(element);
           this.tableInOrders.push(table);
         });
+        console.log("table in order", this.tableInOrders);
       }
-    })
+    });   
   }
 
   getAllTableInOrder() {
     return this.tableInOrders;
+  }
+
+  getTableById(id): TableInOrder{
+    let index = this.tableInOrders.findIndex(elm=>{
+      return elm.id == id;
+    })
+    
+    if(index> -1){
+      console.log("get table by id",id,  index);
+      return this.tableInOrders[index];
+    }
+    return undefined;
   }
 
   loadOrder() {

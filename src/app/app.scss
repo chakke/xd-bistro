@@ -164,7 +164,7 @@
         content: "\e91c";
     }
     
-    [class*="icon"][class$="fs-fs--time-o"]:before {
+    [class*="icon"][class$="fs-time-o"]:before {
         content: "\e91d";
     }
     
@@ -228,6 +228,15 @@
     .fs-divider {
         width: 90%;
         margin-left: 5%;
+        height: 10px;
+        background-image: url(../assets/food-staff/images/icon/line.png);
+        background-repeat: repeat-x;
+        background-size: auto 3px;
+        background-position: center;
+    }
+    
+    .fs-divider-full {
+        width: 100%;
         height: 10px;
         background-image: url(../assets/food-staff/images/icon/line.png);
         background-repeat: repeat-x;

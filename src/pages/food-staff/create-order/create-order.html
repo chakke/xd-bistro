@@ -1,0 +1,60 @@
+<ion-content class="ion-content">
+    <div class="backdrop" #backdrop></div>
+    <div class="main-content">
+        <div class="order-header">
+            <span class="title">Order #1234</span>
+            <div class="fs-divider-full"></div>
+        </div>
+        <div class="order-body">
+            <form (ngSubmit)="createOrder()" [formGroup]="createOrderForm">
+                <div class="fs-form">
+                    <div class="input-div">
+                        <span class="icon"> 
+                        <ion-icon name="fs-table-3-o"></ion-icon>
+                      </span>
+                        <span class="text-input">Chọn bàn</span>
+                        <span class="button-map"><i class="fa fa-map"></i></span>
+                    </div>
+                    <!-- <span *ngIf="!loginForm.controls.account.valid && isSubmitted" class="validate-message">{{accountErrorMessage}}</span> -->
+
+                    <ion-row>
+                        <ion-col col-6>
+                            <div class="input-div" style="padding-right: 5px;">
+                                <span class="icon">
+                                  <ion-icon name="fs-time-o"></ion-icon>
+                                </span>
+                                <span class="text-input">20:07:05</span>
+                            </div>
+                        </ion-col>
+                        <ion-col col-6>
+                            <div class="input-div" style="padding-left: 5px;">
+                                <span class="icon">
+                                  <ion-icon name="fs-group-o"></ion-icon>
+                                </span>
+                                <ion-input type="number" [(ngModel)]="numberOfPerson" formControlName="number" placeholder="Số người" (ionChange)="checkForm()"></ion-input>
+                            </div>
+                        </ion-col>
+                    </ion-row>
+                    <div class="input-div">
+                        <span class="icon">
+                          <ion-icon name="fs-individual-o"></ion-icon>
+                        </span>
+                        <ion-input type="text" [(ngModel)]="name" formControlName="name" placeholder="Tên khách hàng" (ionChange)="checkForm()"></ion-input>
+                    </div>
+                    <div class="input-div" style="padding-left: 5px;">
+                        <span class="icon">
+                          <ion-icon name="fs-phone-o"></ion-icon>
+                        </span>
+                        <ion-input type="tel" [(ngModel)]="phone" formControlName="phone" placeholder="Số điện thoại" (ionChange)="checkForm()"></ion-input>
+                    </div>
+                    <!-- <span *ngIf="!loginForm.controls.password.valid && isSubmitted" class="validate-message">{{passwordErrorMessage}}</span> -->
+                </div>
+                <div class="login-button">
+                    <button ion-button class="fs-button" type="submit">
+                      Đăng nhập
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</ion-content>

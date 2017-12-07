@@ -1,0 +1,70 @@
+page-create-order {
+    .ion-content {
+        background-color: transparent !important;
+    }
+    .backdrop {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 1;
+        background-color: rgba(0, 0, 0, 0.4);
+    }
+    .main-content {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: map-get($map: $FSColors, $key: white);
+        z-index: 2;
+        width: 90%;
+        .order-header {
+            text-align: center;
+            padding: 0 16px;
+            .title {
+                font-size: 2em;
+                font-weight: bold;
+                padding: 5px 16px;
+                background-color: map-get($map: $FSColors, $key: lightgray);
+                color: map-get($map: $FSColors, $key: black);
+                display: inline-block;
+                border-radius: 20px;
+                margin: 15px 0;
+            }
+        }
+    }
+    .fs-divider {
+        background-position: bottom;
+    }
+    .fs-form {
+        $inputHeight: 2.5em;
+        .input-div {
+            padding: 0;
+            margin: 5px 0;
+            .icon {
+                width: $inputHeight;
+            }
+            .text-input {
+                padding-left: $inputHeight;
+            }
+            .button-map {
+                width: 1.5* $inputHeight;
+                height: $inputHeight;
+                display: inline-block;
+                text-align: center;
+                line-height: $inputHeight;
+                margin-left: 10px;
+                color: map-get($map: $FSColors, $key: white);
+                background-color: map-get($map: $FSColors, $key: primary);
+                border-radius: 20px;
+            }
+        }
+        .row {
+            padding: 0;
+        }
+        .col {
+            padding: 0;
+        }
+    }
+}
