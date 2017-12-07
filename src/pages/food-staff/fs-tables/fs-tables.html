@@ -8,7 +8,7 @@
 
 
 <ion-content>
-    <div class="fs-content">
+    <div class="fs-content list-zone" *ngIf="viewMode == 0">
         <div class="search-bar">
             <ion-searchbar class="searchbar-ios" [class.searchbar-md]="false" placeholder="{{placholder}}" [(ngModel)]="searchKeyword" (ionInput)="search()"></ion-searchbar>
         </div>
@@ -65,5 +65,34 @@
                 </div>
             </div>
         </div>
+
     </div>
+    <div class="map-zone" [hidden]="viewMode != 1">
+        <div class="floor-menu">
+            <div class="floor" [class.active]="floor.id == selectedFloor" (click)="selectFloor(floor.id)" tappable *ngFor="let floor of floors">
+                <ion-icon name="fs-stairs-o"></ion-icon>
+                <span>{{floor.name}}</span>
+            </div>
+        </div>
+        <div class="map-container" [style.width]="width+'px'" [style.height]="height+'px'" id="map-container">
+            <div class="map" [style.width]="width+'px'" [style.height]="height+'px'" id="map">
+                <div [ngClass]="component.classList" *ngFor="let component of selectedMap.components; let i = index" [attr.index]="i" [style.transform]="domSanitizer.bypassSecurityTrustStyle('translate(' + component.x + 'px,' + component.y + 'px) ' + 'rotateZ('+ component.rotate +'deg)')"
+                    [style.webkitTransform]="domSanitizer.bypassSecurityTrustStyle('translate(' + component.x + 'px,' + component.y + 'px) ' + 'rotateZ('+ component.rotate +'deg)')" [attr.data-x]="component.x" [attr.data-y]="component.y" [style.width]="component.width + 'px'"
+                    [style.height]="component.height + 'px'" [style.zIndex]="component.zIndex" (click)="selectComponent(component)" [class.selected]="selectedComponent && selectedComponent.id == component.id">
+                    <div class="title">
+                        <span> 
+                            {{component.title}}
+                        </span>
+                    </div>
+                    <div class="content" [innerHTML]="component.innerHtml"></div>
+                    <div class="top-rule rule"></div>
+                    <div class="left-rule rule"></div>
+                    <div class="bottom-rule rule"></div>
+                    <div class="right-rule rule"></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div #sizeHolder class="size-holder"></div>
 </ion-content>

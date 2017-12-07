@@ -15,22 +15,33 @@ import { UserPool } from "../object-pools/user-pool";
 
 import { Subject } from 'rxjs/Subject';
 import { UserContant } from '../app-constant';
+
 import { TableInOrderPool } from '../object-pools/table-pool';
 import { TableInOrder } from '../classes/table';
+
 import { Order } from '../classes/order';
 import { OrderPool } from '../object-pools/order-pool';
+
+import { Map } from '../classes/map';
+import { MapPool } from '../object-pools/map-pool';
 @Injectable()
 export class AppControllerProvider {
   isTesting = true;
 
   toast: Toast;
   menuItems: Array<Menu> = [];
+
   user: User;
   userPool: UserPool;
-  tableInOrders: Array<TableInOrder>;
+
+  tableInOrders: Array<TableInOrder> = [];
   tableInOrderPool: TableInOrderPool;
-  orders: Array<Order>;
+
+  orders: Array<Order> = [];
   orderPool: OrderPool;
+
+  maps: Array<Map> = [];
+  mapPool: MapPool;
 
 
   menuSubject: Subject<Array<Menu>> = new Subject<Array<Menu>>();
@@ -43,10 +54,15 @@ export class AppControllerProvider {
     private httpService: FoodStaffHttpServiceProvider) {
     // initialize pools
     this.userPool = new UserPool();
+
     this.tableInOrderPool = new TableInOrderPool();
     this.tableInOrderPool.initialize(200);
+
     this.orderPool = new OrderPool();
     this.orderPool.initialize(200);
+
+    this.mapPool = new MapPool();
+    this.loadMaps();
 
     //Test
     if (this.isTesting) {
@@ -229,6 +245,18 @@ export class AppControllerProvider {
       return this.orders[index];
     }
     return null;
+  }
+
+  loadMaps(){
+    this.httpService.getAllMap("0").then(data=>{
+      if (data && data.result == 1 && data.content) {
+        this.maps = [];
+        data.content.forEach(element => {
+          let map = this.mapPool.getItemWithData(element);
+          this.maps.push(map);
+        });
+      }
+    })
   }
 
 }

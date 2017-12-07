@@ -68,4 +68,34 @@ export class FoodStaffHttpServiceProvider {
     if (this.isUseFakeData) return this.requestGet(AssetsUrl.BASE_URL + FakeApiUrl.CURRENT_ORDER, "");
   }
 
+  //Lay thong tin ban do cua 1 tang
+  getMapById(mapId: number): Promise<any> {
+    if (this.isUseFakeData) {
+      return new Promise((resolve, reject) => {
+        this.requestGet(AssetsUrl.BASE_URL + FakeApiUrl.MAP, "").then(data => {
+          if (data && data.content) {
+            let maps = data.content;
+            let index = maps.findIndex(elm => {
+              return elm.id == mapId;
+            })
+            if (index > -1) {
+              resolve({
+                "result": 1,
+                "content": maps[index]
+              });
+            }
+          } else {
+            reject();
+          }
+        });
+      })
+    }
+  }
+
+  getAllMap(restId: string): Promise<any> {
+    if (this.isUseFakeData) {
+      return this.requestGet(AssetsUrl.BASE_URL + FakeApiUrl.MAP, "");
+    }
+  }
+
 }
