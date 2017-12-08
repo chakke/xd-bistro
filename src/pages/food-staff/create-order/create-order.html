@@ -9,11 +9,11 @@
             <form (ngSubmit)="createOrder()" [formGroup]="createOrderForm">
                 <div class="fs-form">
                     <div class="input-div">
-                        <span class="icon"> 
-                        <ion-icon name="fs-table-3-o"></ion-icon>
-                      </span>
-                        <span class="text-input">Chọn bàn</span>
-                        <span class="button-map"><i class="fa fa-map"></i></span>
+                        <span class="icon" (click)="showTableList()"> 
+                            <ion-icon name="fs-table-3-o"></ion-icon>
+                        </span>
+                        <span class="text-input" (click)="showTableList()">{{selectedTable ? selectedTable.name : "Chọn bàn"}}</span>
+                        <!-- <span class="button-map" (click)="showTableMap()"><i class="fa fa-map"></i></span> -->
                     </div>
                     <!-- <span *ngIf="!loginForm.controls.account.valid && isSubmitted" class="validate-message">{{accountErrorMessage}}</span> -->
 
@@ -41,7 +41,7 @@
                         </span>
                         <ion-input type="text" [(ngModel)]="name" formControlName="name" placeholder="Tên khách hàng" (ionChange)="checkForm()"></ion-input>
                     </div>
-                    <div class="input-div" style="padding-left: 5px;">
+                    <div class="input-div">
                         <span class="icon">
                           <ion-icon name="fs-phone-o"></ion-icon>
                         </span>
@@ -49,12 +49,61 @@
                     </div>
                     <!-- <span *ngIf="!loginForm.controls.password.valid && isSubmitted" class="validate-message">{{passwordErrorMessage}}</span> -->
                 </div>
-                <div class="login-button">
-                    <button ion-button class="fs-button" type="submit">
-                      Đăng nhập
-                    </button>
-                </div>
+
             </form>
         </div>
+        <div class="order-footer">
+            <div class="fs-divider-full"></div>
+            <div class="button-group">
+                <button type="button" class="fs-button-outline">Hủy bỏ</button>
+                <button type="button" class="fs-button">Tạo order mới</button>
+            </div>
+        </div>
     </div>
+    <div class="action-sheet" [class.show]="showingTableList">
+        <div class="action-sheet-backdrop" (click)="hideTableList()" tappable></div>
+        <div class="action-sheet-content" [class.full-height]="viewMode == 1">
+            <div class="sheet-header">
+                <span class="button-left" (click)="hideTableList()" tappable>Hủy bỏ</span>
+                <!-- <span class="button-right">Xong</span> -->
+                <div class="custom-toggle" (click)="onClickToggleView()" tappale>
+                    <span class="custom-toggle-left-button custom-toggle-button" [class.active]="viewMode == 0"> <i class="fa fa-list-ul" aria-hidden="true"></i></span>
+                    <span class="custom-toggle-right-button custom-toggle-button" [class.active]="viewMode == 1"> <i class="fa fa-map-o" aria-hidden="true"></i></span>
+                </div>
+            </div>
+            <div class="sheet-body">
+                <div class="floors">
+                    <div class="floor" [class.active]="floor.id == selectedFloor.id" (click)="selectFloor(floor)" *ngFor="let floor of floors">{{floor.name}}</div>
+                </div>
+                <div class="table-list" *ngIf="viewMode == 0">
+                    <div class="table status-{{table.status}}" (click)="selectTable(table)" *ngFor="let table of showTables">
+                        <span class="table-name">{{table.name}}</span>
+                        <ion-icon name="fs-table" class="table-icon"></ion-icon>
+                    </div>
+                </div>
+                <div class="table-map" [hidden]="viewMode != 1">
+                    <div class="map-container" [style.width]="width+'px'" [style.height]="height+'px'" id="map-container">
+                        <div class="map" [style.width]="width+'px'" [style.height]="height+'px'" id="map">
+                            <div [ngClass]="component.classList" (click)="selectTable()" *ngFor="let component of selectedMap.components; let i = index" [attr.index]="i" [style.transform]="domSanitizer.bypassSecurityTrustStyle('translate(' + component.x + 'px,' + component.y + 'px) ' + 'rotateZ('+ component.rotate +'deg)')"
+                                [style.webkitTransform]="domSanitizer.bypassSecurityTrustStyle('translate(' + component.x + 'px,' + component.y + 'px) ' + 'rotateZ('+ component.rotate +'deg)')" [attr.data-x]="component.x" [attr.data-y]="component.y" [style.width]="component.width + 'px'"
+                                [style.height]="component.height + 'px'" [style.zIndex]="component.zIndex" [class.selected]="selectedComponent && selectedComponent.id == component.id">
+                                <div class="title">
+                                    <span> 
+                                        {{component.title}}
+                                    </span>
+                                </div>
+                                <div class="content" [innerHTML]="component.innerHtml"></div>
+                                <div class="top-rule rule"></div>
+                                <div class="left-rule rule"></div>
+                                <div class="bottom-rule rule"></div>
+                                <div class="right-rule rule"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="sheet-footer"></div>
+        </div>
+    </div>
+    <div class="size-holder" #sizeHolder></div>
 </ion-content>

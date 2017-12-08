@@ -31,8 +31,7 @@ export class FsTablesPage {
   userTables: Array<TableInOrder> = [];
   showTables: Array<TableInOrder> = [];
   tableCollection: Map<any, Array<TableInOrder>> = new Map<any, Array<TableInOrder>>();
-
-  defaultRatio = 2;
+ 
   width = 0;
   height = 0;
   scale = 1;
@@ -64,7 +63,6 @@ export class FsTablesPage {
       if (TABLE_STATUS.hasOwnProperty(key)) {
         const element = TABLE_STATUS[key];
         this.tableStatusData.push(element);
-
       }
     }
     this.selectedMap = new MyMap(0, 0, "Map 1", []);

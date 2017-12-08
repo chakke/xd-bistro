@@ -9,6 +9,7 @@ export class Table {
     private _name: string;
     private _type: number;
     private _maxPerson: number;
+    private _status: number;
 
     constructor() {
         this.reset();
@@ -19,6 +20,7 @@ export class Table {
         this._name = "name";
         this._type = 0;
         this._maxPerson = 0;
+        this._status = 0;
     }
 
     public get id(): string {
@@ -52,11 +54,18 @@ export class Table {
     public set maxPerson(value: number) {
         this._maxPerson = value;
     }
+    
+    public get status(): number {
+        return this._status;
+    }
+
+    public set status(value: number) {
+        this._status = value;
+    }
 }
 
 export class TableInOrder extends Table {
     private _currentPerson: number;
-    private _status: number;
     private _orders: Array<OrderInTable>;
     private _staffs: Array<number>;
 
@@ -68,7 +77,6 @@ export class TableInOrder extends Table {
     public reset() {
         super.reset();
         this._currentPerson = 0;
-        this._status = 0;
         this._orders = [];
     }
 
@@ -80,13 +88,7 @@ export class TableInOrder extends Table {
         this._currentPerson = value;
     }
 
-    public get status(): number {
-        return this._status;
-    }
 
-    public set status(value: number) {
-        this._status = value;
-    }
 
     public get orders(): Array<OrderInTable> {
         return this._orders;
