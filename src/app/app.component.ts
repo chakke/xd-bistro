@@ -10,11 +10,11 @@ import { User } from "../providers/food-staff/classes/user";
 export class MyApp {
   user: User;
   // rootPage: any = "FsLoginPage";
-  // rootPage: any = "FsOrdersPage";
-  rootPage: any = "CreateOrderPage";
+  rootPage: any = "FsOrdersPage";
+  // rootPage: any = "OrderDetailPage";
   rootPages = ["FsLoginPage"];
 
-  menuItems = [
+   menuItems = [
     {
       name: "Thông báo",
       icon: "fs-bell-o"
@@ -39,7 +39,7 @@ export class MyApp {
       splashScreen.hide();
     });
     this.getMenu();
-    this.getUser();
+    this.getUser(); 
   }
 
   getMenu() {
@@ -57,24 +57,24 @@ export class MyApp {
       console.log("subcrise user", data);
     }, error => {
       console.log("user subcries error");
-    }) 
+    })
   }
 
-  ngAfterViewInit(){   
-    this.app.getActiveNav().viewWillEnter.subscribe(event => { 
+  ngAfterViewInit() {
+    this.app.getActiveNav().viewWillEnter.subscribe(event => {
       console.log("page name", event.id);
-      if(this.rootPages.indexOf(event.id) == -1){
-        if(!this.user){
+      if (this.rootPages.indexOf(event.id) == -1) {
+        if (!this.user) {
           //Un-comment this for production
           // this.appController.setRootPage(this.rootPage);
         }
       }
     })
   }
-  
+
   gotoMenu(item) {
     this.appController.setRootPage(item.page);
     this.menuCtrl.close();
-  }
+  } 
 }
 

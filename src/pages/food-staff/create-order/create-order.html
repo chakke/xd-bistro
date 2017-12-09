@@ -31,7 +31,9 @@
                                 <span class="icon">
                                   <ion-icon name="fs-group-o"></ion-icon>
                                 </span>
-                                <ion-input type="number" [(ngModel)]="numberOfPerson" formControlName="number" placeholder="Số người" (ionChange)="checkForm()"></ion-input>
+                                <span class="text-input number-input">
+                                    <fs-number-picker ></fs-number-picker>
+                                </span>
                             </div>
                         </ion-col>
                     </ion-row>

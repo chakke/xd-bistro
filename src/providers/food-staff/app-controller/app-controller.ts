@@ -24,6 +24,7 @@ import { OrderPool } from '../object-pools/order-pool';
 
 import { Map } from '../classes/map';
 import { MapPool } from '../object-pools/map-pool';
+import { Observable } from 'rxjs/Observable';
 @Injectable()
 export class AppControllerProvider {
   isTesting = true;
@@ -43,9 +44,9 @@ export class AppControllerProvider {
   maps: Array<Map> = [];
   mapPool: MapPool;
 
-
   menuSubject: Subject<Array<Menu>> = new Subject<Array<Menu>>();
   userSubject: Subject<User> = new Subject<User>();
+
   constructor(private app: App,
     private facebook: Facebook,
     public afAuth: AngularFireAuth,
@@ -215,20 +216,20 @@ export class AppControllerProvider {
         });
         console.log("table in order", this.tableInOrders);
       }
-    });   
+    });
   }
 
   getAllTableInOrder() {
     return this.tableInOrders;
   }
 
-  getTableById(id): TableInOrder{
-    let index = this.tableInOrders.findIndex(elm=>{
+  getTableById(id): TableInOrder {
+    let index = this.tableInOrders.findIndex(elm => {
       return elm.id == id;
     })
-    
-    if(index> -1){
-      console.log("get table by id",id,  index);
+
+    if (index > -1) {
+      console.log("get table by id", id, index);
       return this.tableInOrders[index];
     }
     return undefined;
@@ -260,8 +261,8 @@ export class AppControllerProvider {
     return null;
   }
 
-  loadMaps(){
-    this.httpService.getAllMap("0").then(data=>{
+  loadMaps() {
+    this.httpService.getAllMap("0").then(data => {
       if (data && data.result == 1 && data.content) {
         this.maps = [];
         data.content.forEach(element => {
@@ -271,5 +272,4 @@ export class AppControllerProvider {
       }
     })
   }
-
 }

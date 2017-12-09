@@ -148,6 +148,7 @@ export class CreateOrderPage {
   selectTable(table: Table) {
     this.showingTableList = false;
     this.selectedTable = table;
+    this.navCtrl.remove
   }
 
 }

@@ -1,0 +1,32 @@
+<ion-content class="ion-content">
+    <div class="keyboard">
+        <div class="keyboard-backdrop" (click)="backdropClick()"></div>
+        <div class="keyboard-content">
+            <div class="keyboard-header">
+                <div class="row">
+                    <div class="main-number">
+                        <span class="caret">|</span>
+                        <span> 
+                        {{numberInKeyboard}}
+                      </span>
+                    </div>
+                    <span class="done-button" (click)="done()">Xong</span>
+                </div>
+            </div>
+            <div class="keyboard-body">
+                <div class="numpad" *ngFor="let numpad of numpads" (click)="numpadClick(numpad)" tappable>
+                    <span>{{numpad}}</span>
+                </div>
+                <div class="numpad" (click)="clear()">
+                    Clear
+                </div>
+                <div class="numpad" (click)="numpadClick(0)" tappable>
+                    <span>0</span>
+                </div>
+                <div class="numpad" (click)="delete()">
+                    <i class="fa fa-times"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</ion-content>

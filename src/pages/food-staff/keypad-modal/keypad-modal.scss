@@ -1,0 +1,92 @@
+page-keypad-modal {
+    .ion-content {
+        background-color: transparent !important;
+    }
+    .keyboard {
+        $headerHeight: 2 * map-get($map: $FSSizes, $key: lineheight);
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 10;
+        .keyboard-backdrop {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.4);
+            z-index: 11;
+        }
+        .keyboard-content {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: map-get($map: $FSColors, $key: white);
+            z-index: 12;
+            .keyboard-header {
+                padding: 0 16px;
+                height: $headerHeight;
+                background-color: map-get($map: $FSColors, $key: background);
+                .row {
+                    display: flex;
+                    width: 100%;
+                    height: $headerHeight;
+                    line-height: $headerHeight;
+                    .main-number {
+                        display: block;
+                        flex: 1;
+                        text-align: left;
+                        font-size: 1.2em;
+                        font-weight: bold;
+                        overflow-x: auto;
+                        overflow-y: hidden;
+                        white-space: nowrap;
+                        direction: rtl;
+                    }
+                    .done-button {
+                        color: map-get($map: $FSColors, $key: primary);
+                        flex: 0;
+                        padding-left: 20px;
+                    }
+                    .caret {
+                        animation: blink 1s infinite;
+                        font-size: 1.2em;
+                    }
+                }
+            }
+            .keyboard-body {
+                display: flex;
+                flex-wrap: wrap;
+                .numpad {
+                    min-width: 30%;
+                    border-left: solid 1px map-get($map: $FSColors, $key: lightgray);
+                    border-bottom: solid 1px map-get($map: $FSColors, $key: lightgray);
+                    margin-left: -1px;
+                    margin-bottom: -1px;
+                    height: 3* map-get($map: $FSSizes, $key: lineheight);
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    flex: 1;
+                    font-weight: bold;
+                    background: map-get($map: $FSColors, $key: white);
+                    span {
+                        font-size: 1.2em;
+                    }
+                }
+            }
+        }
+    }
+    @keyframes blink {
+        0% {
+            opacity: 1;
+        }
+        100% {
+            opacity: 0;
+        }
+    }
+}
