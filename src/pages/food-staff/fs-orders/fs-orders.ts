@@ -33,7 +33,7 @@ export class FsOrdersPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     private appController: AppControllerProvider,
-  private modalCtrl: ModalController) {
+    private modalCtrl: ModalController) {
   }
 
   ionViewDidLoad() {
@@ -50,13 +50,13 @@ export class FsOrdersPage {
       let totalPersons = 0;
       elm.tableIds.forEach(id => {
         let table = this.appController.getTableById(id);
-        if (table){
+        if (table) {
           totalPersons += table.currentPerson;
           tables.push(table);
         }
       });
       elm["tables"] = tables;
-      if(tables.length > 0){ 
+      if (tables.length > 0) {
         elm["tableName"] = tables[0].name;
         console.log("tables", tables);
       }
@@ -64,10 +64,10 @@ export class FsOrdersPage {
 
       //food mapping 
       let totalCost = 0;
-      elm.foods.forEach(food=>{
+      elm.foods.forEach(food => {
         totalCost += food.price * food.quantityInOrder;
       })
-      elm["totalCost"] = totalCost; 
+      elm["totalCost"] = totalCost;
     })
     this.filterOrders();
   }
@@ -83,12 +83,26 @@ export class FsOrdersPage {
     console.log(this.showOrders);
   }
 
-  addNewOrders(){
+  addNewOrders() {
     let modal = this.modalCtrl.create("CreateOrderPage");
     modal.present();
   }
 
-  formatPrice(price: number){
+  formatPrice(price: number) {
     return Utils.formatNumber(price, ".");
+  }
+
+  gotoDetail() {
+    let modal = this.modalCtrl.create("OrderDetailPage");
+    modal.present();
+  }
+
+  checkItem(){
+    let modal = this.modalCtrl.create("CheckItemPage");
+    modal.present();
+  }
+
+  pay(){
+
   }
 }

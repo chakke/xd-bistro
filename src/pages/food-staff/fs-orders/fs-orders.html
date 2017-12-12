@@ -48,9 +48,9 @@
                             <span> #123 </span>
                         </ion-col>
                         <ion-col class="col-button">
-                            <button class="fs-button fs-button-outline">Đặt món</button>
-                            <button class="fs-button fs-button-outline">Kiểm đồ</button>
-                            <button class="fs-button">Thanh toán</button>
+                            <button class="fs-button fs-button-outline" (click)="gotoDetail(order)">Đặt món</button>
+                            <button class="fs-button fs-button-outline" (click)="checkItem(order)">Kiểm đồ</button>
+                            <button class="fs-button" (click)="pay()">Thanh toán</button>
                         </ion-col>
                     </ion-row>
                 </div>

@@ -1,0 +1,39 @@
+<ion-header>
+    <fs-header [showBackButton]="1" [title]="'Kiểm đồ'"></fs-header>
+</ion-header>
+
+
+<ion-content>
+    <div class="fs-content">
+        <ion-grid class="order-detail">
+            <ion-row class="row-title">
+                <ion-col col-2 class="stt">STT</ion-col>
+                <ion-col col-6>Tên món</ion-col>
+                <ion-col col-2 class="stt"> S.lg gọi</ion-col>
+                <ion-col col-2 class="stt">S.lg trả</ion-col>
+            </ion-row>
+            <ion-row class="row-item">
+                <ion-col col-2 class="stt">1</ion-col>
+                <ion-col col-6 class="food-name">Mỳ ý sốt bò băm (Đĩa)</ion-col>
+                <ion-col col-2 class="number-order">1</ion-col>
+                <ion-col col-2 class="number-serve">
+                    <fs-number-picker [number]="1"></fs-number-picker>
+                </ion-col>
+            </ion-row>
+            <ion-row class="row-item">
+                <ion-col col-2 class="stt">2</ion-col>
+                <ion-col col-6 class="food-name">Khoai tây chiên (Suất)</ion-col>
+                <ion-col col-2 class="number-order">1</ion-col>
+                <ion-col col-2 class="number-serve">
+                    <fs-number-picker [number]="0"></fs-number-picker>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </div>
+</ion-content>
+
+<div class="fs-footer" ion-fixed>
+    <button class="fs-button">
+        Yêu cầu thanh toán
+    </button>
+</div>

@@ -59,6 +59,7 @@ export class FsLoginPage {
       this.appController.loginWithAccountPassword(this.account, this.password).then(success => {
         this.appController.showToast(success);
         this.loginSuccess();
+        console.log("login success")
       }, error => {
         this.appController.showToast(error);
       })
@@ -68,7 +69,7 @@ export class FsLoginPage {
   }
 
   loginSuccess() {
-    // this.appController.setRootPage(this.rootPage); 
+    this.appController.setRootPage(this.rootPage); 
   }
 
   checkForm() {

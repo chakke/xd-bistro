@@ -10,11 +10,11 @@ import { User } from "../providers/food-staff/classes/user";
 export class MyApp {
   user: User;
   // rootPage: any = "FsLoginPage";
-  rootPage: any = "FsOrdersPage";
-  // rootPage: any = "OrderDetailPage";
+  // rootPage: any = "FsOrdersPage";
+  rootPage: any = "AddFoodToOrderPage";
   rootPages = ["FsLoginPage"];
 
-   menuItems = [
+  menuItems = [
     {
       name: "Thông báo",
       icon: "fs-bell-o"
@@ -39,7 +39,7 @@ export class MyApp {
       splashScreen.hide();
     });
     this.getMenu();
-    this.getUser(); 
+    this.getUser();
   }
 
   getMenu() {
@@ -75,6 +75,6 @@ export class MyApp {
   gotoMenu(item) {
     this.appController.setRootPage(item.page);
     this.menuCtrl.close();
-  } 
+  }
 }
 

@@ -179,6 +179,7 @@
         min-height: 100%;
         overflow: hidden;
         background-color: map-get($map: $FSColors, $key: background);
+        line-height: map-get($map: $FSSizes, $key: lineheight);
     }
     
     [nowrap] {
@@ -211,6 +212,10 @@
     
     .fs-green {
         color: map-get($FSColors, green);
+    }
+    
+    .fs-orange {
+        color: map-get($FSColors, orange);
     }
     
     .fs-blue {
@@ -661,4 +666,18 @@
         z-index: 8;
         $step: 5px;
         background-image: repeating-linear-gradient(-45deg, map-get($map: $FSColors, $key: lightgray), map-get($map: $FSColors, $key: lightgray) $step, map-get($map: $FSColors, $key: gray) $step, map-get($map: $FSColors, $key: gray) $step*2);
+    }
+    
+    .fab-button {
+        position: absolute;
+        bottom: 20px;
+        right: 16px;
+        width: 4rem;
+        height: 4rem;
+        border-radius: 50%;
+        background-color: map-get($map: $FSColors, $key: primary);
+        color: map-get($map: $FSColors, $key: white);
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }

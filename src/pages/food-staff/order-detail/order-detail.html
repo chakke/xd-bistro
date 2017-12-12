@@ -1,8 +1,127 @@
 <ion-header>
-    <fs-header [title]="'Chi tiết Order'"></fs-header>
+    <fs-header [showBackButton]="1" [title]="'Chi tiết Order'"></fs-header>
 </ion-header>
 
-
 <ion-content>
-    <fs-number-picker></fs-number-picker>
+    <div class="fs-content">
+        <div class="detail-bar">
+            <div class="detail-item table">
+                <ion-icon name="fs-table-3-o"></ion-icon>
+                <span class="table-name">C17</span>
+                <span class="floor">Tâng 2</span>
+            </div>
+            <div class="detail-item person">
+                <ion-icon class="fs-green" name="fs-group-o"></ion-icon>
+                <span>10 người</span>
+            </div>
+            <div class="detail-item time">
+                <ion-icon class="fs-orange" name="fs-time-o"></ion-icon>
+                <span>11:04:28</span>
+            </div>
+            <div class="detail-item edit">
+                <ion-icon name="fs-note-o"></ion-icon>
+            </div>
+        </div>
+        <ion-segment class="fs-segment segment-md" [class.segment-ios]="false" [(ngModel)]="viewMode">
+            <ion-segment-button value="0">
+                Các món đã chọn
+            </ion-segment-button>
+            <ion-segment-button value="1">
+                Hóa đơn tạm tính
+            </ion-segment-button>
+        </ion-segment>
+        <div class="segment-content" *ngIf="viewMode == '0'">
+            <div class="choosen-list">
+                <div class="item food">
+                    <ion-row>
+                        <ion-col col-3 class="col-image">
+                            <img src="https://cdn5.norecipes.com/wp-content/uploads/2012/10/23052346/recipespaghetti-meat-sauce-recipe.1024x1024-1.jpg" alt="">
+                        </ion-col>
+                        <ion-col col-9 class="col-detail">
+                            <div class="name">
+                                Mỳ Ý sốt bò băm
+                                <span class="fs-green">(x2)</span>
+                            </div>
+                            <div class="fs-price">
+                                59.000 đ
+                            </div>
+                            <div class="button-group">
+                                <button class="fs-button-outline">
+                                    Hủy món
+                                </button>
+                                <button class="fs-button-outline">
+                                    Số lượng
+                                </button>
+                                <button class="fs-button">
+                                    Thêm yêu cầu
+                                </button>
+                            </div>
+                        </ion-col>
+                    </ion-row>
+                </div>
+            </div>
+        </div>
+        <div class="segment-content" *ngIf="viewMode == '1'">
+            <ion-grid class="order-detail">
+                <ion-row class="row-title">
+                    <ion-col col-2 class="stt">STT</ion-col>
+                    <ion-col col-5>Tên món</ion-col>
+                    <ion-col col-2> Số lượng</ion-col>
+                    <ion-col col-3 class="stt">Thành tiền</ion-col>
+                </ion-row>
+                <ion-row class="row-item">
+                    <ion-col col-2 class="stt">1</ion-col>
+                    <ion-col col-5 class="food-name">Mỳ ý sốt bò băm (Đĩa)</ion-col>
+                    <ion-col col-2 class="number">2</ion-col>
+                    <ion-col col-3 class="fs-price">118.000 đ</ion-col>
+                    <ion-col col-12>
+                        <ion-row class="row-bonus">
+                            <ion-col col-2></ion-col>
+                            <ion-col col-5 class="food-name">+Thêm sốt</ion-col>
+                            <ion-col col-2 class="number"></ion-col>
+                            <ion-col col-3 class="fs-price">0 đ</ion-col>
+                        </ion-row>
+                    </ion-col>
+                </ion-row>
+                <ion-row class="row-item">
+                    <ion-col col-2 class="stt">2</ion-col>
+                    <ion-col col-5 class="food-name">Khoai tây chiên (Suất)</ion-col>
+                    <ion-col col-2 class="number">1</ion-col>
+                    <ion-col col-3 class="fs-price">35.000 đ</ion-col>
+                </ion-row>
+                <ion-row class="row-item">
+                    <ion-col col-2 class="stt">3</ion-col>
+                    <ion-col col-5 class="food-name">Cá hồi bỏ lò phô mai (Suất L)</ion-col>
+                    <ion-col col-2 class="number">1</ion-col>
+                    <ion-col col-3 class="fs-price">169.000 đ</ion-col>
+                </ion-row>
+                <ion-row class="row-gift">
+                    <ion-col col-7 class="food-name">
+                        <span class="fs-blue">
+                            Tặng:  
+                        </span> Kem dừa (Ly)
+                    </ion-col>
+                    <ion-col class="number" col-2>2</ion-col>
+                    <ion-col col-3 class="fs-price">0 đ</ion-col>
+                </ion-row>
+                <ion-row class="row-total">
+                    <ion-col col-4 class="title">
+                        Tổng tiền
+                    </ion-col>
+                    <ion-col col-8 class="fs-price">322.000 đ</ion-col>
+                </ion-row>
+            </ion-grid>
+        </div>
+    </div>
+    <div class="fs-footer" ion-fixed *ngIf="viewMode == '1'">
+        <button class="fs-button-outline" (click)="checkItem()">
+            Kiểm đồ
+        </button>
+        <button class="fs-button">
+            Thanh toán
+        </button>
+    </div>
+    <div class="fab-button" [class.high]="viewMode == '1'" ion-fixed (click)="addNewFood()">
+        <i class="fa fa-plus"></i>
+    </div>
 </ion-content>

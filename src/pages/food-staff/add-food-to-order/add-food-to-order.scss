@@ -1,0 +1,144 @@
+page-add-food-to-order {
+    .search-bar {
+        display: flex;
+        .searchbar {
+            padding: 0 5px;
+            border-bottom: none;
+            .searchbar-input {
+                border: solid 1px map-get($map: $FSColors, $key: lightgray);
+            }
+        }
+        .button-left {
+            padding: 0 0 0 16px;
+            white-space: nowrap;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .button-right {
+            padding: 0 16px 0 0;
+            white-space: nowrap;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: map-get($map: $FSColors, $key: primary);
+        }
+    }
+    .menu {
+        display: flex;
+        overflow-x: auto;
+        border-top: solid 1px map-get($map: $FSColors, $key: lightgray);
+        .menu-item {
+            height: 3*map-get($map: $FSSizes, $key: lineheight);
+            padding: 0 10px;
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            white-space: nowrap;
+            background-color: map-get($map: $FSColors, $key: lightgray);
+            &.active {
+                color: map-get($map: $FSColors, $key: primary);
+                background-color: map-get($map: $FSColors, $key: white);
+            }
+        }
+    }
+    .ordered-zone {
+        .item {
+            padding: 10px;
+            background: map-get($map: $FSColors, $key: white);
+            &:nth-child(2n) {
+                background-color: map-get($map: $FSColors, $key: background);
+            }
+            .col-image {
+                padding: 5px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                img {
+                    width: 100%;
+                    border-radius: 50%;
+                }
+            }
+            .col-detail {
+                padding-left: 5px;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-evenly;
+                .name {
+                    font-weight: 500;
+                }
+            }
+            .col-button {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                .button-add {
+                    background-color: map-get($map: $FSColors, $key: primary);
+                    color: map-get($map: $FSColors, $key: white);
+                    border-radius: 50%;
+                    width: 2em;
+                    height: 2em;
+                    line-height: 2em;
+                    text-align: center;
+                }
+            }
+        }
+    }
+    .menu-zone {
+        padding-top: 5px;
+        .item {
+            padding: 10px;
+            background: map-get($map: $FSColors, $key: white);
+            position: relative;
+            &:nth-child(2n) {
+                background-color: map-get($map: $FSColors, $key: background);
+            }
+            .col-image {
+                padding: 5px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                img {
+                    width: 100%;
+                    border-radius: 50%;
+                }
+            }
+            .col-detail {
+                padding-left: 5px;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-evenly;
+                .name {
+                    font-weight: 500;
+                }
+            }
+            .col-button {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                .button-select {
+                    width: 100%;
+                    text-align: center;
+                    padding: 3px 5px;
+                }
+            }
+            .sold-out {
+                position: absolute;
+                right: 0;
+                top: 0;
+                bottom: 0;
+                width: auto;
+                span {
+                    position: absolute;
+                    right: 0;
+                    bottom: 0;
+                }
+                img {
+                    display: block;
+                    height: 100%;
+                }
+            }
+        }
+    }
+}

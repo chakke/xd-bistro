@@ -11,7 +11,7 @@ export class FsNumberPickerComponent {
   @Output() numberChange: EventEmitter<number> = new EventEmitter<number>();
 
   numpads = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-
+  isPicking = false;
 
   constructor(
     private appController: AppControllerProvider,
@@ -23,15 +23,16 @@ export class FsNumberPickerComponent {
     selectNumber() {
     let modal = this.modalCtrl.create("KeypadModalPage", {number: this.number});
     modal.present();
+    this.isPicking = true; 
     modal.onDidDismiss(data=>{
+      this.isPicking = false;
       if(data != null && data != undefined){
-        this.number = data;
+        this.number = data;      
       }
     })
   }
 
-  keypadCloseCallBack(number) {
-    console.log("hey fucker done", number);
+  keypadCloseCallBack(number) { 
     this.number = number;
   }
 }

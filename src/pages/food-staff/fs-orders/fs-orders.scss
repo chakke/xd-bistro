@@ -163,17 +163,4 @@ page-fs-orders {
             }
         }
     }
-    .fab-button {
-        position: absolute;
-        bottom: 20px;
-        right: 16px;
-        width: 4rem;
-        height: 4rem;
-        border-radius: 50%;
-        background-color: map-get($map: $FSColors, $key: primary);
-        color: map-get($map: $FSColors, $key: white);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
 }

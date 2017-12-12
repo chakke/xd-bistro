@@ -4,7 +4,7 @@ page-keypad-modal {
     }
     .keyboard {
         $headerHeight: 2 * map-get($map: $FSSizes, $key: lineheight);
-        position: fixed;
+        position: absolute;
         top: 0;
         left: 0;
         right: 0;
@@ -21,7 +21,6 @@ page-keypad-modal {
         }
         .keyboard-content {
             position: absolute;
-            top: 50%;
             left: 0;
             right: 0;
             bottom: 0;
@@ -65,8 +64,6 @@ page-keypad-modal {
                     min-width: 30%;
                     border-left: solid 1px map-get($map: $FSColors, $key: lightgray);
                     border-bottom: solid 1px map-get($map: $FSColors, $key: lightgray);
-                    margin-left: -1px;
-                    margin-bottom: -1px;
                     height: 3* map-get($map: $FSSizes, $key: lineheight);
                     display: flex;
                     justify-content: center;
