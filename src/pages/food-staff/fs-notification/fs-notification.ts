@@ -7,7 +7,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'fs-notification.html',
 })
 export class FsNotificationPage {
-
+  mode = "notification";
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 

@@ -1,3 +1,150 @@
 page-fs-notification {
-
+    .fs-content {
+        background-color: map-get($map: $FSColors, $key: white);
+    }
+    .fs-segment {
+        .segment-button {
+            color: map-get($map: $FSColors, $key: black);
+            font-weight: bold;
+            border-bottom: solid 1px map-get($map: $FSColors, $key: lightgray);
+            &.segment-activated {
+                color: map-get($map: $FSColors, $key: primary);
+                border-bottom: solid 2px;
+            }
+            .number {
+                color: map-get($map: $FSColors, $key: black);
+                background-color: yellow;
+                border-radius: 50%;
+                display: inline-flex;
+                width: 1.5em;
+                height: 1.5em;
+                border: solid 1px;
+                font-size: .8em;
+                justify-content: center;
+                align-items: center;
+                vertical-align: baseline;
+            }
+        }
+    }
+    .notification-list {
+        padding: 0;
+        border-top: solid 1px map-get($map: $FSColors, $key: lightgray);
+        .row {
+            padding: 0;
+        }
+        .col {
+            padding: 10px 0;
+        }
+        .notification {
+            background: map-get($map: $FSColors, $key: white);
+            border-bottom: solid 1px map-get($map: $FSColors, $key: lightgray);
+            &:nth-child(2n +1) {
+                .col-table {
+                    background-color: map-get($map: $FSColors, $key: lightgray);
+                }
+            }
+            &:nth-child(2n) {
+                .col-table {
+                    background-color: map-get($map: $FSColors, $key: background);
+                }
+            }
+            &.vip {
+                background-color: #fffbe5;
+                .col-table {
+                    background-color: #ffee92;
+                    .vip-text {
+                        img {
+                            height: 1.5em;
+                        }
+                    }
+                }
+            }
+            .col-table {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+                .table-name {
+                    font-weight: bold;
+                }
+            }
+            .col-image {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding-left: 10px;
+                img {
+                    width: 100%;
+                    border-radius: 50%;
+                }
+            }
+            .col-detail {
+                padding-left: 10px;
+                line-height: map-get($map: $FSSizes, $key: lineheight) * 1.2;
+                .name {}
+                .detail {
+                    display: flex;
+                    flex-wrap: wrap;
+                    align-items: center;
+                    .icon {
+                        color: map-get($map: $FSColors, $key: primary);
+                        margin-right: 5px;
+                        vertical-align: middle;
+                    }
+                    div {
+                        flex: 1;
+                        white-space: nowrap;
+                    }
+                    span {
+                        color: map-get($map: $FSColors, $key: gray);
+                    }
+                }
+            }
+            .col-button {
+                padding-right: 10px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                .fs-button {
+                    padding: 4px;
+                    width: 100%;
+                    font-size: .9em;
+                }
+                .fs-button-outline {
+                    padding: 3px;
+                }
+            }
+        }
+        &.old-list {
+            margin-top: 20px;
+            .notification {
+                opacity: .8;
+                .col-table {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    flex-direction: column;
+                    .table-name {
+                        font-weight: bold;
+                    }
+                }
+                .col-detail {
+                    .detail {
+                        .icon {
+                            color: map-get($map: $FSColors, $key: black);
+                        }
+                    }
+                }
+                .col-button {
+                    .fs-button {
+                        background-color: map-get($map: $FSColors, $key: gray);
+                    }
+                    .fs-button-outline {
+                        color: map-get($map: $FSColors, $key: gray);
+                        background-color: map-get($map: $FSColors, $key: white);
+                    }
+                }
+            }
+        }
+    }
 }

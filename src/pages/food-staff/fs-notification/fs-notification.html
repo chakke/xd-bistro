@@ -5,6 +5,184 @@
 
 <ion-content>
     <div class="fs-content">
-        Hello. Its me
+        <div class="fs-segment">
+            <ion-segment [(ngModel)]="mode" class="segment-md" [class.segment-ios]="false">
+                <ion-segment-button value="notification">
+                    Thông báo chung
+                    <span class="number">3</span>
+                </ion-segment-button>
+                <ion-segment-button value="message">
+                    Tin nhắn
+                </ion-segment-button>
+            </ion-segment>
+        </div>
+        <div class="segment-content">
+            <ion-grid class="notification-list">
+                <ion-row class="notification vip">
+                    <ion-col col-2 class="col-table">
+                        <span class="table-name">C17</span>
+                        <span class="vip-text">
+                            <img src="http://lodechuanvip.com/uploads/vip.png" alt="VIP">
+                        </span>
+                    </ion-col>
+                    <ion-col col-2 class="col-image">
+                        <img src="http://media.phunutoday.vn/files/upload_images/2016/01/12/cach-nau-xoi-lap-xuong-3-phunutoday_vn.JPG" alt="">
+                    </ion-col>
+                    <ion-col col-5 class="col-detail">
+                        <div class="name">
+                            Xôi lạp xưởng
+                        </div>
+                        <div class="detail">
+                            <div class="number">
+                                <ion-icon name="logo-buffer"></ion-icon>
+                                <span>2 suất</span>
+                            </div>
+                            <div class="minute">
+                                <ion-icon name="ios-checkmark-circle-outline"></ion-icon>
+                                <span>02:47</span>
+                            </div>
+                        </div>
+                    </ion-col>
+                    <ion-col col-3 class="col-button">
+                        <button class="fs-button">Phục vụ</button>
+                    </ion-col>
+                </ion-row>
+                <ion-row class="notification vip">
+                    <ion-col col-2 class="col-table">
+                        <span class="table-name">C17</span>
+                        <span class="vip-text">
+                                <img src="http://lodechuanvip.com/uploads/vip.png" alt="VIP">
+                            </span>
+                    </ion-col>
+                    <ion-col col-2 class="col-image">
+                        <img src="http://media.phunutoday.vn/files/upload_images/2016/01/12/cach-nau-xoi-lap-xuong-3-phunutoday_vn.JPG" alt="">
+                    </ion-col>
+                    <ion-col col-5 class="col-detail">
+                        <div class="name">
+                            Xôi lạp xưởng
+                        </div>
+                        <div class="detail">
+                            <div class="number">
+                                <ion-icon name="logo-buffer"></ion-icon>
+                                <span>2 suất</span>
+                            </div>
+                            <div class="minute">
+                                <ion-icon name="ios-checkmark-circle-outline"></ion-icon>
+                                <span>02:47</span>
+                            </div>
+                        </div>
+                    </ion-col>
+                    <ion-col col-3 class="col-button">
+                        <button class="fs-button">Phục vụ</button>
+                    </ion-col>
+                </ion-row>
+                <ion-row class="notification">
+                    <ion-col col-2 class="col-table">
+                        <span class="table-name">C17</span>
+                    </ion-col>
+                    <ion-col col-2 class="col-image">
+                        <img src="http://media.phunutoday.vn/files/upload_images/2016/01/12/cach-nau-xoi-lap-xuong-3-phunutoday_vn.JPG" alt="">
+                    </ion-col>
+                    <ion-col col-5 class="col-detail">
+                        <div class="name">
+                            Xôi lạp xưởng
+                        </div>
+                        <div class="detail">
+                            <div class="number">
+                                <ion-icon name="logo-buffer"></ion-icon>
+                                <span>2 suất</span>
+                            </div>
+                            <div class="minute">
+                                <ion-icon name="ios-warning-outline"></ion-icon>
+                                <span>Hết món</span>
+                            </div>
+                        </div>
+                    </ion-col>
+                    <ion-col col-3 class="col-button">
+                        <button class="fs-button fs-button-outline">Xác nhận</button>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+            <ion-grid class="notification-list old-list">
+                <ion-row class="notification">
+                    <ion-col col-2 class="col-table">
+                        <span class="table-name">C17</span>
+                    </ion-col>
+                    <ion-col col-2 class="col-image">
+                        <img src="http://media.phunutoday.vn/files/upload_images/2016/01/12/cach-nau-xoi-lap-xuong-3-phunutoday_vn.JPG" alt="">
+                    </ion-col>
+                    <ion-col col-5 class="col-detail">
+                        <div class="name">
+                            Xôi lạp xưởng
+                        </div>
+                        <div class="detail">
+                            <div class="number">
+                                <ion-icon name="logo-buffer"></ion-icon>
+                                <span>2 suất</span>
+                            </div>
+                            <div class="minute">
+                                <ion-icon name="ios-checkmark-circle-outline"></ion-icon>
+                                <span>02:47</span>
+                            </div>
+                        </div>
+                    </ion-col>
+                    <ion-col col-3 class="col-button">
+                        <button class="fs-button">Đã phục vụ</button>
+                    </ion-col>
+                </ion-row>
+                <ion-row class="notification">
+                    <ion-col col-2 class="col-table">
+                        <span class="table-name">C17</span>
+                    </ion-col>
+                    <ion-col col-2 class="col-image">
+                        <img src="http://media.phunutoday.vn/files/upload_images/2016/01/12/cach-nau-xoi-lap-xuong-3-phunutoday_vn.JPG" alt="">
+                    </ion-col>
+                    <ion-col col-5 class="col-detail">
+                        <div class="name">
+                            Xôi lạp xưởng
+                        </div>
+                        <div class="detail">
+                            <div class="number">
+                                <ion-icon name="logo-buffer"></ion-icon>
+                                <span>2 suất</span>
+                            </div>
+                            <div class="minute">
+                                <ion-icon name="ios-checkmark-circle-outline"></ion-icon>
+                                <span>02:47</span>
+                            </div>
+                        </div>
+                    </ion-col>
+                    <ion-col col-3 class="col-button">
+                        <button class="fs-button">Đã phục vụ</button>
+                    </ion-col>
+                </ion-row>
+                <ion-row class="notification">
+                    <ion-col col-2 class="col-table">
+                        <span class="table-name">C17</span>
+                    </ion-col>
+                    <ion-col col-2 class="col-image">
+                        <img src="http://media.phunutoday.vn/files/upload_images/2016/01/12/cach-nau-xoi-lap-xuong-3-phunutoday_vn.JPG" alt="">
+                    </ion-col>
+                    <ion-col col-5 class="col-detail">
+                        <div class="name">
+                            Xôi lạp xưởng
+                        </div>
+                        <div class="detail">
+                            <div class="number">
+                                <ion-icon name="logo-buffer"></ion-icon>
+                                <span>2 suất</span>
+                            </div>
+                            <div class="minute">
+                                <ion-icon name="ios-warning-outline"></ion-icon>
+                                <span>Hết món</span>
+                            </div>
+                        </div>
+                    </ion-col>
+                    <ion-col col-3 class="col-button">
+                        <button class="fs-button fs-button-outline">Đã xác nhận</button>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </div>
     </div>
 </ion-content>
