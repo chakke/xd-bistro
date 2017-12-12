@@ -9,9 +9,9 @@ import { User } from "../providers/food-staff/classes/user";
 })
 export class MyApp {
   user: User;
-  // rootPage: any = "FsLoginPage";
+  rootPage: any = "FsLoginPage";
   // rootPage: any = "FsOrdersPage";
-  rootPage: any = "AddFoodToOrderPage";
+  // rootPage: any = "AddFoodToOrderPage";
   rootPages = ["FsLoginPage"];
 
   menuItems = [

@@ -1,0 +1,86 @@
+<ion-header>
+    <fs-header [showBackButton]="2" [showSearchBar]="true"></fs-header>
+</ion-header>
+
+
+<ion-content>
+    <div class="fs-content">
+        <div class="menu">
+            <div class="menu-item" [class.active]="menu.active" (click)="selectMenu(menu)" *ngFor="let menu of menuItems">
+                <span>{{menu.title}}</span>
+            </div>
+        </div>
+        <div class="segment-content">
+            <div class="food-list">
+                <div class="item food">
+                    <ion-row>
+                        <ion-col col-3 class="col-image">
+                            <img src="https://cdn5.norecipes.com/wp-content/uploads/2012/10/23052346/recipespaghetti-meat-sauce-recipe.1024x1024-1.jpg" alt="">
+                        </ion-col>
+                        <ion-col col-7 class="col-detail">
+                            <div class="name">
+                                <span class="fs-tilt">
+                                (BS05)
+                              </span> Mỳ Ý sốt bò băm
+                            </div>
+                            <div class="price">
+                                <span class="fs-price">
+                                  (S) 99.000 đ - (L) 155.000 đ
+                              </span>
+                            </div>
+                        </ion-col>
+                        <div class="sold-out">
+                            <img src="assets/food-staff/images/icon/out_stock.png" alt="">
+                        </div>
+                    </ion-row>
+                </div>
+                <div class="item food">
+                    <ion-row>
+                        <ion-col col-3 class="col-image">
+                            <img src="https://cdn5.norecipes.com/wp-content/uploads/2012/10/23052346/recipespaghetti-meat-sauce-recipe.1024x1024-1.jpg" alt="">
+                        </ion-col>
+                        <ion-col col-7 class="col-detail">
+                            <div class="name">
+                                <span class="fs-tilt">
+                                (BS12)
+                              </span> Thăn bò Mỹ nướng sốt tiêu đen
+                            </div>
+                            <div class="price">
+                                <span class="new-price fs-price">(S) 53.000 đ</span>
+                                <span class="old-price">59.000 đ</span>
+                                <span class="sale-off">(-10%)</span>
+                            </div>
+                            <div class="price">
+                                <span class="new-price fs-price"> (L) 80.000 đ</span>
+                                <span class="old-price">100.000 đ</span>
+                                <span class="sale-off">(-10%)</span>
+                            </div>
+                        </ion-col>
+                    </ion-row>
+                </div>
+                <div class="item food out-of-business">
+                    <ion-row>
+                        <ion-col col-3 class="col-image">
+                            <img src="https://cdn5.norecipes.com/wp-content/uploads/2012/10/23052346/recipespaghetti-meat-sauce-recipe.1024x1024-1.jpg" alt="">
+                        </ion-col>
+                        <ion-col col-7 class="col-detail">
+                            <div class="name">
+                                <span class="fs-tilt">
+                                (BS05)
+                              </span> Mỳ Ý sốt bò băm
+                            </div>
+                            <div class="price">
+                                <span class="fs-price">
+                                  40.000 đ
+                              </span>
+                            </div>
+                        </ion-col>
+                        <div class="stop-business">
+                            <span>Ngừng kinh doanh</span>
+                        </div>
+                    </ion-row>
+                </div>
+            </div>
+        </div>
+    </div>
+</ion-content>
