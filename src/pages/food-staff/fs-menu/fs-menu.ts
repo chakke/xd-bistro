@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Product } from '../../../providers/food-staff/classes/product';
+import { AppControllerProvider } from '../../../providers/food-staff/app-controller/app-controller';
 
 @IonicPage()
 @Component({
@@ -8,28 +10,47 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class FsMenuPage {
 
-  menuItems = [
-    { id: 1, title: "Đồ ăn", active: true },
-    { id: 2, title: "Đồ uống", active: false },
-    { id: 3, title: "Khác", active: false },
-    { id: 4, title: "Combo", active: false },
-    { id: 5, title: "Service", active: false },
-  ]
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  menuItems = [];
+  selectedMenu = { code: "3", title: "Đồ ăn" };
+  keyword = "";
+  products: Array<Product> = [];
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    private appController: AppControllerProvider) {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad FsMenuPage');
-  }
-  search() {
+    this.loadMenu()
+    this.loadProducts();
+    this.appController.productChanel.asObservable().subscribe(() => {
+      this.loadProducts();
+    })
 
   }
+
+  loadMenu() {
+    this.menuItems = this.appController.productCategories;
+    if (this.menuItems.length > 0)
+      this.selectedMenu = this.menuItems[0]
+  }
+
+  loadProducts() {
+    this.products = this.appController.products.filter(elm => {
+      return (elm.category == this.selectedMenu.code && (this.keyword == "" || (this.keyword && elm.keyword.includes(this.keyword.toLowerCase()))));
+    })
+  }
+
+  search(keyword) {
+    this.keyword = keyword;
+    this.loadProducts();
+  }
+
 
   selectMenu(menu) {
-    this.menuItems.forEach(element => {
-      element.active = false;
-    });
-    menu.active = true;
+    this.selectedMenu = menu;
+    this.loadProducts();
   }
+
 
 }

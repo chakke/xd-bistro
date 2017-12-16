@@ -5,8 +5,8 @@
                 <img src="{{user.avatarImg}}" alt="avatar image">
             </div>
             <div class="name">{{user.lastName + " " + user.firstName}}</div>
-            <span class="button-edit">
-                <ion-icon name="fs-note-o"></ion-icon>
+            <span class="button-edit" (click)="logout()">
+                <ion-icon name="ios-power"></ion-icon>
             </span>
         </div>
         <div class="menu-item" [class.active]="item.active" *ngFor="let item of menuItems" (click)="gotoMenu(item)" tappable>

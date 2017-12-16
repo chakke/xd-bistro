@@ -1,0 +1,219 @@
+page-fs-loading {
+    .loading-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        background-color: map-get($map: $FSColors, $key: primary);
+        $colors: hsla(337, 84, 48, 0.75) hsla(160, 50, 48, 0.75) hsla(190, 61, 65, 0.75) hsla( 41, 82, 52, 0.75);
+        $size: 4em;
+        $thickness: 0.8em;
+        // Calculated variables.
+        $lat: ($size - $thickness) / 2;
+        $offset: $lat - $thickness;
+        .loading-text {
+            color: #FFF;
+            margin-top: 20px;
+            display: flex;
+        }
+        .loader {
+            position: relative;
+            width: $size;
+            height: $size;
+            transform: rotate(165deg);
+            margin-bottom: 20px;
+            &:before,
+            &:after {
+                content: '';
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                display: block;
+                width: $thickness;
+                height: $thickness;
+                border-radius: $thickness / 2;
+                transform: translate(-50%, -50%);
+            }
+            &:before {
+                animation: before 3s infinite;
+            }
+            &:after {
+                animation: after 3s infinite;
+            }
+        }
+        @keyframes before {
+            0% {
+                width: $thickness;
+                box-shadow: $lat (-$offset) nth($colors, 1), (-$lat) $offset nth($colors, 3);
+            }
+            35% {
+                width: $size;
+                box-shadow: 0 (-$offset) nth($colors, 1), 0 $offset nth($colors, 3);
+            }
+            70% {
+                width: $thickness;
+                box-shadow: (-$lat) (-$offset) nth($colors, 1), $lat $offset nth($colors, 3);
+            }
+            100% {
+                box-shadow: $lat (-$offset) nth($colors, 1), (-$lat) $offset nth($colors, 3);
+            }
+        }
+        @keyframes after {
+            0% {
+                height: $thickness;
+                box-shadow: $offset $lat nth($colors, 2), (-$offset) (-$lat) nth($colors, 4);
+            }
+            35% {
+                height: $size;
+                box-shadow: $offset 0 nth($colors, 2), (-$offset) 0 nth($colors, 4);
+            }
+            70% {
+                height: $thickness;
+                box-shadow: $offset (-$lat) nth($colors, 2), (-$offset) $lat nth($colors, 4);
+            }
+            100% {
+                box-shadow: $offset $lat nth($colors, 2), (-$offset) (-$lat) nth($colors, 4);
+            }
+        }
+        $DotSize: 5px;
+        .loader10:before {
+            content: "";
+            position: absolute;
+            top: 0px;
+            left: -2 *$DotSize;
+            height: $DotSize;
+            width: $DotSize;
+            border-radius: 50%;
+            -webkit-animation: loader10g 3s ease-in-out infinite;
+            animation: loader10g 3s ease-in-out infinite;
+        }
+        .loader10 {
+            position: relative;
+            width: $DotSize;
+            height: $DotSize;
+            bottom: -1.8* $DotSize;
+            left: 3*$DotSize;
+            border-radius: 50%;
+            -webkit-animation: loader10m 3s ease-in-out infinite;
+            animation: loader10m 3s ease-in-out infinite;
+        }
+        .loader10:after {
+            content: "";
+            position: absolute;
+            top: 0px;
+            left: 2 * $DotSize;
+            height: $DotSize;
+            width: $DotSize;
+            border-radius: 50%;
+            -webkit-animation: loader10d 3s ease-in-out infinite;
+            animation: loader10d 3s ease-in-out infinite;
+        }
+        @-webkit-keyframes loader10g {
+            0% {
+                background-color: rgba(255, 255, 255, .2);
+            }
+            25% {
+                background-color: rgba(255, 255, 255, 1);
+            }
+            50% {
+                background-color: rgba(255, 255, 255, .2);
+            }
+            75% {
+                background-color: rgba(255, 255, 255, .2);
+            }
+            100% {
+                background-color: rgba(255, 255, 255, .2);
+            }
+        }
+        @keyframes loader10g {
+            0% {
+                background-color: rgba(255, 255, 255, .2);
+            }
+            25% {
+                background-color: rgba(255, 255, 255, 1);
+            }
+            50% {
+                background-color: rgba(255, 255, 255, .2);
+            }
+            75% {
+                background-color: rgba(255, 255, 255, .2);
+            }
+            100% {
+                background-color: rgba(255, 255, 255, .2);
+            }
+        }
+        @-webkit-keyframes loader10m {
+            0% {
+                background-color: rgba(255, 255, 255, .2);
+            }
+            25% {
+                background-color: rgba(255, 255, 255, .2);
+            }
+            50% {
+                background-color: rgba(255, 255, 255, 1);
+            }
+            75% {
+                background-color: rgba(255, 255, 255, .2);
+            }
+            100% {
+                background-color: rgba(255, 255, 255, .2);
+            }
+        }
+        @keyframes loader10m {
+            0% {
+                background-color: rgba(255, 255, 255, .2);
+            }
+            25% {
+                background-color: rgba(255, 255, 255, .2);
+            }
+            50% {
+                background-color: rgba(255, 255, 255, 1);
+            }
+            75% {
+                background-color: rgba(255, 255, 255, .2);
+            }
+            100% {
+                background-color: rgba(255, 255, 255, .2);
+            }
+        }
+        @-webkit-keyframes loader10d {
+            0% {
+                background-color: rgba(255, 255, 255, .2);
+            }
+            25% {
+                background-color: rgba(255, 255, 255, .2);
+            }
+            50% {
+                background-color: rgba(255, 255, 255, .2);
+            }
+            75% {
+                background-color: rgba(255, 255, 255, 1);
+            }
+            100% {
+                background-color: rgba(255, 255, 255, .2);
+            }
+        }
+        @keyframes loader10d {
+            0% {
+                background-color: rgba(255, 255, 255, .2);
+            }
+            25% {
+                background-color: rgba(255, 255, 255, .2);
+            }
+            50% {
+                background-color: rgba(255, 255, 255, .2);
+            }
+            75% {
+                background-color: rgba(255, 255, 255, 1);
+            }
+            100% {
+                background-color: rgba(255, 255, 255, .2);
+            }
+        }
+    }
+}

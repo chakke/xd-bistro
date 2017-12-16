@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { AppControllerProvider } from '../../../providers/food-staff/app-controller/app-controller';
+import { LoadingController } from 'ionic-angular/components/loading/loading-controller';
 
 
 @IonicPage()
@@ -20,12 +21,13 @@ export class FsLoginPage {
   accountErrorMessage = "";
   passwordErrorMessage = "";
 
-  rootPage = "FsHomePage";
+  loadingPage = "FsLoadingPage";
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     public formBuilder: FormBuilder,
     private appController: AppControllerProvider,
+    private loadingCtrl: LoadingController
   ) {
     console.log("login page constructor");
     this.loginForm = this.formBuilder.group({
@@ -34,7 +36,7 @@ export class FsLoginPage {
     });
 
   }
- 
+
   loginWithFacebook() {
     this.appController.loginWithFacebook().then(success => {
       this.appController.showToast(success);
@@ -56,12 +58,15 @@ export class FsLoginPage {
   login() {
     this.isSubmitted = true;
     if (this.loginForm.valid) {
+      this.appController.showLoading();
       this.appController.loginWithAccountPassword(this.account, this.password).then(success => {
         this.appController.showToast(success);
         this.loginSuccess();
-        console.log("login success")
+        console.log("login success");
+        this.appController.hideLoading();
       }, error => {
         this.appController.showToast(error);
+        this.appController.hideLoading();
       })
     } else {
       this.checkForm();
@@ -69,7 +74,7 @@ export class FsLoginPage {
   }
 
   loginSuccess() {
-    this.appController.setRootPage(this.rootPage); 
+    this.appController.setRootPage(this.loadingPage);
   }
 
   checkForm() {
@@ -92,6 +97,6 @@ export class FsLoginPage {
   }
 
   changeLoginForm() {
-    this.loginType = 3 - this.loginType; 
+    this.loginType = 3 - this.loginType;
   }
 }

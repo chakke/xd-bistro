@@ -1,0 +1,23 @@
+scroll-to-top {
+    $scollTopSize: 4rem;
+    .scroll-top {
+        position: fixed;
+        bottom: 16px;
+        right: 16px;
+        width: $scollTopSize;
+        height: $scollTopSize;
+        font-size: $scollTopSize / 2;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+        background-color: map-get($map: $FSColors, $key: gray);
+        color: map-get($map: $FSColors, $key: white);
+        opacity: .7;
+        z-index: 9999;
+        &:hover {
+            opacity: 1;
+            background-color: map-get($map: $FSColors, $key: primary);
+        }
+    }
+}

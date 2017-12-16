@@ -67,7 +67,7 @@ export class CreateOrderPage {
         let table = new Table();
         table.id = i * (30 + i) + (j + 1) + "";
         table.name = "A" + (+table.id < 10 ? "0" + table.id : table.id);
-        table.status = Math.floor(Math.random() * 2 + 2);
+        table.status = Math.floor(Math.random() * 2 + 2) + "";
         tables.push(table);
       }
       this.tableCollection.set(this.floors[i].id, tables);

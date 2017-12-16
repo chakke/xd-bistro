@@ -4,6 +4,7 @@ page-fs-menu {
         background-color: map-get($map: $FSColors, $key: white);
         display: flex;
         overflow-x: auto;
+        background-color: map-get($map: $FSColors, $key: background);
         .menu-item {
             flex: 1;
             display: flex;
@@ -11,6 +12,7 @@ page-fs-menu {
             align-items: center;
             height: $menuHeight;
             padding: 5px;
+            font-size: .9em;
             &.active {
                 span {
                     background-color: #FFF !important;

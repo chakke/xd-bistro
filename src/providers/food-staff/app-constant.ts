@@ -13,6 +13,8 @@ import { IComponentType } from "./interfaces/i-component-type";
  * - Object pool phải kiểm tra tính update của dữ liệu
  */
 
+export const SEPARATOR = "(づ￣ ³￣)づ";
+
 export class UserContant {
     public static LOGIN_METHOD = {
         FACEBOOK: 1,
@@ -37,7 +39,7 @@ export class AssetsUrl {
 export class FakeApiUrl {
     public static MENU: string = "/data/menu.json";
     public static TABLE_IN_ORDER = "/data/table-in-order.json";
-    public static CURRENT_ORDER  = "/data/order.json";
+    public static CURRENT_ORDER = "/data/order.json";
     public static MAP = "/data/map.json";
 }
 
@@ -48,23 +50,35 @@ export class ResponseCode {
 
 export const TABLE_STATUS = {
     ALL: {
-        id: 0,
+        id: -1,
         name: "Tất cả"
     },
     IN_USE: {
-        id: 1,
+        id: 2,
         name: "Đang phục vụ",
         shortName: "Đang PV"
     },
-    ORDERED: {
-        id: 2,
+    BOOKED: {
+        id: 1,
         name: "Đã đặt"
     },
     EMPTY: {
-        id: 3,
+        id: 0,
         name: "Còn trống"
     },
 }
+
+export const TABLE_TYPE = {
+    NORMAL: {
+        id: 1,
+        name: "Thường"
+    },
+    VIP: {
+        id: 2,
+        name: "VIP"
+    }
+}
+
 
 export const ORDER_STATUS = {
     UN_CONFIRM: {
@@ -87,7 +101,7 @@ export const ORDER_STATUS = {
         id: 4,
         name: "Hủy"
     }
-} 
+}
 
 export class ComponentType {
     public static UI_COMPONENT: IComponentType = {
@@ -133,3 +147,25 @@ export class ComponentType {
 }
 
 export const MAP_RATIO = 1.55;
+
+export const FIREBASE_PATH = {
+    PRODUCT: "products",
+    FOOD: "foods",
+    FOOD_CATEGORY: "food_categories",
+    FOOD_OPTION: "food_options",
+    FOOD_SALE: "food_sales",
+    FOOD_SIZE: "food_sizes",
+    FOOD_STATE: "food_states",
+    FOOD_TYPE: "food_types",
+    FOOD_UNIT: "food_units",
+    RESTAURANT: "restaurants",
+    TABLE: "tables"
+}
+
+export const FIREBASE_CONST = {
+    DOCUMENT_CHANGE_TYPE: {
+        ADD: "added",
+        MODIFY: "modified",
+        REMOVE: "removed"
+    }
+}

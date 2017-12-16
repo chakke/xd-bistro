@@ -1,6 +1,6 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
-import { TableInOrder, } from '../../../providers/food-staff/classes/table';
+import { Table } from '../../../providers/food-staff/classes/table';
 import { AppControllerProvider } from '../../../providers/food-staff/app-controller/app-controller';
 import { TABLE_STATUS, MAP_RATIO, ComponentType } from '../../../providers/food-staff/app-constant';
 import { OrderInTable } from '../../../providers/food-staff/interfaces/order-in-table';
@@ -27,10 +27,10 @@ export class FsTablesPage {
   tableStatus: string = "0";
   tableStatusData = [];
 
-  allTables: Array<TableInOrder> = [];
-  userTables: Array<TableInOrder> = [];
-  showTables: Array<TableInOrder> = [];
-  tableCollection: Map<any, Array<TableInOrder>> = new Map<any, Array<TableInOrder>>();
+  allTables: Array<Table> = [];
+  userTables: Array<Table> = [];
+  showTables: Array<Table> = [];
+  tableCollection: Map<any, Array<Table>> = new Map<any, Array<Table>>();
  
   width = 0;
   height = 0;
@@ -148,27 +148,27 @@ export class FsTablesPage {
 
   search() {
     this.showTables = this.allTables.filter(table => {
-      return (table.status == +this.tableStatus || +this.tableStatus == 0) && table.name.toLowerCase().includes(this.searchKeyword.trim().toLowerCase())
+      return (table.status == this.tableStatus || +this.tableStatus == TABLE_STATUS.ALL.id) && table.name.toLowerCase().includes(this.searchKeyword.trim().toLowerCase())
     })
     console.log("Hello from the other side", this.searchKeyword, this.showTables);
   }
 
   loadTables() {
-    this.allTables = this.appController.getAllTableInOrder();
+    this.allTables = this.appController.tables;
     this.allTables.forEach(table => {
       let orders = [];
-      table.orders.forEach(shortOrder => {
-        let order = this.appController.getOrderById(shortOrder.id);
-        orders.push(order);
-      });
-      table.orders = orders;
-      (<any>table)["missingFoods"] = this.getMissingFoods((<any>table).orders);
+      // table.orders.forEach(shortOrder => {
+      //   let order = this.appController.getOrderById(shortOrder.id);
+      //   orders.push(order);
+      // });
+      // table.orders = orders;
+      // (<any>table)["missingFoods"] = this.getMissingFoods((<any>table).orders);
     });
     this.userTables = this.allTables.filter(table => {
-      return table.staffs.indexOf(this.appController.user.id) > -1;
+      // return table.staffs.indexOf(this.appController.user.id) > -1;
     })
     this.userTables = this.userTables.sort((a, b) => {
-      return a.status - b.status;
+      return +a.status - +b.status;
     })
     this.filterTable();
   }
@@ -179,9 +179,10 @@ export class FsTablesPage {
     this.tableCollection.clear();
     this.tableStatusData.forEach(element => {
       this.tableCollection.set(element.id, this.allTables.filter(table => {
-        return element.id == 0 || table.status == element.id;
+        return element.id == TABLE_STATUS.ALL.id || table.status == element.id;
       }));
     });
+
     this.showTables = this.tableCollection.get(+this.tableStatus);
     console.log(this.tableCollection, this.userTables);
   }

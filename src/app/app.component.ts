@@ -12,7 +12,7 @@ export class MyApp {
   rootPage: any = "FsLoginPage";
   // rootPage: any = "FsOrdersPage";
   // rootPage: any = "AddFoodToOrderPage";
-  rootPages = ["FsLoginPage"];
+  rootPages = ["FsLoginPage","FsLoadingPage"];
 
   menuItems = [
     {
@@ -43,7 +43,7 @@ export class MyApp {
   }
 
   getMenu() {
-    this.appController.menuSubject.asObservable().subscribe(data => {
+    this.appController.menuChanel.asObservable().subscribe(data => {
       this.menuItems = data;
       console.log("subcrise menu", data);
     }, error => {
@@ -52,7 +52,7 @@ export class MyApp {
   }
 
   getUser() {
-    this.appController.userSubject.asObservable().subscribe(data => {
+    this.appController.userChanel.asObservable().subscribe(data => {
       this.user = data;
       console.log("subcrise user", data);
     }, error => {
@@ -75,6 +75,13 @@ export class MyApp {
   gotoMenu(item) {
     this.appController.setRootPage(item.page);
     this.menuCtrl.close();
+  }
+
+  logout() {
+    this.menuCtrl.close().then(() => {
+      this.appController.logout();
+      this.appController.setRootPage("FsLoginPage");
+    })
   }
 }
 

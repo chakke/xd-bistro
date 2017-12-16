@@ -8,6 +8,7 @@
 
 
 <ion-content>
+    <scroll-to-top></scroll-to-top>
     <div class="fs-content list-zone" *ngIf="viewMode == 0">
         <div class="search-bar">
             <ion-searchbar class="searchbar-ios" [class.searchbar-md]="false" placeholder="{{placholder}}" [(ngModel)]="searchKeyword" (ionInput)="search()"></ion-searchbar>

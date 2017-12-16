@@ -7,9 +7,11 @@ import { OrderInTable } from "../interfaces/order-in-table";
 export class Table {
     private _id: string;
     private _name: string;
-    private _type: number;
+    private _type: string;
     private _maxPerson: number;
-    private _status: number;
+    private _status: string;
+    private _areaId: string;
+    private _areaName: string;
 
     constructor() {
         this.reset();
@@ -18,9 +20,21 @@ export class Table {
     public reset() {
         this._id = "0";
         this._name = "name";
-        this._type = 0;
+        this._type = "0";
         this._maxPerson = 0;
-        this._status = 0;
+        this._status = "0";
+        this._areaId = "0";
+        this._areaName = "";
+    }
+
+    public mappingFirebaseData(data) {
+        this._areaId = data.area_id + "";
+        this._areaName = data.area_name + "";
+        this._id = data.id + "";
+        this._maxPerson = +data.capacity;
+        this._name = data.name + "";
+        this._status = data.state + "";
+        this._type = data.type + "";
     }
 
     public get id(): string {
@@ -39,11 +53,11 @@ export class Table {
         this._name = value;
     }
 
-    public get type(): number {
+    public get type(): string {
         return this._type;
     }
 
-    public set type(value: number) {
+    public set type(value: string) {
         this._type = value;
     }
 
@@ -54,14 +68,31 @@ export class Table {
     public set maxPerson(value: number) {
         this._maxPerson = value;
     }
-    
-    public get status(): number {
+
+    public get status(): string {
         return this._status;
     }
 
-    public set status(value: number) {
+    public set status(value: string) {
         this._status = value;
     }
+
+    public get areaId(): string {
+        return this._areaId;
+    }
+
+    public set areaId(value: string) {
+        this._areaId = value;
+    }
+
+    public get areaName(): string {
+        return this._areaName;
+    }
+
+    public set areaName(value: string) {
+        this._areaName = value;
+    }
+
 }
 
 export class TableInOrder extends Table {
