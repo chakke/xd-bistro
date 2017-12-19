@@ -202,12 +202,12 @@ export class FsTablesPage {
     let missingFoods = 0;
     if (orders && orders.length > 0) {
       for (let i = 0; i < orders.length; i++) {
-        let foods = orders[i].foods;
-        for (let j = 0; j < foods.length; j++) {
-          if (foods[j].quantityInOrder > foods[j].quantityInTable) {
-            missingFoods++;
-          }
-        }
+        // let foods = orders[i].foods;
+        // for (let j = 0; j < foods.length; j++) {
+        //   if (foods[j].quantityInOrder > foods[j].quantityInTable) {
+        //     missingFoods++;
+        //   }
+        // }
       }
     }
     return missingFoods;

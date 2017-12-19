@@ -8,11 +8,13 @@ page-fs-orders {
         }
     }
     .fs-segment {
+        font-size: map-get($map: $FSSizes, $key: small);
         .number {
             font-size: 0.8em;
             padding: 4px;
             border-radius: 20px;
             box-sizing: content-box;
+            // transition: all 1s ease-in-out;
         }
         .segment-button {
             color: map-get($map: $FSColors, $key: black);

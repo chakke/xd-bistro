@@ -1,7 +1,7 @@
-import { Component, Input, Output, EventEmitter, ViewChild } from '@angular/core';
-import { NavController, Content } from 'ionic-angular'; 
+import { Component, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
+import { NavController, Content } from 'ionic-angular';
 import { AppControllerProvider } from '../../../providers/food-staff/app-controller/app-controller';
- 
+
 @Component({
   selector: 'fs-header',
   templateUrl: 'fs-header.html'
@@ -12,6 +12,8 @@ export class FsHeaderComponent {
   searchKeyword = "";
   user: any;
   backButtons = ["arrow-back"];
+  scrollContent: HTMLElement;
+
   @Input()
   placholder = "Tìm kiếm món ăn, dịch vụ, khuyến mãi";
   @Input()
@@ -29,18 +31,19 @@ export class FsHeaderComponent {
   @Input()
   backButton = "arrow-back";
 
-  @Input()
-  ionContent;
-
   @Output()
   onSearch = new EventEmitter<string>();
 
-  constructor(private appController: AppControllerProvider, private navCtrl: NavController) {
+  constructor(private el: ElementRef, private appController: AppControllerProvider, private navCtrl: NavController) {
   }
   ngAfterViewInit() {
     this.backButton = this.backButtons[this.backButtonType];
     // this.user = this.appController.getUserService().getUser();
     this.getOrderLength();
+    let showPage = <HTMLElement>this.el.nativeElement.closest('.ion-page');
+    if(showPage){
+      this.scrollContent = showPage.querySelector('.scroll-content');
+    }
   }
   search() {
     this.onSearch.emit(this.searchKeyword);
@@ -58,10 +61,9 @@ export class FsHeaderComponent {
     // this.orderedFood = this.appController.getFoodService().getOrderedFoods();
   }
   scrollToTop() {
-    if (this.ionContent) {
-      this.ionContent = this.ionContent as Content;
-      this.ionContent.scrollToTop(300);
-    }
+   if(this.scrollContent){
+     this.scrollContent.scrollTop = 0;
+   }
   }
 
   openMenu() {

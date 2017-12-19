@@ -1,21 +1,22 @@
 <ion-header>
     <fs-header [showBackButton]="2" [title]="'Order'"></fs-header>
+    <div class="search-bar">
+        <ion-searchbar class="searchbar-ios" [class.searchbar-md]="false" placeholder="{{placholder}}" [(ngModel)]="searchKeyword" (ionInput)="search()"></ion-searchbar>
+    </div>
+    <div class="fs-segment">
+        <ion-segment class="segment-md" [class.segment-ios]="false" [(ngModel)]="selectedOrderStatus" (ionChange)="filterOrders()">
+            <ion-segment-button value="{{status.id}}" *ngFor="let status of orderStatusData">
+                <span class="number status-{{status.id}}">{{ orderCollection.get(status.id)?.length}}</span>
+                <span class="text"> {{status.shortName || status.name}} </span>
+            </ion-segment-button>
+        </ion-segment>
+    </div>
 </ion-header>
 
-<ion-content>
+<ion-content id="content1">
     <scroll-to-top></scroll-to-top>
     <div class="fs-content list-zone">
-        <div class="search-bar">
-            <ion-searchbar class="searchbar-ios" [class.searchbar-md]="false" placeholder="{{placholder}}" [(ngModel)]="searchKeyword" (ionInput)="search()"></ion-searchbar>
-        </div>
-        <div class="fs-segment">
-            <ion-segment class="segment-md" [class.segment-ios]="false" [(ngModel)]="selectedOrderStatus" (ionChange)="filterOrders()">
-                <ion-segment-button value="{{status.id}}" *ngFor="let status of orderStatusData">
-                    <span class="number status-{{status.id}}">{{ orderCollection.get(status.id)?.length}}</span>
-                    <span class="text"> {{status.shortName || status.name}} </span>
-                </ion-segment-button>
-            </ion-segment>
-        </div>
+
         <div class="segment-content">
             <div class="order-list">
                 <div class="order-item" *ngFor="let order of showOrders">

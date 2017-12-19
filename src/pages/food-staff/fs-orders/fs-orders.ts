@@ -5,11 +5,15 @@ import { AppControllerProvider } from '../../../providers/food-staff/app-control
 import { Utils } from '../../../providers/app-utils';
 import { ModalController } from 'ionic-angular/components/modal/modal-controller';
 
+declare var $: any;
+
 @IonicPage()
 @Component({
   selector: 'page-fs-orders',
   templateUrl: 'fs-orders.html',
 })
+
+
 export class FsOrdersPage {
   searchKeyword = "";
   placholder = "Tìm order";
@@ -39,6 +43,7 @@ export class FsOrdersPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad FsOrdersPage');
     this.loadIOrders();
+
   }
 
   loadIOrders() {
@@ -48,13 +53,13 @@ export class FsOrdersPage {
       //table mapping
       let tables = [];
       let totalPersons = 0;
-      elm.tableIds.forEach(id => {
-        let table = this.appController.getTableById(id);
-        if (table) {
-          totalPersons += table.currentPerson;
-          tables.push(table);
-        }
-      });
+      // elm.tableIds.forEach(id => {
+      //   let table = this.appController.getTableById(id);
+      //   if (table) {
+      //     totalPersons += table.currentPerson;
+      //     tables.push(table);
+      //   }
+      // });
       elm["tables"] = tables;
       if (tables.length > 0) {
         elm["tableName"] = tables[0].name;
@@ -64,9 +69,9 @@ export class FsOrdersPage {
 
       //food mapping 
       let totalCost = 0;
-      elm.foods.forEach(food => {
-        totalCost += food.price * food.quantityInOrder;
-      })
+      // elm.foods.forEach(food => {
+      //   totalCost += food.price * food.quantityInOrder;
+      // })
       elm["totalCost"] = totalCost;
     })
     this.filterOrders();
@@ -76,7 +81,7 @@ export class FsOrdersPage {
     this.orderCollection.clear();
     this.orderStatusData.forEach(element => {
       this.orderCollection.set(element.id, this.allOrders.filter(order => {
-        return order.status == element.id;
+        // return order.status == element.id;
       }));
     });
     this.showOrders = this.orderCollection.get(+this.selectedOrderStatus);
@@ -97,12 +102,13 @@ export class FsOrdersPage {
     modal.present();
   }
 
-  checkItem(){
+  checkItem() {
     let modal = this.modalCtrl.create("CheckItemPage");
     modal.present();
   }
 
-  pay(){
+  pay() {
 
   }
+ 
 }

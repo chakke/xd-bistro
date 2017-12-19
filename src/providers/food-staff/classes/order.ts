@@ -4,95 +4,56 @@ import { Staff } from "./user";
 import { StaffInOrder } from "../interfaces/staff-in-order";
 
 export class Order {
-	private _id: string;
-	private _code: string;
-	private _ownerId: string;
-	private _status: number;
-	private _foods: Array<FoodInOrder>;
-	private _tableIds: Array<string>;
-	private _staffs: Array<StaffInOrder>;
-	private _time: Date;
+	/**ID của Order */
+	id: string;
+	/**Mô tả của order */
+	descrition: string;
+	/**Trạng thái order */
+	state: number;
+	/**Loại order */
+	type: number;
+	/**Thời gian tạo order */
+	timeCreate: Date;
+
+	/**ID của khu vực */
+	areaId: string;
+	/**Tên khu vực */
+	areaName: string;
+	/**ID Bàn của order */
+	tableId: string;
+	/**Name bàn của order */
+	tableName: string;
+
+
+
+	/**ID nhân viên ghi order */
+	staffId: string;
+	/**Tên nhân viên ghi order */
+	staffName: string;
+	/**Ảnh đại diện của nhân viên ghi order */
+	staffAvatar: string;
 
 	constructor() {
 		this.reset();
 	}
 
 	reset() {
-		this._id = "0";
-		this._code = "#";
-		this._ownerId = "0";
-		this._status = 0;
-		this._foods = [];
-		this._tableIds = [];
-		this._staffs = [];
-		this._time = new Date();
+		this.areaId = "";
+		this.areaName = "";
+		this.descrition = "";
+		this.id = "";
+		this.staffAvatar = "";
+		this.staffId = "";
+		this.staffName = "";
+		this.state = 0;
+		this.tableId = "";
+		this.tableName = "";
+		this.timeCreate = new Date();
+		this.type = 0;
 	}
 
 
-	public get id(): string {
-		return this._id;
-	}
 
-	public set id(value: string) {
-		this._id = value;
-	}
-
-	public get code(): string {
-		return this._code;
-	}
-
-	public set code(value: string) {
-		this._code = value;
-	}
-
-	public get ownerId(): string {
-		return this._ownerId;
-	}
-
-	public set ownerId(value: string) {
-		this._ownerId = value;
-	}
-
-	public get status(): number {
-		return this._status;
-	}
-
-	public set status(value: number) {
-		this._status = value;
-	}
-
-	public get foods(): Array<FoodInOrder> {
-		return this._foods;
-	}
-
-	public set foods(value: Array<FoodInOrder>) {
-		this._foods = value;
-	}
-
-	public get tableIds(): Array<string> {
-		return this._tableIds;
-	}
-
-	public set tableIds(value: Array<string>) {
-		this._tableIds = value;
-	}
-
-	public get staffs(): Array<StaffInOrder> {
-		return this._staffs;
-	}
-
-	public set staffs(value: Array<StaffInOrder>) {
-		this._staffs = value;
-	}
-
-
-	public get time(): Date {
-		return this._time;
-	}
-
-	public set time(value: Date) {
-		this._time = value;
-	}
 
 }
 

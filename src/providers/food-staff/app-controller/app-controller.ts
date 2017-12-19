@@ -28,6 +28,8 @@ import { Product } from '../classes/product';
 import { ProductPool } from '../object-pools/product-pool';
 import { ProductSize, ProductState, ProductType, ProductUnit, ProductCategory } from '../interfaces/product';
 
+import { ScrollController } from '../../scroll-controller';
+
 @Injectable()
 export class AppControllerProvider {
 
@@ -86,6 +88,8 @@ export class AppControllerProvider {
   menuChanel: Subject<Array<Menu>> = new Subject<Array<Menu>>();
   userChanel: Subject<User> = new Subject<User>();
 
+  scrollController: ScrollController = new ScrollController();
+
   constructor(private app: App,
     private facebook: Facebook,
     public googlePlus: GooglePlus,
@@ -119,6 +123,10 @@ export class AppControllerProvider {
       this.user.id = 1;
       this.getMenu();
     }
+  }
+
+  getScrollController(){
+    return this.scrollController;
   }
 
   pushPage(page: any) {

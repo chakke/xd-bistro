@@ -1,9 +1,10 @@
 page-fs-tables {
+    $headerRowHeight: 45px;
     $customToggleHeight: 2em;
     .custom-toggle {
         position: absolute;
         right: 10px;
-        top: 50%;
+        top: $headerRowHeight / 2;
         transform: translateY(-50%);
         height: $customToggleHeight;
         border-radius: 20px;
@@ -46,6 +47,7 @@ page-fs-tables {
         }
     }
     .fs-segment {
+        font-size: map-get($map: $FSSizes, $key: small);
         .number {
             font-size: 0.8em;
             padding: 4px;

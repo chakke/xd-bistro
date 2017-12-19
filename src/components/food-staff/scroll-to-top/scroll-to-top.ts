@@ -1,4 +1,9 @@
 import { Component, ElementRef, Renderer } from '@angular/core';
+declare global {
+  interface HTMLElement {
+    animateBezier: (x1, y1, x2, y2, propertive, target) => {};
+  }
+}
 
 @Component({
   selector: 'scroll-to-top',
@@ -10,15 +15,18 @@ export class ScrollToTopComponent {
   scrollContent: HTMLElement;
   scrollDuration = 1000;
   constructor(private el: ElementRef, private renderer: Renderer) {
+
   }
+
 
   ngAfterViewInit() {
     // let scrollContent = document.querySelector('.show-page .scroll-content');
+    HTMLElement.prototype.animateBezier = this.animateBezier;
     this.scrollContent = <HTMLElement>this.el.nativeElement.closest('.scroll-content');
     let height = this.scrollContent.clientHeight;
     if (this.scrollContent) {
       this.scrollContent.addEventListener('scroll', (event) => {
-        let scrollTop = this.scrollContent.scrollTop; 
+        let scrollTop = this.scrollContent.scrollTop;
         if (scrollTop > 0.8 * height) {
           this.showButton = true;
         } else {
@@ -26,38 +34,94 @@ export class ScrollToTopComponent {
         }
       })
     }
+
+
+    let div = document.createElement("div");
+    div.style.position = "absolute";
+    div.style.width = "50px";
+    div.style.height = "50px";
+    div.style.backgroundColor = "green";
+    div.style.left = "20px";
+    div.style.top = "100px";
+    div.style.zIndex = "9999";
+    this.scrollContent.appendChild(div);
+    setTimeout(() => {
+      div.animateBezier(1, 0, 0, 1, "top", 300);
+    }, 2000)
   }
 
   scrollTop() {
-    if (this.scrollContent) {
-      let currentTop = this.scrollContent.scrollTop;
-      let a = currentTop * 4 / this.scrollDuration / this.scrollDuration;
-      let vMax = 2 * currentTop / this.scrollDuration;
-      let v = 0;
-      let debounceTime = 16;
-      let startTime = Date.now();
-      let intervalCount = 0;
-      console.log("vmax", vMax);
-      let interval = setInterval(() => {
-        intervalCount++;
-        if(this.scrollContent.scrollTop == 0){
-          clearInterval(interval);
-          console.log("time: ", Date.now() - startTime);
-          console.log("count: ", intervalCount);
-        }
-        v += a * debounceTime;
-        if (v >= vMax) {
-          a = -a;
-        }
-        if (v <= 0) {
-          this.scrollContent.scrollTop = 0;
-          clearTimeout(interval);
-          console.log("time: ", Date.now() - startTime);
-          console.log("count: ", intervalCount);
-        }else{
-          this.scrollContent.scrollTop = this.scrollContent.scrollTop - v * debounceTime; 
-        }
-      }, debounceTime)
+    // if (this.scrollContent) {
+    //   let currentTop = this.scrollContent.scrollTop;
+    //   let a = currentTop * 4 / this.scrollDuration / this.scrollDuration;
+    //   let vMax = 2 * currentTop / this.scrollDuration;
+    //   let v = 0;
+    //   let debounceTime = 16;
+    //   let startTime = Date.now();
+    //   let intervalCount = 0;
+    //   console.log("vmax", vMax, currentTop);
+    //   let interval = setInterval(() => {
+    //     intervalCount++;
+    //     if (this.scrollContent.scrollTop == 0) {
+    //       clearInterval(interval);
+    //       console.log("time: ", Date.now() - startTime);
+    //       console.log("count: ", intervalCount);
+    //     }
+    //     let d = v * debounceTime + 0.5 * a * debounceTime * debounceTime;
+    //     v += a * debounceTime;
+    //     if (v >= vMax) {
+    //       a = -a;
+    //     }
+    //     if (v <= 0) {
+    //       this.scrollContent.scrollTop = 0;
+    //       clearTimeout(interval);
+    //       console.log("time: ", Date.now() - startTime);
+    //       console.log("count: ", intervalCount);
+    //     } else {
+    //       this.scrollContent.scrollTop = this.scrollContent.scrollTop - d;
+    //     }
+    //     console.log(v, d);
+    //   }, debounceTime)
+    // }
+
+    // HTMLElement.prototype.animateBezier = this.animateBezier;
+    // if (this.scrollContent) {
+    //   this.scrollContent.animateBezier(1, 0, 0, 1, "scrollTop", 0);
+    // }
+
+  }
+
+  animateBezier(x1, y1, x2, y2, propertive, target) {
+    let defaultTime = 1000;
+    function caculateX(time: number) {
+      return 3 * x1 * Math.pow(1 - time, 2) * time + 3 * x2 * (1 - time) * Math.pow(time, 2) + Math.pow(time, 3);
     }
+
+    function caculateY(time: number) {
+      return 3 * y1 * Math.pow(1 - time, 2) * time + 3 * y2 * (1 - time) * Math.pow(time, 2) + Math.pow(time, 3);
+    }
+
+    function caculateDistance(time) {
+      return Math.sqrt(Math.pow(caculateX(time), 2) + Math.pow(caculateY(time), 2));
+    }
+
+    let debounceTime = 10;
+    // let start = (<any>this).style[propertive];
+    let start = 100;
+    let distance = target - start;
+    console.log("start animate", this, start, distance);
+    let t = 0;
+    let startTime = Date.now();
+    let interval = setInterval(() => {
+      t += debounceTime / defaultTime;
+      // this[propertive] = start + caculateDistance(t) / Math.SQRT2 * distance;
+      (<any>this).style[propertive] = start + caculateY(t) * distance + "px";
+      console.log((<any>this).style[propertive]);
+      if (t >= 1) {
+        clearInterval(interval);
+        console.log("end animate", Date.now() - startTime);
+      }
+    }, debounceTime);
+    return null;
   }
 }

@@ -169,3 +169,45 @@ export const FIREBASE_CONST = {
         REMOVE: "removed"
     }
 }
+
+export const FOOD_ORDER_STATE = {
+    /**Mặc định khi order food thì món ăn ở trạng thái đợi */
+    WAITING: 0,
+    /**Sau khi đầu bếp xem xét các món đang đợi, lựa chọn món để chế biến, đưa nó vào trạng thái Cooking */
+    COOKING: 1,
+    /**Nếu hết nguyên liệu, hoặc không thể chế biến tại thời điểm hiện tại thì thông báo */
+    COOKING_UNAVAILABLE: 2,
+    /**Khi chế biến xong, chuyển nó về trạng thái sẵn sàng để giao, chạy bàn tiếp nhận thông tin và chuyển đến bàn theo yêu cầu */
+    DELIVERABLE: 3,
+    /**Khi phục vụ giao xong món ăn */
+    DELIVERED: 4,
+    /**Trong quá trình giao, khách không nhận hoặc hủy món */
+    RETURNED: 5
+}
+
+export const PAYMENT_STATE = {
+    /**Đã thanh toán */
+    PAID: 0,
+    /**Đã hủy, vì một lý do nào đó,thông tin thanh toán không hợp lệ, nên hủy hóa đơn */
+    CANCELLED: 1
+}
+
+export const PAYMENT_TYPE = {
+    /**Ghi nợ, chưa trả */
+    BOOKED: -1,
+    /**Cash : tiền mặt */
+    CASH: 0,
+    /**Thẻ visa or master hoặc atm */
+    BANK: 1
+}
+
+export const ORDER_SATE = {
+    /**Đã tạo, chưa gọi món hoặc đã gọi món nhưng chưa chế biến xong */
+    CREATED: 0,
+    /**Đã chuyển xong các món */
+    FOOD_DONE: 1,
+    /**Đã thanh toán */
+    PAID: 2,
+    /**Đã hủy */
+    CANCELLED: 3
+}
