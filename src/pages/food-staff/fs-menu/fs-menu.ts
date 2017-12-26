@@ -11,7 +11,7 @@ import { AppControllerProvider } from '../../../providers/food-staff/app-control
 export class FsMenuPage {
 
   menuItems = [];
-  selectedMenu = { code: "3", title: "Đồ ăn" };
+  selectedMenu = { id: "3", title: "Đồ ăn" };
   keyword = "";
   products: Array<Product> = [];
   constructor(
@@ -37,8 +37,9 @@ export class FsMenuPage {
 
   loadProducts() {
     this.products = this.appController.products.filter(elm => {
-      return (elm.category == this.selectedMenu.code && (this.keyword == "" || (this.keyword && elm.keyword.includes(this.keyword.toLowerCase()))));
+      return (elm.category == this.selectedMenu.id && (this.keyword == "" || (this.keyword && elm.keyword.includes(this.keyword.toLowerCase()))));
     })
+    console.log("load product", this.products);
   }
 
   search(keyword) {

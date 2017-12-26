@@ -1,4 +1,4 @@
-page-create-order {
+page-fs-chef-food-order-detail {
     .fs-number-picker {
         display: block;
         width: 100%;
@@ -72,14 +72,9 @@ page-create-order {
             text-align: center;
             padding: 0 16px;
             .title {
-                font-size: 2em;
+                font-size: 1.2em;
                 font-weight: bold;
-                padding: 5px 16px;
-                background-color: map-get($map: $FSColors, $key: lightgray);
                 color: map-get($map: $FSColors, $key: black);
-                display: inline-block;
-                border-radius: 20px;
-                margin: 15px 0;
             }
         }
         .order-footer {
@@ -218,14 +213,6 @@ page-create-order {
                         justify-content: center;
                         align-items: center;
                         position: relative;
-                        &.selected {
-                            .table-icon {
-                                color: map-get($map: $FSColors, $key: primary);
-                            }
-                            .table-name {
-                                color: map-get($map: $FSColors, $key: white);
-                            }
-                        }
                         .table-icon {
                             font-size: 1.3*$headerHeight;
                             color: map-get($map: $FSColors, $key: gray);
@@ -243,6 +230,14 @@ page-create-order {
                             }
                             .table-name {
                                 color: map-get($map: $FSColors, $key: orange);
+                            }
+                        }
+                        &:hover {
+                            .table-icon {
+                                color: map-get($map: $FSColors, $key: primary);
+                            }
+                            .table-name {
+                                color: map-get($map: $FSColors, $key: white);
                             }
                         }
                     }

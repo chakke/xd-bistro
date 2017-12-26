@@ -1,46 +1,319 @@
 {
     "result": 1,
     "content": [{
-            "id": 1,
-            "name": "Order",
-            "icon": "fs-food-menu-o",
-            "page": "FsOrdersPage",
-            "link": "fs-orders"
+            "role": 0,
+            "menu": [{
+                    "id": 1,
+                    "name": "Order",
+                    "icon": "fs-food-menu-o",
+                    "page": "FsChefOrdersPage",
+                    "link": "fs-chef-orders"
+                },
+                {
+                    "id": 3,
+                    "name": "Trả món",
+                    "icon": "fs-order-o",
+                    "page": "FsServePage",
+                    "link": "fs-serve"
+                },
+                {
+                    "id": 6,
+                    "name": "Thực đơn",
+                    "icon": "ios-list-outline",
+                    "page": "FsChefMenuPage",
+                    "link": "fs-chef-menu"
+                },
+                {
+                    "id": 4,
+                    "name": "Thông báo",
+                    "icon": "fs-bell-o",
+                    "page": "FsNotificationPage",
+                    "link": "fs-notification"
+                },
+                {
+                    "id": 5,
+                    "name": "Cài đặt",
+                    "icon": "ios-cog",
+                    "page": "FsSettingPage",
+                    "link": "fs-setting"
+                }
+            ]
         },
         {
-            "id": 2,
-            "name": "Danh sách bàn",
-            "icon": "fs-table-3-o",
-            "page": "FsTablesPage",
-            "link": "fs-tables"
+            "role": 1,
+            "menu": [{
+                    "id": 1,
+                    "name": "Order",
+                    "icon": "fs-food-menu-o",
+                    "page": "FsOrdersPage",
+                    "link": "fs-orders"
+                },
+                {
+                    "id": 2,
+                    "name": "Danh sách bàn",
+                    "icon": "fs-table-3-o",
+                    "page": "FsTablesPage",
+                    "link": "fs-tables"
+                },
+                {
+                    "id": 3,
+                    "name": "Trả món",
+                    "icon": "fs-order-o",
+                    "page": "FsServePage",
+                    "link": "fs-serve"
+                },
+                {
+                    "id": 6,
+                    "name": "Thực đơn",
+                    "icon": "ios-list-outline",
+                    "page": "FsMenuPage",
+                    "link": "fs-menu"
+                },
+                {
+                    "id": 4,
+                    "name": "Thông báo",
+                    "icon": "fs-bell-o",
+                    "page": "FsNotificationPage",
+                    "link": "fs-notification"
+                },
+                {
+                    "id": 5,
+                    "name": "Cài đặt",
+                    "icon": "ios-cog",
+                    "page": "FsSettingPage",
+                    "link": "fs-setting"
+                }
+            ]
         },
         {
-            "id": 3,
-            "name": "Trả món",
-            "icon": "fs-order-o",
-            "page": "FsServePage",
-            "link": "fs-serve"
+            "role": 2,
+            "menu": [{
+                    "id": 1,
+                    "name": "Order",
+                    "icon": "fs-food-menu-o",
+                    "page": "FsOrdersPage",
+                    "link": "fs-orders"
+                },
+                {
+                    "id": 2,
+                    "name": "Danh sách bàn",
+                    "icon": "fs-table-3-o",
+                    "page": "FsTablesPage",
+                    "link": "fs-tables"
+                },
+                {
+                    "id": 3,
+                    "name": "Trả món",
+                    "icon": "fs-order-o",
+                    "page": "FsServePage",
+                    "link": "fs-serve"
+                },
+                {
+                    "id": 6,
+                    "name": "Thực đơn",
+                    "icon": "ios-list-outline",
+                    "page": "FsMenuPage",
+                    "link": "fs-menu"
+                },
+                {
+                    "id": 4,
+                    "name": "Thông báo",
+                    "icon": "fs-bell-o",
+                    "page": "FsNotificationPage",
+                    "link": "fs-notification"
+                },
+                {
+                    "id": 5,
+                    "name": "Cài đặt",
+                    "icon": "ios-cog",
+                    "page": "FsSettingPage",
+                    "link": "fs-setting"
+                }
+            ]
         },
         {
-            "id": 6,
-            "name": "Thực đơn",
-            "icon": "ios-list-outline",
-            "page": "FsMenuPage",
-            "link": "fs-menu"
+            "role": 3,
+            "menu": [{
+                    "id": 1,
+                    "name": "Order",
+                    "icon": "fs-food-menu-o",
+                    "page": "FsOrdersPage",
+                    "link": "fs-orders"
+                },
+                {
+                    "id": 2,
+                    "name": "Danh sách bàn",
+                    "icon": "fs-table-3-o",
+                    "page": "FsTablesPage",
+                    "link": "fs-tables"
+                },
+                {
+                    "id": 3,
+                    "name": "Trả món",
+                    "icon": "fs-order-o",
+                    "page": "FsServePage",
+                    "link": "fs-serve"
+                },
+                {
+                    "id": 6,
+                    "name": "Thực đơn",
+                    "icon": "ios-list-outline",
+                    "page": "FsMenuPage",
+                    "link": "fs-menu"
+                },
+                {
+                    "id": 4,
+                    "name": "Thông báo",
+                    "icon": "fs-bell-o",
+                    "page": "FsNotificationPage",
+                    "link": "fs-notification"
+                },
+                {
+                    "id": 5,
+                    "name": "Cài đặt",
+                    "icon": "ios-cog",
+                    "page": "FsSettingPage",
+                    "link": "fs-setting"
+                }
+            ]
         },
         {
-            "id": 4,
-            "name": "Thông báo",
-            "icon": "fs-bell-o",
-            "page": "FsNotificationPage",
-            "link": "fs-notification"
+            "role": 4,
+            "menu": [{
+                    "id": 1,
+                    "name": "Order",
+                    "icon": "fs-food-menu-o",
+                    "page": "FsOrdersPage",
+                    "link": "fs-orders"
+                },
+                {
+                    "id": 2,
+                    "name": "Danh sách bàn",
+                    "icon": "fs-table-3-o",
+                    "page": "FsTablesPage",
+                    "link": "fs-tables"
+                },
+                {
+                    "id": 3,
+                    "name": "Trả món",
+                    "icon": "fs-order-o",
+                    "page": "FsServePage",
+                    "link": "fs-serve"
+                },
+                {
+                    "id": 6,
+                    "name": "Thực đơn",
+                    "icon": "ios-list-outline",
+                    "page": "FsMenuPage",
+                    "link": "fs-menu"
+                },
+                {
+                    "id": 4,
+                    "name": "Thông báo",
+                    "icon": "fs-bell-o",
+                    "page": "FsNotificationPage",
+                    "link": "fs-notification"
+                },
+                {
+                    "id": 5,
+                    "name": "Cài đặt",
+                    "icon": "ios-cog",
+                    "page": "FsSettingPage",
+                    "link": "fs-setting"
+                }
+            ]
         },
         {
-            "id": 5,
-            "name": "Cài đặt",
-            "icon": "ios-cog",
-            "page": "FsSettingPage",
-            "link": "fs-setting"
+            "role": 5,
+            "menu": [{
+                    "id": 1,
+                    "name": "Order",
+                    "icon": "fs-food-menu-o",
+                    "page": "FsOrdersPage",
+                    "link": "fs-orders"
+                },
+                {
+                    "id": 2,
+                    "name": "Danh sách bàn",
+                    "icon": "fs-table-3-o",
+                    "page": "FsTablesPage",
+                    "link": "fs-tables"
+                },
+                {
+                    "id": 3,
+                    "name": "Trả món",
+                    "icon": "fs-order-o",
+                    "page": "FsServePage",
+                    "link": "fs-serve"
+                },
+                {
+                    "id": 6,
+                    "name": "Thực đơn",
+                    "icon": "ios-list-outline",
+                    "page": "FsMenuPage",
+                    "link": "fs-menu"
+                },
+                {
+                    "id": 4,
+                    "name": "Thông báo",
+                    "icon": "fs-bell-o",
+                    "page": "FsNotificationPage",
+                    "link": "fs-notification"
+                },
+                {
+                    "id": 5,
+                    "name": "Cài đặt",
+                    "icon": "ios-cog",
+                    "page": "FsSettingPage",
+                    "link": "fs-setting"
+                }
+            ]
+        },
+        {
+            "role": 6,
+            "menu": [{
+                    "id": 1,
+                    "name": "Order",
+                    "icon": "fs-food-menu-o",
+                    "page": "FsOrdersPage",
+                    "link": "fs-orders"
+                },
+                {
+                    "id": 2,
+                    "name": "Danh sách bàn",
+                    "icon": "fs-table-3-o",
+                    "page": "FsTablesPage",
+                    "link": "fs-tables"
+                },
+                {
+                    "id": 3,
+                    "name": "Trả món",
+                    "icon": "fs-order-o",
+                    "page": "FsServePage",
+                    "link": "fs-serve"
+                },
+                {
+                    "id": 6,
+                    "name": "Thực đơn",
+                    "icon": "ios-list-outline",
+                    "page": "FsMenuPage",
+                    "link": "fs-menu"
+                },
+                {
+                    "id": 4,
+                    "name": "Thông báo",
+                    "icon": "fs-bell-o",
+                    "page": "FsNotificationPage",
+                    "link": "fs-notification"
+                },
+                {
+                    "id": 5,
+                    "name": "Cài đặt",
+                    "icon": "ios-cog",
+                    "page": "FsSettingPage",
+                    "link": "fs-setting"
+                }
+            ]
         }
     ]
 }

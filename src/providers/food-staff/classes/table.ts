@@ -17,6 +17,10 @@ export class Table {
         this.reset();
     }
 
+    toString(): string {
+        return this._name;
+    }
+
     public reset() {
         this._id = "0";
         this._name = "name";

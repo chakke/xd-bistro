@@ -22,13 +22,28 @@ export class UserContant {
         ACCOUNT: 3
     }
     public static USER_TYPE = {
-        USER: 1,
-        STAFF: 2,
-        MANAGER: 3,
-        BARTENDER: 4,
-        CHEF: 5,
-        WAITER: 6
+        CHEF: 1,
+        BAR: 1,
+        WAITER: 2,
+        ORDER: 3,
+        RECEPTIONIST: 4,
+        MANAGER: 5,
+        SUPERVISOR: 6,
+        SECURITY: 7
     }
+
+    public static STAFF_STAE = {
+        ACTIVE : 0,
+        UNACTIVE : 1,
+        BLOCKED : 2
+    }
+
+    public static STAFF_TYPE = {
+        PARTIME : 0,
+        FULLTIME : 1,
+        ONETIME : 2
+    }
+
     public static AVATAR_IMAGE = "https://i.pinimg.com/originals/7c/c7/a6/7cc7a630624d20f7797cb4c8e93c09c1.png";
 }
 
@@ -80,28 +95,28 @@ export const TABLE_TYPE = {
 }
 
 
-export const ORDER_STATUS = {
-    UN_CONFIRM: {
-        id: 0,
-        name: "Chưa xác nhận"
-    },
-    IN_USE: {
-        id: 1,
-        name: "Đang sử dụng"
-    },
-    PENDING: {
-        id: 2,
-        name: "Chờ thanh toán"
-    },
-    PAYED: {
-        id: 3,
-        name: "Đã thanh toán"
-    },
-    CANCELED: {
-        id: 4,
-        name: "Hủy"
-    }
-}
+// export const ORDER_STATUS = {
+//     UN_CONFIRM: {
+//         id: 0,
+//         name: "Chưa xác nhận"
+//     },
+//     IN_USE: {
+//         id: 1,
+//         name: "Đang sử dụng"
+//     },
+//     PENDING: {
+//         id: 2,
+//         name: "Chờ thanh toán"
+//     },
+//     PAYED: {
+//         id: 3,
+//         name: "Đã thanh toán"
+//     },
+//     CANCELED: {
+//         id: 4,
+//         name: "Hủy"
+//     }
+// }
 
 export class ComponentType {
     public static UI_COMPONENT: IComponentType = {
@@ -159,7 +174,10 @@ export const FIREBASE_PATH = {
     FOOD_TYPE: "food_types",
     FOOD_UNIT: "food_units",
     RESTAURANT: "restaurants",
-    TABLE: "tables"
+    TABLE: "tables",
+    STAFF: "staffs",
+    ORDER: "orders",
+    AREA: "areas"
 }
 
 export const FIREBASE_CONST = {
@@ -201,7 +219,7 @@ export const PAYMENT_TYPE = {
     BANK: 1
 }
 
-export const ORDER_SATE = {
+export const ORDER_STATE = {
     /**Đã tạo, chưa gọi món hoặc đã gọi món nhưng chưa chế biến xong */
     CREATED: 0,
     /**Đã chuyển xong các món */

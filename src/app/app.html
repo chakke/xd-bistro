@@ -2,9 +2,9 @@
     <div class="fs-menu">
         <div *ngIf="user" class="profile-item fs-shadow">
             <div class="avatar">
-                <img src="{{user.avatarImg}}" alt="avatar image">
+                <img src="{{user.avatar || 'https://i.pinimg.com/originals/7c/c7/a6/7cc7a630624d20f7797cb4c8e93c09c1.png'}}" alt="avatar image">
             </div>
-            <div class="name">{{user.lastName + " " + user.firstName}}</div>
+            <div class="name">{{user.name}}</div>
             <span class="button-edit" (click)="logout()">
                 <ion-icon name="ios-power"></ion-icon>
             </span>

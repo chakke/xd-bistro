@@ -35,54 +35,53 @@ export class ScrollToTopComponent {
       })
     }
 
-
-    let div = document.createElement("div");
-    div.style.position = "absolute";
-    div.style.width = "50px";
-    div.style.height = "50px";
-    div.style.backgroundColor = "green";
-    div.style.left = "20px";
-    div.style.top = "100px";
-    div.style.zIndex = "9999";
-    this.scrollContent.appendChild(div);
-    setTimeout(() => {
-      div.animateBezier(1, 0, 0, 1, "top", 300);
-    }, 2000)
+    // let div = document.createElement("div");
+    // div.style.position = "absolute";
+    // div.style.width = "50px";
+    // div.style.height = "50px";
+    // div.style.backgroundColor = "green";
+    // div.style.left = "20px";
+    // div.style.top = "100px";
+    // div.style.zIndex = "9999";
+    // this.scrollContent.appendChild(div);
+    // setTimeout(() => {
+    //   div.animateBezier(1, 0, 0, 1, "top", 300);
+    // }, 2000)
   }
 
   scrollTop() {
-    // if (this.scrollContent) {
-    //   let currentTop = this.scrollContent.scrollTop;
-    //   let a = currentTop * 4 / this.scrollDuration / this.scrollDuration;
-    //   let vMax = 2 * currentTop / this.scrollDuration;
-    //   let v = 0;
-    //   let debounceTime = 16;
-    //   let startTime = Date.now();
-    //   let intervalCount = 0;
-    //   console.log("vmax", vMax, currentTop);
-    //   let interval = setInterval(() => {
-    //     intervalCount++;
-    //     if (this.scrollContent.scrollTop == 0) {
-    //       clearInterval(interval);
-    //       console.log("time: ", Date.now() - startTime);
-    //       console.log("count: ", intervalCount);
-    //     }
-    //     let d = v * debounceTime + 0.5 * a * debounceTime * debounceTime;
-    //     v += a * debounceTime;
-    //     if (v >= vMax) {
-    //       a = -a;
-    //     }
-    //     if (v <= 0) {
-    //       this.scrollContent.scrollTop = 0;
-    //       clearTimeout(interval);
-    //       console.log("time: ", Date.now() - startTime);
-    //       console.log("count: ", intervalCount);
-    //     } else {
-    //       this.scrollContent.scrollTop = this.scrollContent.scrollTop - d;
-    //     }
-    //     console.log(v, d);
-    //   }, debounceTime)
-    // }
+    if (this.scrollContent) {
+      let currentTop = this.scrollContent.scrollTop;
+      let a = currentTop * 4 / this.scrollDuration / this.scrollDuration;
+      let vMax = 2 * currentTop / this.scrollDuration;
+      let v = 0;
+      let debounceTime = 16;
+      let startTime = Date.now();
+      let intervalCount = 0;
+      console.log("vmax", vMax, currentTop);
+      let interval = setInterval(() => {
+        intervalCount++;
+        if (this.scrollContent.scrollTop == 0) {
+          clearInterval(interval);
+          console.log("time: ", Date.now() - startTime);
+          console.log("count: ", intervalCount);
+        }
+        let d = v * debounceTime + 0.5 * a * debounceTime * debounceTime;
+        v += a * debounceTime;
+        if (v >= vMax) {
+          a = -a;
+        }
+        if (v <= 0) {
+          this.scrollContent.scrollTop = 0;
+          clearTimeout(interval);
+          console.log("time: ", Date.now() - startTime);
+          console.log("count: ", intervalCount);
+        } else {
+          this.scrollContent.scrollTop = this.scrollContent.scrollTop - d;
+        }
+        console.log(v, d);
+      }, debounceTime)
+    }
 
     // HTMLElement.prototype.animateBezier = this.animateBezier;
     // if (this.scrollContent) {

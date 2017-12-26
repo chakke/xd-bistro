@@ -2,21 +2,21 @@
     <fs-header [showBackButton]="1" [title]="'Chi tiết Order'"></fs-header>
 </ion-header>
 
-<ion-content>
+<ion-content *ngIf="order">
     <div class="fs-content">
         <div class="detail-bar">
             <div class="detail-item table">
                 <ion-icon name="fs-table-3-o"></ion-icon>
-                <span class="table-name">C17</span>
-                <span class="floor">Tâng 2</span>
+                <span class="table-name">{{order.tables.length > 0 ? order.tables[0].name: ""}}</span>
+                <span class="floor">{{order.areaName}}</span>
             </div>
             <div class="detail-item person">
                 <ion-icon class="fs-green" name="fs-group-o"></ion-icon>
-                <span>10 người</span>
+                <span>{{order.numberCustormer}} người</span>
             </div>
             <div class="detail-item time">
                 <ion-icon class="fs-orange" name="fs-time-o"></ion-icon>
-                <span>11:04:28</span>
+                <span>{{order.timeCreate | date :  "hh:mm:ss"}}</span>
             </div>
             <div class="detail-item edit">
                 <ion-icon name="fs-note-o"></ion-icon>

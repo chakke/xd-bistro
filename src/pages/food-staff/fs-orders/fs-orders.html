@@ -21,28 +21,28 @@
             <div class="order-list">
                 <div class="order-item" *ngFor="let order of showOrders">
                     <ion-row class="item-detail">
-                        <ion-col class="col-table status-{{order.status}}">
+                        <ion-col class="col-table status-{{order.state}}">
                             <ion-icon name="fs-table"></ion-icon>
-                            <span class="table-number">{{order.tableName}}</span>
+                            <span class="table-number">{{order.tables ? order.tables.join(" ") :  ""}}</span>
                         </ion-col>
                         <ion-col class="col-detail">
                             <div class="staff">
                                 <ion-icon name="fs-service-o"></ion-icon>
-                                <span class="staff-name">(NV{{order.staffs[0]?.id}}) {{order.staffs[0]?.name}}</span>
+                                <span class="staff-name">({{order.staffId}}) {{order.staffName}}</span>
                             </div>
                             <div class="detail">
                                 <div class="person">
                                     <ion-icon name="fs-group-o"></ion-icon>
-                                    <span>{{order.totalPersons}} người</span>
+                                    <span>{{order.numberCustormer}} người</span>
                                 </div>
                                 <div class="time">
                                     <ion-icon name="fs-time-o"></ion-icon>
-                                    <span>{{order.time?.toLocaleTimeString()}}</span>
+                                    <span>{{order.timeCreate | date: 'hh:mm:ss'}}</span>
                                 </div>
                             </div>
                         </ion-col>
                         <ion-col class="col-price">
-                            <span class="price">{{formatPrice(order.totalCost)}} đ</span>
+                            <span class="price">{{0}} đ</span>
                         </ion-col>
                     </ion-row>
                     <ion-row class="item-action">

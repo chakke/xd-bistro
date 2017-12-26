@@ -20,11 +20,9 @@ export class Order {
 	/**Tên khu vực */
 	areaName: string;
 	/**ID Bàn của order */
-	tableId: string;
+	tableIds: Array<string>;
 	/**Name bàn của order */
-	tableName: string;
-
-
+	tables: Array<Table>;
 
 	/**ID nhân viên ghi order */
 	staffId: string;
@@ -32,6 +30,16 @@ export class Order {
 	staffName: string;
 	/**Ảnh đại diện của nhân viên ghi order */
 	staffAvatar: string;
+	// Ghi chú
+	note: string;
+	/**Số lượng khách trong order này, nếu order có nhiều bàn, thì là tổng khách trên các bàn */
+	numberCustormer: number;
+	/** Tên khách hàng*/
+	custormerName: string;
+	/** Số điện thoại của khách hàng */
+	custormerPhone: string;
+	/** ID của khách hàng, nếu đã tồn tại trên hệ thống */
+	custormerId: string;
 
 	constructor() {
 		this.reset();
@@ -46,10 +54,33 @@ export class Order {
 		this.staffId = "";
 		this.staffName = "";
 		this.state = 0;
-		this.tableId = "";
-		this.tableName = "";
+		this.tableIds = [];
+		this.tables = [];
 		this.timeCreate = new Date();
 		this.type = 0;
+		this.note = "";
+		this.numberCustormer = 0;
+		this.custormerName = "";
+		this.custormerPhone = "";
+		this.custormerId = "";
+	}
+
+	mappingFirebaseData(data) {
+		if (data) {
+			this.areaId = data.area_id;
+			this.descrition = data.area_description;
+			this.id = data.id;
+			this.staffId = data.staff_id;
+			this.state = data.state;
+			this.tableIds = data.table_ids;
+			this.timeCreate = data.time_create;
+			this.type = data.type;
+			this.note = data.note;
+			this.numberCustormer = data.number_customers;
+			this.custormerId = data.customer_id;
+			this.custormerName = data.customer_name;
+			this.custormerPhone = data.customer_phone;
+		}
 	}
 
 

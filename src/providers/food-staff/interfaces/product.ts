@@ -1,9 +1,11 @@
 export interface ProductCategory {
-    code: string;
+    firebaseId: string;
+    firebaseReference: string;
     id: string;
     name: string;
     en: string;
     vie: string;
+    
 }
 
 export interface ProductSize {

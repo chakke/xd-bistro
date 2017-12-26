@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { File } from '@ionic-native/file';
 import { ResourceLoader } from '../../../providers/resource-loader/resource-loader';
 import { AppControllerProvider } from '../../../providers/food-staff/app-controller/app-controller';
+import { ISubscription } from 'rxjs/Subscription';
 
 @IonicPage()
 @Component({
@@ -13,7 +14,8 @@ export class FsLoadingPage {
   private assetSrc = "www/assets/food-staff/";
   imageArr = [];
   functionId = 0;
-  rootPage = "FsMenuPage"
+  rootPage = "FsMenuPage";
+  subscriseber: ISubscription;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -32,19 +34,19 @@ export class FsLoadingPage {
         console.log("loaded image error", error);
       })
     }, error => {
-      console.log("load image error", error); 
+      console.log("load image error", error);
     });
 
     //Check product constant
-    if (this.checkProductConstant())
-      this.appController.setRootPage(this.rootPage);
-    
-    this.appController.loadedDataChanel.asObservable().subscribe(() => {
-      if(this.checkProductConstant()){
-        this.appController.setRootPage(this.rootPage);
-      }      
-    })
+    if (this.checkProductConstant()) {
+      this.loadDataDone();
+    }
 
+    this.subscriseber = this.appController.loadedDataChanel.asObservable().subscribe(() => {
+      if (this.checkProductConstant()) {
+        this.loadDataDone();
+      }
+    })
   }
 
   //Check product constant
@@ -58,6 +60,11 @@ export class FsLoadingPage {
     }
     return true;
   }
+
+  loadDataDone() { 
+    this.appController.setRootPage(this.rootPage);
+  }
+
   loadImageAssets(path): Promise<any> {
     let promises = [];
     this.functionId++;
@@ -107,5 +114,9 @@ export class FsLoadingPage {
         this.imageArr.push(element);
       }
     });
-  } 
+  }
+
+  ionViewDidLeave() {
+    if (this.subscriseber) this.subscriseber.unsubscribe();
+  }
 }

@@ -1,3 +1,293 @@
 page-fs-chef-orders {
-
+    $headerRowHeight: 45px;
+    $customToggleHeight: 2em;
+    .header {
+        &::after {
+            display: none;
+        }
+    }
+    .custom-toggle {
+        position: absolute;
+        right: 10px;
+        top: $headerRowHeight / 2;
+        transform: translateY(-50%);
+        height: $customToggleHeight;
+        border-radius: 20px;
+        padding: 2px;
+        background-color: #760d14;
+        .icon,
+        i,
+        {
+            margin: auto;
+        }
+        .custom-toggle-button {
+            height: 100%;
+            padding: 0 10px;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-display: flex;
+            border-radius: 20px;
+            background-color: transparent;
+            -webkit-transition: all 1s;
+            transition: all 1s;
+            color: map-get($map: $FSColors, $key: white);
+        }
+        span.active {
+            background-color: map-get($FSColors, primary)
+        }
+    }
+    .custom-toggle-left-button {
+        float: left;
+    }
+    .custom-toggle-right-button {
+        float: right;
+    }
+    .search-bar {
+        background-color: map-get($map: $FSColors, $key: background);
+        .searchbar-ios {
+            border: none;
+        }
+        .searchbar-input {
+            border: solid 1px lightgray;
+        }
+    }
+    .fs-segment {
+        font-size: map-get($map: $FSSizes, $key: small);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: map-get($map: $FSColors, $key: background);
+        &::after {
+            display: none;
+        }
+        &.active {
+            background-color: map-get($map: $FSColors, $key: white);
+        }
+        .number {
+            font-size: 0.8em;
+            padding: 0 4px;
+            border-radius: 50%;
+            display: inline-block;
+            height: 2rem;
+            min-width: 2rem;
+            line-height: 2rem;
+            border: solid 1px;
+            margin-right: 5px;
+        }
+        .segment-button {
+            color: map-get($map: $FSColors, $key: black);
+            &.segment-activated {
+                background-color: map-get($map: $FSColors, $key: white);
+                font-weight: bold;
+            }
+            .status-1 {
+                background-color: map-get($map: $FSColors, $key: green);
+                color: map-get($map: $FSColors, $key: white);
+            }
+            // .status-2 {
+            //     background-color: map-get($map: $FSColors, $key: green);
+            //     color: map-get($map: $FSColors, $key: white);
+            // }
+            // .status-3 {
+            //     background-color: map-get($map: $FSColors, $key: gray);
+            //     color: map-get($map: $FSColors, $key: black);
+            // }
+            .status-0 {
+                background-color: map-get($map: $FSColors, $key: primary);
+                color: map-get($map: $FSColors, $key: white);
+            }
+        }
+    }
+    .segment-content {
+        background-color: map-get($map: $FSColors, $key: white);
+        $iconSize: 4em;
+        position: relative;
+        .row,
+        .col {
+            padding: 0;
+        }
+        .food-item {
+            padding: 10px map-get($map: $FSSizes, $key: defaultPadding);
+            // border-bottom: solid 1px map-get($map: $FSColors, $key: lightgray);
+            background-color: map-get($map: $FSColors, $key: white);
+            margin-bottom: 5px;
+            .col-img {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: 0 5px;
+                img {
+                    object-fit: cover;
+                    border-radius: 50%;
+                }
+            }
+            .col-detail {
+                padding-left: 10px;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-evenly;
+                .name {
+                    font-weight: bold;
+                    .code {
+                        font-style: italic;
+                    }
+                }
+                .info {
+                    display: flex;
+                    color: map-get($map: $FSColors, $key: gray);
+                    .number {
+                        margin-right: 20px;
+                    }
+                    .icon {
+                        color: map-get($map: $FSColors, $key: primary);
+                        margin-right: 5px;
+                    }
+                }
+            }
+            .row-action {
+                padding-top: 10px;
+                .col-time {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    .time {
+                        width: 100%;
+                        text-align: center;
+                        font-weight: 500;
+                        border-radius: 20px;
+                    }
+                }
+                .col-button {
+                    display: flex;
+                    justify-content: flex-end;
+                    align-items: center;
+                }
+            }
+            &.warning-0 {
+                .time {
+                    background-color: #b5e287;
+                    color: #5d991f;
+                }
+            }
+            &.warning-1 {
+                .time {
+                    background-color: map-get($map: $FSColors, $key: gray);
+                    color: map-get($map: $FSColors, $key: black);
+                }
+            }
+            &.warning-2 {
+                background-color: #ffedb3;
+                .time {
+                    background-color: #ffc300;
+                    color: #ab6200;
+                }
+            }
+            &.warning-3 {
+                background-color: #fce0dc;
+                .time {
+                    background-color: #fe9aa0;
+                    color: #ce452b;
+                }
+            }
+        }
+        .order-list {
+            .order-item {
+                padding: 10px map-get($map: $FSSizes, $key: defaultPadding);
+                border-bottom: solid 1px map-get($map: $FSColors, $key: lightgray);
+                .item-detail {
+                    &:last-of-type {
+                        border-bottom: 0;
+                    }
+                    .col-table {
+                        min-width: $iconSize;
+                        min-height: $iconSize;
+                        padding: 0;
+                        flex: 0;
+                        position: relative;
+                        .icon {
+                            font-size: 4em;
+                            z-index: 1;
+                            position: absolute;
+                            top: 50%;
+                            left: 50%;
+                            transform: translate(-50%, -50%);
+                            color: map-get($map: $FSColors, $key: primary);
+                        }
+                        .table-number {
+                            position: absolute;
+                            top: 50%;
+                            left: 50%;
+                            transform: translate(-50%, -50%);
+                            z-index: 2;
+                            color: map-get($map: $FSColors, $key: white);
+                            font-weight: bold;
+                        }
+                    }
+                    .col-detail {
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: space-evenly;
+                        flex: 1;
+                        padding-left: 10px;
+                        .icon {
+                            color: map-get($map: $FSColors, $key: primary);
+                            vertical-align: text-bottom;
+                        }
+                        .staff {
+                            color: map-get($map: $FSColors, $key: black);
+                            font-weight: bold;
+                        }
+                        .detail {
+                            color: map-get($map: $FSColors, $key: gray);
+                            display: flex;
+                            justify-content: space-between;
+                        }
+                    }
+                    .col-price {
+                        flex: 0;
+                        display: flex;
+                        .price {
+                            white-space: nowrap;
+                            color: map-get($map: $FSColors, $key: orange);
+                            font-weight: bold;
+                        }
+                    }
+                }
+                .item-action {
+                    margin-top: 10px;
+                    .col-id {
+                        flex: 0;
+                        min-width: $iconSize;
+                        text-align: center;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        span {
+                            background-color: map-get($map: $FSColors, $key: lightgray);
+                            color: map-get($map: $FSColors, $key: black);
+                            padding: 0px 5px;
+                            border-radius: 20px;
+                        }
+                    }
+                    .col-button {
+                        text-align: center;
+                        justify-content: flex-end;
+                        display: flex;
+                        align-items: center;
+                    }
+                }
+            }
+        }
+        .fs-button {
+            padding: 4px 12px;
+            margin-left: 10px;
+            font-size: 1em;
+            border: solid 1px map-get($map: $FSColors, $key: primary);
+        }
+    }
+    .scroll-top {
+        left: 16px;
+        right: auto;
+    }
 }

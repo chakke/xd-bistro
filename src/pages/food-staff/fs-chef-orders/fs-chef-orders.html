@@ -1,18 +1,227 @@
-<!--
-  Generated template for the FsChefOrdersPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
-
-  <ion-navbar>
-    <ion-title>fs-chef-orders</ion-title>
-  </ion-navbar>
-
+    <fs-header [showBackButton]="2" [title]="'Danh sách order'"></fs-header>
+    <div class="custom-toggle" (click)="onClickToggleView()" tappale>
+        <span class="custom-toggle-left-button custom-toggle-button" [class.active]="viewMode == 0"> <ion-icon name="fs-order-o"></ion-icon></span>
+        <span class="custom-toggle-right-button custom-toggle-button" [class.active]="viewMode == 1"> <ion-icon name="fs-table-3-o"></ion-icon></span>
+    </div>
+    <div class="search-bar">
+        <ion-searchbar class="searchbar-ios" [class.searchbar-md]="false" placeholder="{{placholder}}" [(ngModel)]="searchKeyword" (ionInput)="search()"></ion-searchbar>
+    </div>
+    <div class="fs-segment">
+        <ion-segment class="segment-md" [class.segment-ios]="false" [(ngModel)]="selectedOrderStatus" (ionChange)="filterOrders()">
+            <ion-segment-button value="{{status.id}}" *ngFor="let status of orderStatusData">
+                <!-- <span class="number status-{{status.id}}">{{ orderCollection.get(status.id)?.length}}</span> -->
+                <span class="number status-{{status.id}}">5</span>
+                <span class="text"> {{status.title}} </span>
+            </ion-segment-button>
+        </ion-segment>
+    </div>
 </ion-header>
 
 
-<ion-content padding>
-
+<ion-content>
+    <scroll-to-top></scroll-to-top>
+    <div class="fs-content">
+        <div class="segment-content" *ngIf="viewMode == 0">
+            <div class="food-list">
+                <div class="food-item warning-0">
+                    <ion-row>
+                        <ion-col col-2 class="col-img">
+                            <img src="http://media.phunutoday.vn/files/upload_images/2016/01/12/cach-nau-xoi-lap-xuong-3-phunutoday_vn.JPG" alt="image">
+                        </ion-col>
+                        <ion-col col-10 class="col-detail">
+                            <div class="name"><span class="code">(BS05)</span> Xôi lạp xưởng</div>
+                            <div class="info">
+                                <div class="number">
+                                    <ion-icon name="logo-buffer"></ion-icon>
+                                    <span>1 suất</span>
+                                </div>
+                                <div class="table">
+                                    <ion-icon name="fs-table-3-o"></ion-icon>
+                                    <span>A09</span>
+                                </div>
+                            </div>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row class="row-action">
+                        <ion-col col-2 class="col-time">
+                            <span class="time">25'49"</span>
+                        </ion-col>
+                        <ion-col col-10 class="col-button">
+                            <button class="fs-button fs-button-outline">Báo hết</button>
+                            <button class="fs-button">Chế biến</button>
+                        </ion-col>
+                    </ion-row>
+                    <div class="fs-divider-full"></div>
+                </div>
+                <div class="food-item  warning-3">
+                    <ion-row>
+                        <ion-col col-2 class="col-img">
+                            <img src="http://media.phunutoday.vn/files/upload_images/2016/01/12/cach-nau-xoi-lap-xuong-3-phunutoday_vn.JPG" alt="image">
+                        </ion-col>
+                        <ion-col col-10 class="col-detail">
+                            <div class="name"><span class="code">(BS05)</span> Xôi lạp xưởng</div>
+                            <div class="info">
+                                <div class="number">
+                                    <ion-icon name="logo-buffer"></ion-icon>
+                                    <span>1 suất</span>
+                                </div>
+                                <div class="table">
+                                    <ion-icon name="fs-table-3-o"></ion-icon>
+                                    <span>A09</span>
+                                </div>
+                            </div>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row class="row-action">
+                        <ion-col col-2 class="col-time">
+                            <span class="time">25'49"</span>
+                        </ion-col>
+                        <ion-col col-10 class="col-button">
+                            <button class="fs-button fs-button-outline">Báo hết</button>
+                            <button class="fs-button">Chế biến</button>
+                        </ion-col>
+                    </ion-row>
+                </div>
+                <div class="food-item warning-2">
+                    <ion-row>
+                        <ion-col col-2 class="col-img">
+                            <img src="http://media.phunutoday.vn/files/upload_images/2016/01/12/cach-nau-xoi-lap-xuong-3-phunutoday_vn.JPG" alt="image">
+                        </ion-col>
+                        <ion-col col-10 class="col-detail">
+                            <div class="name"><span class="code">(BS05)</span> Xôi lạp xưởng</div>
+                            <div class="info">
+                                <div class="number">
+                                    <ion-icon name="logo-buffer"></ion-icon>
+                                    <span>1 suất</span>
+                                </div>
+                                <div class="table">
+                                    <ion-icon name="fs-table-3-o"></ion-icon>
+                                    <span>A09</span>
+                                </div>
+                            </div>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row class="row-action">
+                        <ion-col col-2 class="col-time">
+                            <span class="time">25'49"</span>
+                        </ion-col>
+                        <ion-col col-10 class="col-button">
+                            <button class="fs-button fs-button-outline">Báo hết</button>
+                            <button class="fs-button">Chế biến</button>
+                        </ion-col>
+                    </ion-row>
+                </div>
+                <div class="food-item  warning-1">
+                    <ion-row>
+                        <ion-col col-2 class="col-img">
+                            <img src="http://media.phunutoday.vn/files/upload_images/2016/01/12/cach-nau-xoi-lap-xuong-3-phunutoday_vn.JPG" alt="image">
+                        </ion-col>
+                        <ion-col col-10 class="col-detail">
+                            <div class="name"><span class="code">(BS05)</span> Xôi lạp xưởng</div>
+                            <div class="info">
+                                <div class="number">
+                                    <ion-icon name="logo-buffer"></ion-icon>
+                                    <span>1 suất</span>
+                                </div>
+                                <div class="table">
+                                    <ion-icon name="fs-table-3-o"></ion-icon>
+                                    <span>A09</span>
+                                </div>
+                            </div>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row class="row-action">
+                        <ion-col col-2 class="col-time">
+                            <span class="time">25'49"</span>
+                        </ion-col>
+                        <ion-col col-10 class="col-button">
+                            <button class="fs-button fs-button-outline">Báo hết</button>
+                            <button class="fs-button">Chế biến</button>
+                        </ion-col>
+                    </ion-row>
+                </div>
+            </div>
+        </div>
+        <div class="segment-content" *ngIf="viewMode == 1">
+            <div class="order-list">
+                <div class="order-item">
+                    <ion-row class="item-detail">
+                        <ion-col class="col-table">
+                            <ion-icon name="fs-table"></ion-icon>
+                            <span class="table-number">G14</span>
+                        </ion-col>
+                        <ion-col class="col-detail">
+                            <div class="staff">
+                                <ion-icon name="fs-service-o"></ion-icon>
+                                <span class="staff-name">(NV104) Nguyễn Văn A</span>
+                            </div>
+                            <div class="detail">
+                                <div class="person">
+                                    <ion-icon name="fs-group-o"></ion-icon>
+                                    <span>10 người</span>
+                                </div>
+                                <div class="time">
+                                    <ion-icon name="fs-time-o"></ion-icon>
+                                    <span>48:04:28</span>
+                                </div>
+                                <div class="piece">
+                                    <ion-icon name="logo-buffer"></ion-icon>
+                                    <span>
+                                        <span class="fs-green">14</span> /24 suất
+                                    </span>
+                                </div>
+                            </div>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row class="item-action">
+                        <ion-col class="col-id">
+                            <span> #123 </span>
+                        </ion-col>
+                        <ion-col class="col-button">
+                            <button class="fs-button" (click)="pay()">Xem order</button>
+                        </ion-col>
+                    </ion-row>
+                </div>
+                <div class="order-item">
+                    <ion-row class="item-detail">
+                        <ion-col class="col-table">
+                            <ion-icon name="fs-table"></ion-icon>
+                            <span class="table-number">G14</span>
+                        </ion-col>
+                        <ion-col class="col-detail">
+                            <div class="staff">
+                                <ion-icon name="fs-service-o"></ion-icon>
+                                <span class="staff-name">(NV104) Nguyễn Văn A</span>
+                            </div>
+                            <div class="detail">
+                                <div class="person">
+                                    <ion-icon name="fs-group-o"></ion-icon>
+                                    <span>10 người</span>
+                                </div>
+                                <div class="time">
+                                    <ion-icon name="fs-time-o"></ion-icon>
+                                    <span>48:04:28</span>
+                                </div>
+                                <div class="piece">
+                                    <ion-icon name="logo-buffer"></ion-icon>
+                                    <span>
+                                        <span class="fs-green">14</span> /24 suất
+                                    </span>
+                                </div>
+                            </div>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row class="item-action">
+                        <ion-col class="col-id">
+                            <span> #123 </span>
+                        </ion-col>
+                        <ion-col class="col-button">
+                            <button class="fs-button" (click)="pay()">Xem order</button>
+                        </ion-col>
+                    </ion-row>
+                </div>
+            </div>
+        </div>
+    </div>
 </ion-content>

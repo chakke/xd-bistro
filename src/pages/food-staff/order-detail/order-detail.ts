@@ -19,7 +19,7 @@ export class OrderDetailPage {
     public navParams: NavParams,
     private appController: AppControllerProvider,
     private modalCtrl: ModalController) {
-
+      this.order = this.navParams.get("order");
   }
 
   ionViewDidLoad() {

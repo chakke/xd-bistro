@@ -20,19 +20,20 @@ export class FsNumberPickerComponent {
     this.number = 1;
   }
 
-    selectNumber() {
-    let modal = this.modalCtrl.create("KeypadModalPage", {number: this.number});
+  selectNumber() {
+    let modal = this.modalCtrl.create("KeypadModalPage", { number: this.number });
     modal.present();
-    this.isPicking = true; 
-    modal.onDidDismiss(data=>{
+    this.isPicking = true;
+    modal.onDidDismiss(data => {
       this.isPicking = false;
-      if(data != null && data != undefined){
-        this.number = data;      
+      if (data != null && data != undefined) {
+        this.number = data;
+        this.numberChange.next(this.number);
       }
     })
   }
 
-  keypadCloseCallBack(number) { 
+  keypadCloseCallBack(number) {
     this.number = number;
   }
 }

@@ -1,7 +1,7 @@
 <ion-header>
     <fs-header [showBackButton]="2" [showSearchBar]="true" (onSearch)="search($event)"></fs-header>
     <div class="menu">
-        <div class="menu-item" [class.active]="menu.code == selectedMenu.code" (click)="selectMenu(menu)" *ngFor="let menu of menuItems">
+        <div class="menu-item" [class.active]="menu.id == selectedMenu.id" (click)="selectMenu(menu)" *ngFor="let menu of menuItems">
             <span>{{menu.name}}</span>
         </div>
     </div>
@@ -21,7 +21,7 @@
                         <ion-col col-9 class="col-detail">
                             <div class="name">
                                 <span class="fs-tilt">
-                                        ({{product.code}})
+                                        ({{product.id}})
                                       </span> {{product.name | title}}
                             </div>
                             <div class="price">

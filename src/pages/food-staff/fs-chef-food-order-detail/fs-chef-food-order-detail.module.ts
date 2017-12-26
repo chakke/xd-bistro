@@ -1,15 +1,14 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
-import { FsChefOrdersPage } from './fs-chef-orders';
+import { FsChefFoodOrderDetailPage } from './fs-chef-food-order-detail';
 import { ComponentsModule } from "../../../components/food-staff/components.module";
-
 @NgModule({
   declarations: [
-    FsChefOrdersPage,
+    FsChefFoodOrderDetailPage,
   ],
   imports: [
-    IonicPageModule.forChild(FsChefOrdersPage),
+    IonicPageModule.forChild(FsChefFoodOrderDetailPage),
     ComponentsModule
   ],
 })
-export class FsChefOrdersPageModule { }
+export class FsChefFoodOrderDetailPageModule {}

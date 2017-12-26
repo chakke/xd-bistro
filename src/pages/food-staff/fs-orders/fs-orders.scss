@@ -22,12 +22,16 @@ page-fs-orders {
                 background-color: map-get($map: $FSColors, $key: white);
                 font-weight: bold;
             }
-            .status-1 {
+            .status-0 {
                 background-color: map-get($map: $FSColors, $key: primary);
                 color: map-get($map: $FSColors, $key: white);
             }
-            .status-2 {
+            .status-1 {
                 background-color: map-get($map: $FSColors, $key: green);
+                color: map-get($map: $FSColors, $key: white);
+            }
+            .status-2 {
+                background-color: map-get($map: $FSColors, $key: black);
                 color: map-get($map: $FSColors, $key: white);
             }
             .status-3 {
@@ -71,6 +75,7 @@ page-fs-orders {
                             left: 50%;
                             transform: translate(-50%, -50%);
                             z-index: 2;
+                            text-align: center;
                         }
                     }
                     .col-detail {
@@ -138,7 +143,7 @@ page-fs-orders {
                 }
             }
         }
-        .status-1 {
+        .status-0 {
             .table-number {
                 color: map-get($map: $FSColors, $key: white);
                 text-transform: uppercase;
@@ -148,12 +153,20 @@ page-fs-orders {
                 color: map-get($map: $FSColors, $key: primary);
             }
         }
-        .status-2 {
+        .status-1 {
             .table-number {
                 color: map-get($map: $FSColors, $key: white);
             }
             .icon {
                 color: map-get($map: $FSColors, $key: green);
+            }
+        }
+        .status-2 {
+            .table-number {
+                color: map-get($map: $FSColors, $key: white);
+            }
+            .icon {
+                color: map-get($map: $FSColors, $key: black);
             }
         }
         .status-3 {

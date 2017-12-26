@@ -53,8 +53,22 @@ export class FoodStaffHttpServiceProvider {
   }
 
   //Lấy danh sách menu
-  getMenu(userId: number): Promise<any> {
-    if (this.isUseFakeData) return this.requestGet(AssetsUrl.BASE_URL + FakeApiUrl.MENU, "");
+  getMenu(role: number): Promise<any> {
+    if (this.isUseFakeData) return new Promise((resolve, reject) => {
+      this.requestGet(AssetsUrl.BASE_URL + FakeApiUrl.MENU, "").then(data => {
+        if (data && data.content) {
+          let index = data.content.findIndex(elm => {
+            return elm.role == role;
+          });
+          if (index >= 0) {
+            resolve(data.content[index]);
+          } else {
+            reject();
+          }
+        }
+        else reject();
+      });
+    })
     // return this.requestGet(this.serviceUrl + APIUrl.PROVINCE, "");
   }
 

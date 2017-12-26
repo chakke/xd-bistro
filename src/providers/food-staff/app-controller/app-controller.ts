@@ -20,7 +20,7 @@ import { TableInOrder, Table } from '../classes/table';
 import { Order } from '../classes/order';
 import { OrderPool } from '../object-pools/order-pool';
 
-import { Map } from '../classes/map';
+import { Map as UIMap } from '../classes/map';
 import { MapPool } from '../object-pools/map-pool';
 import { Observable } from 'rxjs/Observable';
 import { FirebaseServiceProvider } from '../firebase-service/firebase-service';
@@ -29,6 +29,7 @@ import { ProductPool } from '../object-pools/product-pool';
 import { ProductSize, ProductState, ProductType, ProductUnit, ProductCategory } from '../interfaces/product';
 
 import { ScrollController } from '../../scroll-controller';
+import { Floor } from '../classes/floor';
 
 @Injectable()
 export class AppControllerProvider {
@@ -48,20 +49,27 @@ export class AppControllerProvider {
     productSize: false,
     productSale: false,
     productOption: false,
-    table: false
+    table: false,
+    order: false,
+    area: false,
+    staff: false
   }
 
   user: User;
   userPool: UserPool;
+  staffes: Array<User> = [];
+  staffCollection: Map<string, User> = new Map<string, User>();
   restid = "bistro";
 
   tableInOrders: Array<TableInOrder> = [];
   tableInOrderPool: TableInOrderPool;
+  tableCollection: Map<string, Table> = new Map<string, Table>();
 
   orders: Array<Order> = [];
   orderPool: OrderPool;
+  orderCollection: Map<string, Order> = new Map<string, Order>();
 
-  maps: Array<Map> = [];
+  maps: Array<UIMap> = [];
   mapPool: MapPool;
 
 
@@ -69,6 +77,7 @@ export class AppControllerProvider {
   products: Array<Product> = [];
   productPool: ProductPool;
   totalProduct = 1000;
+  productCollection: Map<string, Product> = new Map<string, Product>();
 
   productCategories: Array<ProductCategory> = [];
   productSizes: Array<ProductSize> = [];
@@ -81,12 +90,17 @@ export class AppControllerProvider {
   tablePool: TablePool;
   totalTable: 500;
 
+  //Floor
+  floors: Array<Floor> = [];
+  floorCollection: Map<string, Floor> = new Map<string, Floor>();
+
   //Kênh youtube của các đối tượng. Mỗi khi ra video mới sẽ bật thông báo cho các thành viên đã đăng kí.
   loadedDataChanel: Subject<string> = new Subject<string>();
   tableChanel: Subject<string> = new Subject<string>();
   productChanel: Subject<string> = new Subject<string>();
   menuChanel: Subject<Array<Menu>> = new Subject<Array<Menu>>();
   userChanel: Subject<User> = new Subject<User>();
+  orderChanel: Subject<string> = new Subject<string>();
 
   scrollController: ScrollController = new ScrollController();
 
@@ -115,17 +129,55 @@ export class AppControllerProvider {
     this.tablePool = new TablePool();
     this.tablePool.initialize(this.totalTable);
 
+    //Mapping data    
+    this.loadedDataChanel.asObservable().subscribe((data) => {
+      //Mapping table to order
+      if ((data == "order" || data == "table") && this.loadedData.order && this.loadedData.table) {
+        this.orders = this.orders.map(order => {
+          if (order.tableIds) {
+            order.tables = [];
+            order.tableIds.forEach(id => {
+              order.tables.push(this.tableCollection.get(id));
+            });
+          }
+          return order;
+        })
+      }
+
+      // Mapping staff to order
+      if ((data == "order" || data == "staff") && this.loadedData.order && this.loadedData.staff) {
+        this.orders = this.orders.map(order => {
+          if (order.staffId) {
+            order.staffName = this.staffCollection.get(order.staffId).name;
+          }
+          return order;
+        })
+      }
+
+      //Mapping area to order
+      if ((data == "order" || data == "area") && this.loadedData.order && this.loadedData.area) {
+        this.orders = this.orders.map(order => {
+          if (order.areaId) {
+            order.areaName = this.floorCollection.get(order.areaId).name;
+          }
+          return order;
+        })
+      }
+    })
+
+
+
     //Test
-    if (this.isTesting) {
-      this.loadOrder();
-      this.loadTableInOrder();
-      this.user = this.userPool.getItem(1);
-      this.user.id = 1;
-      this.getMenu();
-    }
+    // if (this.isTesting) {
+    //   this.loadOrder();
+    //   this.loadTableInOrder();
+    //   this.user = this.userPool.getItem(1);
+    //   this.user.id = "1";
+    //   this.getMenu();
+    // }
   }
 
-  getScrollController(){
+  getScrollController() {
     return this.scrollController;
   }
 
@@ -202,7 +254,7 @@ export class AppControllerProvider {
       this.firebaseService.loginWithAccountPassword(email, password).then(success => {
         resolve("Đăng nhập thành công");
         console.log(success);
-        this.loginSuccess({ id: 1, type: UserContant.USER_TYPE.WAITER, isLoggedIn: true, loginMethod: UserContant.LOGIN_METHOD.ACCOUNT, firstName: "Trinh", lastName: "Ngọc" })
+        this.loginSuccess(email)
       }, error => {
         reject("Đăng nhập thất bại " + error.code);
         console.log(error);
@@ -214,24 +266,89 @@ export class AppControllerProvider {
     this.user = null;
   }
 
-  loginSuccess(userData: any) {
-    if (userData.type) {
-      this.user = this.userPool.getItemWithData(userData);
-      this.userChanel.next(this.user);
-      this.getMenu();
+  loginSuccess(email: any) {
+    if (email) {
+      //Get restaurant
       this.restid = "bistro";
 
-      this.fetchProduct();
-      this.fetchProductOption();
-      this.fetchProductSales();
-      this.fetchProductSize();
-      this.fetchProductState();
-      this.fetchProductType();
-      this.fetchProductUnit();
-      this.fetchProductCategory();
+      //Get user detail 
+      this.firebaseService.getUserInRestaurant(email).then(data => {
+        if (data && data.length > 0) {
+          this.user = this.userPool.getItemWithData(data[0]);
+          this.userChanel.next(this.user);
 
-      this.fetchTable();
+          //Get menu by user role
+          this.getMenu();
+
+          //Get all Staff in restaurant
+          this.fetchStaff();
+
+          //Get all product in restaurant
+          this.fetchProduct();
+          //Get all product option in restaurant
+          this.fetchProductOption();
+          //Get all product sale in restaurant
+          this.fetchProductSales();
+          //Get all product size in restaurant
+          this.fetchProductSize();
+          //Get all product state in restaurant
+          this.fetchProductState();
+          //Get all product type in restaurant
+          this.fetchProductType();
+          //Get all product unit in restaurant
+          this.fetchProductUnit();
+          //Get all product category in restaurant
+          this.fetchProductCategory();
+
+          //Get all table in restaurant
+          this.fetchTable();
+
+          //Get all order in restaurant
+          this.fetchOrder();
+
+          //Get all area in restaurant
+          this.fetchArea();
+        }
+      }, error => {
+        console.log("get user error", error);
+      })
     }
+  }
+
+  fetchStaff() {
+    //Fetch product
+    this.firebaseService.fetchAllStaffInRestaurant(this.restid).subscribe(data => {
+      data.docChanges.forEach(change => {
+        let staffData = change.doc.data();
+        if (change.type == FIREBASE_CONST.DOCUMENT_CHANGE_TYPE.ADD) {
+          let staff = this.userPool.getItem(0);
+          staff.mappingFirebaseData(staffData);
+          this.staffes.push(staff);
+        }
+        if (change.type == FIREBASE_CONST.DOCUMENT_CHANGE_TYPE.MODIFY) {
+          let index = this.staffes.findIndex(elm => {
+            return elm.id == staffData.id;
+          })
+          if (index > -1) {
+            this.staffes[index].mappingFirebaseData(staffData);
+          }
+        }
+        if (change.type == FIREBASE_CONST.DOCUMENT_CHANGE_TYPE.REMOVE) {
+          let index = this.staffes.findIndex(elm => {
+            return elm.id == staffData.id;
+          })
+          if (index > -1) {
+            this.staffes.splice(index, 1);
+          }
+        }
+      });
+      this.staffes.forEach(staff => {
+        this.staffCollection.set(staff.id, staff);
+      })
+      console.log("staff change", this.staffes);
+      this.loadedData.staff = true;
+      this.loadedDataChanel.next("staff");
+    })
   }
 
   fetchProduct() {
@@ -261,6 +378,10 @@ export class AppControllerProvider {
           }
         }
       });
+      this.products.forEach(product => {
+        this.productCollection.set(product.id, product);
+      })
+
       this.loadedData.product = true;
       this.productChanel.next("Treeboo vừa ra video mới!");
       this.loadedDataChanel.next("Hàng mới về");
@@ -285,10 +406,11 @@ export class AppControllerProvider {
         if (change.type == FIREBASE_CONST.DOCUMENT_CHANGE_TYPE.ADD) {
           let category: ProductCategory = {
             id: categoryData.id,
-            code: categoryData.code,
+            firebaseId: categoryData.firebase_id,
+            firebaseReference: categoryData.firebase_reference,
             name: categoryData.name,
-            en: categoryData.en,
-            vie: categoryData.vie
+            en: categoryData.en_name,
+            vie: categoryData.name
           };
           this.productCategories.push(category);
         }
@@ -299,10 +421,11 @@ export class AppControllerProvider {
           if (index > -1) {
             this.productCategories[index] = {
               id: categoryData.id,
-              code: categoryData.code,
+              firebaseId: categoryData.firebase_id,
+              firebaseReference: categoryData.firebase_reference,
               name: categoryData.name,
-              en: categoryData.en,
-              vie: categoryData.vie
+              en: categoryData.en_name,
+              vie: categoryData.name
             };
           }
         }
@@ -502,19 +625,99 @@ export class AppControllerProvider {
           }
         }
       });
+      this.tables.forEach(table => {
+        this.tableCollection.set(table.id, table);
+      })
+
       this.loadedData.table = true;
       this.tableChanel.next("Lệ rơi vừa ra video mới!");
-      this.loadedDataChanel.next("Hàng mới về");
+      this.loadedDataChanel.next("table");
       console.log("tables fetched successfully", this.tables);
+    })
+  }
+
+  fetchOrder() {
+    //Fetch order
+    this.firebaseService.fetchAllOrderRestaurant(this.restid).subscribe(data => {
+      data.docChanges.forEach(change => {
+        let orderData = change.doc.data();
+        if (change.type == FIREBASE_CONST.DOCUMENT_CHANGE_TYPE.ADD) {
+          let order = this.orderPool.getItem();
+          order.mappingFirebaseData(orderData);
+          this.orders.push(order);
+        }
+        if (change.type == FIREBASE_CONST.DOCUMENT_CHANGE_TYPE.MODIFY) {
+          let index = this.orders.findIndex(elm => {
+            return elm.id == orderData.id;
+          })
+          if (index > -1) {
+            this.orders[index].mappingFirebaseData(orderData);
+          }
+        }
+        if (change.type == FIREBASE_CONST.DOCUMENT_CHANGE_TYPE.REMOVE) {
+          let index = this.orders.findIndex(elm => {
+            return elm.id == orderData.id;
+          })
+          if (index > -1) {
+            this.orders.splice(index, 1);
+          }
+        }
+      });
+      this.orders.forEach(order => {
+        this.orderCollection.set(order.id, order);
+      })
+
+      this.loadedData.order = true;
+      this.orderChanel.next("Tùng Sơn vừa ra video mới!");
+      this.loadedDataChanel.next("order");
+      console.log("ordes fetched successfully", this.orders);
+    })
+  }
+
+  fetchArea() {
+    this.firebaseService.fetchAreas(this.restid).subscribe(data => {
+      data.docChanges.forEach(change => {
+        let areaData = change.doc.data();
+        if (change.type == FIREBASE_CONST.DOCUMENT_CHANGE_TYPE.ADD) {
+          let floor: Floor = new Floor();
+          floor.mappingFirebaseData(areaData);
+          this.floors.push(floor);
+        }
+        if (change.type == FIREBASE_CONST.DOCUMENT_CHANGE_TYPE.MODIFY) {
+          let index = this.floors.findIndex(elm => {
+            return elm.id == areaData.id;
+          })
+          if (index > -1) {
+            this.floors[index].mappingFirebaseData(areaData);
+          }
+        }
+        if (change.type == FIREBASE_CONST.DOCUMENT_CHANGE_TYPE.REMOVE) {
+          let index = this.floors.findIndex(elm => {
+            return elm.id == areaData.id;
+          })
+          if (index > -1) {
+            this.floors.splice(index, 1);
+          }
+        }
+      });
+
+      this.floors.forEach(floor => {
+        this.floorCollection.set(floor.id, floor);
+      })
+
+      this.loadedData.area = true;
+      this.loadedDataChanel.next("area");
+      console.log("floors fetched successfully", this.productTypes);
     })
   }
 
   getMenu() {
     if (this.user) {
-      this.httpService.getMenu(this.user.id).then(data => {
-        if (data && data.result == 1 && data.content) {
+      this.httpService.getMenu(this.user.staffRole).then(data => {
+        if (data && data.menu) {
+          console.log("get menu success", this.user.staffRole, data.menu);
           this.menuItems = [];
-          data.content.forEach(element => {
+          data.menu.forEach(element => {
             let menu = new Menu(element.id, element.name, element.icon, false, element.page, element.link);
             this.menuItems.push(menu);
           });
@@ -523,6 +726,11 @@ export class AppControllerProvider {
       })
     }
   }
+
+  addOrder(order: Order): Promise<any> {
+    return this.firebaseService.addOrder(this.restid, order);
+  }
+
 
   showToast(message: string, duration?: number, position?: string) {
     if (this.toast) this.hideToast();
@@ -557,7 +765,6 @@ export class AppControllerProvider {
       this.loading.dismiss();
     }
   }
-
 
 
   loadTableInOrder() {

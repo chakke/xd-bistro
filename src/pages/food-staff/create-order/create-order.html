@@ -12,7 +12,7 @@
                         <span class="icon" (click)="showTableList()"> 
                             <ion-icon name="fs-table-3-o"></ion-icon>
                         </span>
-                        <span class="text-input" (click)="showTableList()">{{selectedTable ? selectedTable.name : "Chọn bàn"}}</span>
+                        <span class="text-input" (click)="showTableList()">{{order.tables.length > 0 ? order.tables.join(", ") : "Chọn bàn"}}</span>
                         <!-- <span class="button-map" (click)="showTableMap()"><i class="fa fa-map"></i></span> -->
                     </div>
                     <!-- <span *ngIf="!loginForm.controls.account.valid && isSubmitted" class="validate-message">{{accountErrorMessage}}</span> -->
@@ -23,7 +23,7 @@
                                 <span class="icon">
                                   <ion-icon name="fs-time-o"></ion-icon>
                                 </span>
-                                <span class="text-input">20:07:05</span>
+                                <span class="text-input">{{this.order.timeCreate | date: 'hh:mm:ss'}}</span>
                             </div>
                         </ion-col>
                         <ion-col col-6>
@@ -32,7 +32,7 @@
                                   <ion-icon name="fs-group-o"></ion-icon>
                                 </span>
                                 <span class="text-input number-input">
-                                    <fs-number-picker ></fs-number-picker>
+                                    <fs-number-picker (numberChange)="updateNumberOfPerson($event)"></fs-number-picker>
                                 </span>
                             </div>
                         </ion-col>
@@ -41,13 +41,13 @@
                         <span class="icon">
                           <ion-icon name="fs-individual-o"></ion-icon>
                         </span>
-                        <ion-input type="text" [(ngModel)]="name" formControlName="name" placeholder="Tên khách hàng" (ionChange)="checkForm()"></ion-input>
+                        <ion-input type="text" [(ngModel)]="custormerName" formControlName="name" placeholder="Tên khách hàng"></ion-input>
                     </div>
                     <div class="input-div">
                         <span class="icon">
                           <ion-icon name="fs-phone-o"></ion-icon>
                         </span>
-                        <ion-input type="tel" [(ngModel)]="phone" formControlName="phone" placeholder="Số điện thoại" (ionChange)="checkForm()"></ion-input>
+                        <ion-input type="tel" [(ngModel)]="custormerPhone" formControlName="phone" placeholder="Số điện thoại"></ion-input>
                     </div>
                     <!-- <span *ngIf="!loginForm.controls.password.valid && isSubmitted" class="validate-message">{{passwordErrorMessage}}</span> -->
                 </div>
@@ -56,9 +56,10 @@
         </div>
         <div class="order-footer">
             <div class="fs-divider-full"></div>
+            <div class="error-message" *ngIf="errorMessage">{{errorMessage}}</div>
             <div class="button-group">
-                <button type="button" class="fs-button-outline">Hủy bỏ</button>
-                <button type="button" class="fs-button">Tạo order mới</button>
+                <button type="button" class="fs-button-outline" (click)="cancelOrder()" tappable>Hủy bỏ</button>
+                <button type="submit" class="fs-button" (click)="createOrder()" tappable>Tạo order mới</button>
             </div>
         </div>
     </div>
@@ -66,9 +67,9 @@
         <div class="action-sheet-backdrop" (click)="hideTableList()" tappable></div>
         <div class="action-sheet-content" [class.full-height]="viewMode == 1">
             <div class="sheet-header">
-                <span class="button-left" (click)="hideTableList()" tappable>Hủy bỏ</span>
+                <span class="button-left fs-primary" (click)="hideTableList()" tappable>Xong</span>
                 <!-- <span class="button-right">Xong</span> -->
-                <div class="custom-toggle" (click)="onClickToggleView()" tappale>
+                <div class="custom-toggle" (click)="onClickToggleView()" tappable>
                     <span class="custom-toggle-left-button custom-toggle-button" [class.active]="viewMode == 0"> <i class="fa fa-list-ul" aria-hidden="true"></i></span>
                     <span class="custom-toggle-right-button custom-toggle-button" [class.active]="viewMode == 1"> <i class="fa fa-map-o" aria-hidden="true"></i></span>
                 </div>
@@ -78,7 +79,7 @@
                     <div class="floor" [class.active]="floor.id == selectedFloor.id" (click)="selectFloor(floor)" *ngFor="let floor of floors">{{floor.name}}</div>
                 </div>
                 <div class="table-list" *ngIf="viewMode == 0">
-                    <div class="table status-{{table.status}}" (click)="selectTable(table)" *ngFor="let table of showTables">
+                    <div [class.selected]="table.selected" class="table status-{{table.status}}" (click)="selectTable(table)" *ngFor="let table of showTables">
                         <span class="table-name">{{table.name}}</span>
                         <ion-icon name="fs-table" class="table-icon"></ion-icon>
                     </div>

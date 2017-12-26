@@ -4,6 +4,7 @@ import { Order } from '../../../providers/food-staff/classes/order';
 import { AppControllerProvider } from '../../../providers/food-staff/app-controller/app-controller';
 import { Utils } from '../../../providers/app-utils';
 import { ModalController } from 'ionic-angular/components/modal/modal-controller';
+import { ORDER_STATE } from '../../../providers/food-staff/app-constant';
 
 declare var $: any;
 
@@ -17,15 +18,23 @@ declare var $: any;
 export class FsOrdersPage {
   searchKeyword = "";
   placholder = "Tìm order";
-  selectedOrderStatus = "1";
+  selectedOrderStatus = "0";
   orderStatusData = [
     {
-      id: 1,
-      name: "Đang phục vụ"
+      id: ORDER_STATE.CREATED,
+      name: "Đang đợi món"
     },
     {
-      id: 2,
-      name: "Đã hoàn tất"
+      id: ORDER_STATE.FOOD_DONE,
+      name: "Đã đủ món"
+    },
+    {
+      id: ORDER_STATE.PAID,
+      name: "Đã thanh toán"
+    },
+    {
+      id: ORDER_STATE.CANCELLED,
+      name: "Đã hủy"
     }
   ]
 
@@ -42,38 +51,14 @@ export class FsOrdersPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad FsOrdersPage');
-    this.loadIOrders();
-
+    this.loadOrders();
+    this.appController.orderChanel.asObservable().subscribe(data => {
+      this.loadOrders();
+    })
   }
 
-  loadIOrders() {
-    this.allOrders = this.appController.getAllOrders();
-    this.allOrders.map(elm => {
-
-      //table mapping
-      let tables = [];
-      let totalPersons = 0;
-      // elm.tableIds.forEach(id => {
-      //   let table = this.appController.getTableById(id);
-      //   if (table) {
-      //     totalPersons += table.currentPerson;
-      //     tables.push(table);
-      //   }
-      // });
-      elm["tables"] = tables;
-      if (tables.length > 0) {
-        elm["tableName"] = tables[0].name;
-        console.log("tables", tables);
-      }
-      elm["totalPersons"] = totalPersons;
-
-      //food mapping 
-      let totalCost = 0;
-      // elm.foods.forEach(food => {
-      //   totalCost += food.price * food.quantityInOrder;
-      // })
-      elm["totalCost"] = totalCost;
-    })
+  loadOrders() {
+    this.allOrders = this.appController.getAllOrders();      
     this.filterOrders();
   }
 
@@ -81,9 +66,10 @@ export class FsOrdersPage {
     this.orderCollection.clear();
     this.orderStatusData.forEach(element => {
       this.orderCollection.set(element.id, this.allOrders.filter(order => {
-        // return order.status == element.id;
+        return order.state == element.id;
       }));
     });
+
     this.showOrders = this.orderCollection.get(+this.selectedOrderStatus);
     console.log(this.showOrders);
   }
@@ -97,18 +83,18 @@ export class FsOrdersPage {
     return Utils.formatNumber(price, ".");
   }
 
-  gotoDetail() {
-    let modal = this.modalCtrl.create("OrderDetailPage");
+  gotoDetail(order) {
+    let modal = this.modalCtrl.create("OrderDetailPage", { order: order });
     modal.present();
   }
 
-  checkItem() {
-    let modal = this.modalCtrl.create("CheckItemPage");
+  checkItem(order) {
+    let modal = this.modalCtrl.create("CheckItemPage", { order: order });
     modal.present();
   }
 
   pay() {
 
   }
- 
+
 }

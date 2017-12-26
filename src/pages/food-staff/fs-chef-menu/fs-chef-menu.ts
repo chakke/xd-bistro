@@ -1,12 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
-/**
- * Generated class for the FsChefMenuPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { Product } from '../../../providers/food-staff/classes/product';
+import { AppControllerProvider } from '../../../providers/food-staff/app-controller/app-controller';
 
 @IonicPage()
 @Component({
@@ -15,11 +10,48 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class FsChefMenuPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  menuItems = [];
+  selectedMenu = { id: "3", title: "Đồ ăn" };
+  keyword = "";
+  products: Array<Product> = [];
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    private appController: AppControllerProvider) {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad FsChefMenuPage');
+    this.loadMenu()
+    this.loadProducts();
+    this.appController.productChanel.asObservable().subscribe(() => {
+      this.loadProducts();
+    })
+
   }
+
+  loadMenu() {
+    this.menuItems = this.appController.productCategories;
+    if (this.menuItems.length > 0)
+      this.selectedMenu = this.menuItems[0]
+  }
+
+  loadProducts() {
+    this.products = this.appController.products.filter(elm => {
+      return (elm.category == this.selectedMenu.id && (this.keyword == "" || (this.keyword && elm.keyword.includes(this.keyword.toLowerCase()))));
+    })
+    console.log("load product", this.products);
+  }
+
+  search(keyword) {
+    this.keyword = keyword;
+    this.loadProducts();
+  }
+
+
+  selectMenu(menu) {
+    this.selectedMenu = menu;
+    this.loadProducts();
+  }
+
 
 }
