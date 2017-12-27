@@ -141,7 +141,7 @@ export class ScrollDiv {
 
     constructor(id: string) {
         this.id = id;
-        this.element = document.querySelector(id);
+        this.element = <HTMLElement>document.querySelector(id);
     }
 
     setOption(option: ScrollOption) {

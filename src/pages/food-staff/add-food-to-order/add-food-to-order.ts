@@ -43,7 +43,7 @@ export class AddFoodToOrderPage {
 
   loadMenu() {
     this.menuItems = this.appController.productCategories;
-    console.log("menu", this.menuItems);
+    // console.log("menu", this.menuItems);
     if (this.menuItems.length > 0)
       this.selectedMenu = this.menuItems[0]
   }
@@ -52,7 +52,7 @@ export class AddFoodToOrderPage {
     this.products = this.appController.products.filter(elm => {
       return (elm.category == this.selectedMenu.id && (this.keyword == "" || (this.keyword && elm.keyword.includes(this.keyword.toLowerCase()))));
     })
-    console.log("load product", this.products);
+    // console.log("load product", this.products);
   }
 
   loadOrder() {    

@@ -47,7 +47,7 @@
                         <span class="icon">
                           <ion-icon name="fs-phone-o"></ion-icon>
                         </span>
-                        <ion-input type="tel" [(ngModel)]="custormerPhone" formControlName="phone" placeholder="Số điện thoại"></ion-input>
+                        <ion-input type="tel" [(ngModel)]="custormerPhone" [maxlength]="11" formControlName="phone" placeholder="Số điện thoại"></ion-input>
                     </div>
                     <!-- <span *ngIf="!loginForm.controls.password.valid && isSubmitted" class="validate-message">{{passwordErrorMessage}}</span> -->
                 </div>

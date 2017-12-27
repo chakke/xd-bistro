@@ -8,8 +8,8 @@ import { FirebaseQuery, FirebaseOrder } from '../interfaces/firebase';
 import { Observable } from 'rxjs/Observable';
 import { Order } from '../classes/order';
 import { Product, FoodOrder } from '../classes/product';
+import { AngularFirestore } from 'angularfire2/firestore';
 
-// import { AngularFirestore } from 'angularfire2/firestore';
 
 @Injectable()
 export class FirebaseServiceProvider {
@@ -19,22 +19,22 @@ export class FirebaseServiceProvider {
   isTestingPhase = false;
   todayString: string;
   constructor(
-    // private agf: AngularFirestore
+    private agf: AngularFirestore
   ) {
-    firebase.initializeApp({
-      apiKey: "AIzaSyDMEZoEtmor-T166lP9bGCR9FxqQP4eGik",
-      authDomain: "bistrodancerapp.firebaseapp.com",
-      databaseURL: "https://bistrodancerapp.firebaseio.com",
-      projectId: "bistrodancerapp",
-      storageBucket: "bistrodancerapp.appspot.com",
-      messagingSenderId: "773087969883"
-    });
+    // firebase.initializeApp({
+    //   apiKey: "AIzaSyDMEZoEtmor-T166lP9bGCR9FxqQP4eGik",
+    //   authDomain: "bistrodancerapp.firebaseapp.com",
+    //   databaseURL: "https://bistrodancerapp.firebaseio.com",
+    //   projectId: "bistrodancerapp",
+    //   storageBucket: "bistrodancerapp.appspot.com",
+    //   messagingSenderId: "773087969883"
+    // });
     this.db = firebase.firestore();
 
     let today = new Date();
     this.todayString = "";
     this.todayString += today.getDate() < 10 ? "0" + today.getDate() : today.getDate();
-    this.todayString += today.getMonth() + 1 < 10 ? "0" + (today.getMonth() + 1) : today.getMonth();
+    this.todayString += today.getMonth() + 1 < 10 ? "0" + (today.getMonth() + 1) : today.getMonth()+1;
     this.todayString += today.getFullYear();
 
     //test
@@ -50,6 +50,9 @@ export class FirebaseServiceProvider {
     return type + Date.now();
   }
 
+  getNewFirebaseDocumentId(){
+    return this.agf.createId();
+  }
   addDocument(collection: string, value: any, documentId?: string): Promise<any> {
     console.log("firebase add document", collection, documentId);
     // this.progressController.add();
@@ -68,6 +71,8 @@ export class FirebaseServiceProvider {
     }
 
   }
+
+
 
 
   getDocument(path: string): Promise<any> {
@@ -290,8 +295,9 @@ export class FirebaseServiceProvider {
   }
 
   addFoodOrder(restId: string, orderId: string, staffId: string, product: FoodOrder): Promise<any> {
+    var newId = this.getNewFirebaseDocumentId();
     return this.addDocument(FIREBASE_PATH.FOOD_ORDER + "/" + restId + "/" + this.todayString, {
-      id: "",
+      id: newId,
       order_id: orderId,
       staff_id: staffId,
       state: FOOD_ORDER_STATE.WAITING,
@@ -303,7 +309,7 @@ export class FirebaseServiceProvider {
       sale: product.sale,
       options: product.options,
       note: product.note,
-    });
+    },newId);
   }
 
 }
