@@ -19,22 +19,22 @@ export class FirebaseServiceProvider {
   isTestingPhase = false;
   todayString: string;
   constructor(
-    private agf: AngularFirestore
+    // private agf: AngularFirestore
   ) {
-    // firebase.initializeApp({
-    //   apiKey: "AIzaSyDMEZoEtmor-T166lP9bGCR9FxqQP4eGik",
-    //   authDomain: "bistrodancerapp.firebaseapp.com",
-    //   databaseURL: "https://bistrodancerapp.firebaseio.com",
-    //   projectId: "bistrodancerapp",
-    //   storageBucket: "bistrodancerapp.appspot.com",
-    //   messagingSenderId: "773087969883"
-    // });
+    firebase.initializeApp({
+      apiKey: "AIzaSyDMEZoEtmor-T166lP9bGCR9FxqQP4eGik",
+      authDomain: "bistrodancerapp.firebaseapp.com",
+      databaseURL: "https://bistrodancerapp.firebaseio.com",
+      projectId: "bistrodancerapp",
+      storageBucket: "bistrodancerapp.appspot.com",
+      messagingSenderId: "773087969883"
+    });
     this.db = firebase.firestore();
 
     let today = new Date();
     this.todayString = "";
     this.todayString += today.getDate() < 10 ? "0" + today.getDate() : today.getDate();
-    this.todayString += today.getMonth() + 1 < 10 ? "0" + (today.getMonth() + 1) : today.getMonth()+1;
+    this.todayString += (today.getMonth() + 1) < 10 ? "0" + (today.getMonth() + 1) : (today.getMonth() + 1);
     this.todayString += today.getFullYear();
 
     //test
@@ -51,7 +51,7 @@ export class FirebaseServiceProvider {
   }
 
   getNewFirebaseDocumentId(){
-    return this.agf.createId();
+    return this.db.collection('_').doc().id;
   }
   addDocument(collection: string, value: any, documentId?: string): Promise<any> {
     console.log("firebase add document", collection, documentId);
@@ -119,7 +119,7 @@ export class FirebaseServiceProvider {
     return new Promise((resolve, reject) => {
       this.db.doc(path).delete().then(success => {
         console.log("delete succsess", success);
-        resolve();
+        resolve({sucess: true});
         // this.progressController.subtract();
       }, error => {
         // this.progressController.subtract();
@@ -310,6 +310,21 @@ export class FirebaseServiceProvider {
       options: product.options,
       note: product.note,
     },newId);
+  }
+
+  removeFoodOrder(restId: string, staffId: string, product: FoodOrder) : Promise<any> {
+    return this.deleteDocument(FIREBASE_PATH.FOOD_ORDER + "/" + restId + "/" + this.todayString + "/" + product.id);
+  }
+
+  updateFoodOrder(restId: string, staffId: string, product: FoodOrder): Promise<any> {
+    return this.updateDocument(FIREBASE_PATH.FOOD_ORDER + "/" + restId + "/" + this.todayString + "/" + product.id, {
+      state: product.state,
+      amount_order: product.amountOrder,
+      amount_done: product.amountDone,
+      amount_return: product.amountReturn,
+      options: product.options,
+      note: product.note,
+    });
   }
 
 }

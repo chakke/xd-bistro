@@ -31,6 +31,7 @@ import { ProductSize, ProductState, ProductType, ProductUnit, ProductCategory } 
 import { ScrollController } from '../../scroll-controller';
 import { Floor } from '../classes/floor';
 import { FoodOrderPool } from '../object-pools/food-order-pool';
+import { Utils } from '../../app-utils';
 
 @Injectable()
 export class AppControllerProvider {
@@ -183,11 +184,25 @@ export class AppControllerProvider {
       if ((data == "foodOrder") && this.loadedData.order && this.loadedData.foodOrder) {
         this.foodOrders.forEach(foodOrder => {
           if (foodOrder.orderId && this.orderCollection.get(foodOrder.orderId)) {
-            this.orderCollection.get(foodOrder.orderId).foods.push(foodOrder);
-            this.orderCollection.get(foodOrder.orderId).totalPrice += foodOrder.price * foodOrder.amountOrder;
+            let order = this.orderCollection.get(foodOrder.orderId);
+            let index = order.foods.findIndex(elm => {
+              return elm.id == foodOrder.id;
+            })
+            if (index > -1) {
+              this.orderCollection.get(foodOrder.orderId).totalPrice += foodOrder.price * (order.foods[index].amountOrder - foodOrder.amountOrder);
+              Utils.copyObject(foodOrder, order.foods[index]);
+            } else {
+              order.foods.push(foodOrder);
+              this.orderCollection.get(foodOrder.orderId).totalPrice += foodOrder.price * foodOrder.amountOrder;
+            }
+
+          }
+          if (foodOrder.foodId) {
+            foodOrder.food = this.productCollection.get(foodOrder.foodId);
           }
         })
         dataChange.push("order");
+        dataChange.push("foodOrder");
       }
 
       if (dataChange.indexOf("order") >= 0) {
@@ -810,6 +825,14 @@ export class AppControllerProvider {
 
   addFoodOrder(orderId: string, product: FoodOrder): Promise<any> {
     return this.firebaseService.addFoodOrder(this.restid, orderId, this.user.id, product);
+  }
+
+  removeFoodOrder(product: FoodOrder) : Promise<any> {
+    return this.firebaseService.removeFoodOrder(this.restid, this.user.id, product);
+  }
+
+  updateFoodOrder(product: FoodOrder): Promise<any> {
+    return this.firebaseService.updateFoodOrder(this.restid, this.user.id, product);
   }
 
 

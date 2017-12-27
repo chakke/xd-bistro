@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { Order } from '../../../providers/food-staff/classes/order';
 import { AppControllerProvider } from '../../../providers/food-staff/app-controller/app-controller';
 import { ModalController } from 'ionic-angular/components/modal/modal-controller';
@@ -13,8 +13,9 @@ import { ModalController } from 'ionic-angular/components/modal/modal-controller
 export class OrderDetailPage {
   viewMode = "0";
   order: Order;
-
+  
   constructor(
+    private alertCtrl: AlertController,
     public navCtrl: NavController,
     public navParams: NavParams,
     private appController: AppControllerProvider,
@@ -38,4 +39,35 @@ export class OrderDetailPage {
     this.appController.pushPage("CheckItemPage");
   }
 
+  showAlert(food){
+    let alert = this.alertCtrl.create({
+      title:"Hủy món",
+      message: "Bạn có chắc chắn muốn hủy món ăn này không ?",
+      buttons: [
+        {
+          text: "Không",
+          handler: () =>{
+            console.log("Click không");
+            
+          }
+        },
+        { 
+          text: "Có",
+          handler : () =>{
+            console.log("Click Có");
+            this.removeDocument(food);
+          }
+        }
+      ]
+    });
+    alert.present();
+  }
+
+  removeDocument(food){
+    this.appController.showLoading();
+    this.appController.removeFoodOrder(food).then((res: any)=>{
+      if(res && res.sucess)
+      this.appController.hideLoading();
+    });
+  }
 }

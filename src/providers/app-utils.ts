@@ -152,4 +152,12 @@ export class Utils {
 
     return inside;
   };
+
+  public static copyObject(source: any, target: any) {
+    Object.keys(source).forEach(key => {
+      if (source.hasOwnProperty(key)) {
+        target[key] = source[key];
+      }
+    })
+  }
 }
