@@ -19,7 +19,7 @@ export class OrderDetailPage {
     public navParams: NavParams,
     private appController: AppControllerProvider,
     private modalCtrl: ModalController) {
-      this.order = this.navParams.get("order");
+    this.order = this.navParams.get("order");
   }
 
   ionViewDidLoad() {
@@ -27,7 +27,7 @@ export class OrderDetailPage {
   }
 
   addNewFood() {
-    let modal = this.modalCtrl.create("AddFoodToOrderPage");
+    let modal = this.modalCtrl.create("AddFoodToOrderPage", { orderId: this.order.id });
     modal.present();
 
   }

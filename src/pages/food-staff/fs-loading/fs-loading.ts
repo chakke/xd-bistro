@@ -14,6 +14,7 @@ export class FsLoadingPage {
   private assetSrc = "www/assets/food-staff/";
   imageArr = [];
   functionId = 0;
+  // rootPage = "AddFoodToOrderPage";
   rootPage = "FsMenuPage";
   subscriseber: ISubscription;
   constructor(

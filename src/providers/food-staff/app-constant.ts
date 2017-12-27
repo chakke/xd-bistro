@@ -177,7 +177,8 @@ export const FIREBASE_PATH = {
     TABLE: "tables",
     STAFF: "staffs",
     ORDER: "orders",
-    AREA: "areas"
+    AREA: "areas",
+    FOOD_ORDER: "foodorders"
 }
 
 export const FIREBASE_CONST = {

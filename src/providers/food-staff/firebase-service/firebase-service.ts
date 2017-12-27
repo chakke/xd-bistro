@@ -3,10 +3,11 @@ import { Injectable } from '@angular/core';
 import * as firebase from 'firebase';
 import 'firebase/firestore';
 
-import { FIREBASE_PATH } from "../app-constant";
+import { FIREBASE_PATH, FOOD_ORDER_STATE } from "../app-constant";
 import { FirebaseQuery, FirebaseOrder } from '../interfaces/firebase';
 import { Observable } from 'rxjs/Observable';
 import { Order } from '../classes/order';
+import { Product, FoodOrder } from '../classes/product';
 
 // import { AngularFirestore } from 'angularfire2/firestore';
 
@@ -262,6 +263,10 @@ export class FirebaseServiceProvider {
     return this.fetchCollection(FIREBASE_PATH.ORDER + "/" + restId + "/" + this.todayString);
   }
 
+  fetchAllFoodOrderInRestaurant(restId: string): Observable<any> {
+    return this.fetchCollection(FIREBASE_PATH.FOOD_ORDER + "/" + restId + "/" + this.todayString);
+  }
+
   fetchAreas(restId: string): Observable<any> {
     return this.fetchCollection(FIREBASE_PATH.RESTAURANT + "/" + restId + "/" + FIREBASE_PATH.AREA);
   }
@@ -281,6 +286,23 @@ export class FirebaseServiceProvider {
       customer_name: order.custormerName,
       customer_id: order.custormerId,
       number_customers: order.numberCustormer
+    });
+  }
+
+  addFoodOrder(restId: string, orderId: string, staffId: string, product: FoodOrder): Promise<any> {
+    return this.addDocument(FIREBASE_PATH.FOOD_ORDER + "/" + restId + "/" + this.todayString, {
+      id: "",
+      order_id: orderId,
+      staff_id: staffId,
+      state: FOOD_ORDER_STATE.WAITING,
+      amount_order: product.amountOrder,
+      amount_done: product.amountDone,
+      amount_return: product.amountReturn,
+      food_id: product.foodId,
+      price: product.price,
+      sale: product.sale,
+      options: product.options,
+      note: product.note,
     });
   }
 

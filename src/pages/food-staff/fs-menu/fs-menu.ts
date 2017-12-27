@@ -26,7 +26,6 @@ export class FsMenuPage {
     this.appController.productChanel.asObservable().subscribe(() => {
       this.loadProducts();
     })
-
   }
 
   loadMenu() {
