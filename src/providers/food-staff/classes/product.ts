@@ -8,7 +8,7 @@ import { Utils } from "../../app-utils";
  */
 
 export class Product {
-
+	private _firebaseId: string;
 	private _id: string;
 	private _album: string;
 	private _category: string;
@@ -44,6 +44,7 @@ export class Product {
 	}
 
 	reset() {
+		this._firebaseId = "";
 		this._album = "";
 		this._category = "";
 		this._code = "";
@@ -66,6 +67,7 @@ export class Product {
 
 	mappingFirebaseData(data) {
 		if (data) {
+			this._firebaseId = data.firebase_id;
 			this._album = data.album_id + "";
 			this._category = data.category + "";
 			this._code = data.code + "";
@@ -94,6 +96,14 @@ export class Product {
 			if (this._code)
 				this._keyword += SEPARATOR + this.code.toLowerCase();
 		}
+	}
+
+	public get firebaseId(): string {
+		return this._firebaseId;
+	}
+
+	public set firebaseId(value: string) {
+		this._firebaseId = value;
 	}
 
 
@@ -243,6 +253,8 @@ export class Product {
 }
 
 export class FoodOrder {
+	//path tren firebase
+	firebaseId: string;
 	/**ID của food order */
 	id: string;
 	/**ID cuar order */
@@ -275,6 +287,7 @@ export class FoodOrder {
 	}
 
 	reset() {
+		this.firebaseId = "";
 		this.id = "";
 		this.orderId = "";
 		this.staffId = "";
@@ -292,6 +305,7 @@ export class FoodOrder {
 
 	mappingFirebaseData(data) {
 		if (data) {
+			this.firebaseId = data.firebase_id;
 			this.id = data.id;
 			this.orderId = data.order_id;
 			this.staffId = data.staff_id;

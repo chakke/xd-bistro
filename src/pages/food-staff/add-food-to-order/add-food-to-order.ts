@@ -33,13 +33,13 @@ export class AddFoodToOrderPage {
 
   ionViewDidLoad() {
     this.loadMenu()
-    this.loadProducts();
-    this.appController.productChanel.asObservable().subscribe(() => {
-      this.loadProducts();
-    })
     this.loadOrder();
     this.appController.orderChanel.asObservable().subscribe(() => {
       this.loadOrder();
+    })
+    this.loadProducts();
+    this.appController.productChanel.asObservable().subscribe(() => {
+      this.loadProducts();
     })
   }
 
@@ -53,7 +53,19 @@ export class AddFoodToOrderPage {
   loadProducts() {
     this.products = this.appController.products.filter(elm => {
       return (elm.category == this.selectedMenu.id && (this.keyword == "" || (this.keyword && elm.keyword.includes(this.keyword.toLowerCase()))));
-    })
+    });
+    this.products.forEach(product => {
+      let index = this.orderedFood.findIndex(foodOrder => {
+        return foodOrder.foodId == product.id;
+      })
+      if (index >= 0) {
+        product["ordered"] = true;
+        product["amountOrder"] = this.orderedFood[index].amountOrder;
+
+      } else {
+        product["ordered"] = false;
+      }
+    });
     console.log("load product", this.appController.products, this.selectedMenu.id, this.keyword);
   }
 
@@ -72,8 +84,8 @@ export class AddFoodToOrderPage {
   }
 
   search(keyword) {
-    this.loadProducts();
     this.loadOrderedFood();
+    this.loadProducts();
   }
 
 
@@ -83,9 +95,9 @@ export class AddFoodToOrderPage {
     this.loadProducts();
   }
 
-  selectProduct(product) {
+  selectProduct(product, amount?: number) {
     product.highlight = true;
-    let modal = this.modalCtrl.create("KeypadModalPage", { number: 1 });
+    let modal = this.modalCtrl.create("KeypadModalPage", { number: (amount ? amount : 1) });
     modal.present();
     modal.onDidDismiss(data => {
       product.highlight = false;
@@ -94,7 +106,7 @@ export class AddFoodToOrderPage {
           return foodOrder.food.id == product.id;
         })
         if (index > -1) {
-          this.order.foods[index].amountOrder += data;
+          this.order.foods[index].amountOrder = data;
           this.appController.showLoading();
           this.appController.updateFoodOrder(this.order.foods[index]).then(data => {
             console.log("update food order successfully");

@@ -62,7 +62,8 @@ export class FsLoadingPage {
     return true;
   }
 
-  loadDataDone() { 
+  loadDataDone() {
+    this.rootPage = this.appController.menuItems[0].page;
     this.appController.setRootPage(this.rootPage);
   }
 

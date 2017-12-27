@@ -4,6 +4,7 @@ export class Floor {
     name: string;
     capacity: number;
     maps: Array<Map> = [];
+    firebaseId: string;
     constructor() {
     }
 
@@ -11,6 +12,7 @@ export class Floor {
         this.id = "0";
         this.name = "";
         this.maps = [];
+        this.firebaseId = "";
     }
 
     mappingFirebaseData(data) {
@@ -18,6 +20,7 @@ export class Floor {
             this.id = data.id;
             this.name = data.name;
             this.capacity = data.capacity;
+            this.firebaseId = data.firebase_id;
             // this.maps = data.maps;
         }
     }

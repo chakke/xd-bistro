@@ -54,13 +54,16 @@ export class FirebaseServiceProvider {
     console.log("firebase add document", collection, documentId);
     // this.progressController.add();
     if (documentId) {
+      value["firebase_id"] = documentId;
       return this.db.collection(collection).doc(documentId).set(value).then(success => {
         // this.progressController.subtract();
       }, error => {
         // this.progressController.subtract();
       })
     } else {
-      return this.db.collection(collection).add(value).then(success => {
+      let newRef = this.db.collection(collection).doc();
+      value["firebase_id"] = newRef.id;
+      return newRef.set(value).then(success => {
         // this.progressController.subtract();
       }, error => {
         // this.progressController.subtract();
@@ -69,7 +72,6 @@ export class FirebaseServiceProvider {
 
   }
 
-
   getDocument(path: string): Promise<any> {
     console.log("firebase get document", path);
     // this.progressController.add();
@@ -77,8 +79,7 @@ export class FirebaseServiceProvider {
       this.db.doc(path).get().then(success => {
         console.log("get document succsess", success.data());
         if (success.exists) {
-          let result = success.data();
-          result.id = success.id;
+          let result = success.data(); 
           resolve(result);
         } else {
           reject("Bản ghi không tồn tại");
@@ -146,8 +147,7 @@ export class FirebaseServiceProvider {
         console.log("firebase get collection success", querySnapshot);
         let result = [];
         querySnapshot.forEach(doc => {
-          let element = doc.data();
-          element.id = doc.id;
+          let element = doc.data(); 
           result.push(element);
         })
         // this.progressController.subtract();

@@ -32,16 +32,16 @@ export class UserContant {
         SECURITY: 7
     }
 
-    public static STAFF_STAE = {
-        ACTIVE : 0,
-        UNACTIVE : 1,
-        BLOCKED : 2
+    public static STAFF_STATE = {
+        ACTIVE: 0,
+        UNACTIVE: 1,
+        BLOCKED: 2
     }
 
     public static STAFF_TYPE = {
-        PARTIME : 0,
-        FULLTIME : 1,
-        ONETIME : 2
+        PARTIME: 0,
+        FULLTIME: 1,
+        ONETIME: 2
     }
 
     public static AVATAR_IMAGE = "https://i.pinimg.com/originals/7c/c7/a6/7cc7a630624d20f7797cb4c8e93c09c1.png";
@@ -186,6 +186,25 @@ export const FIREBASE_CONST = {
         ADD: "added",
         MODIFY: "modified",
         REMOVE: "removed"
+    }
+}
+
+export const FOOD_STATE = {
+    NOT_YET: {
+        id: 0,
+        value: "Chưa kinh doanh"
+    },
+    AVAILABLE: {
+        id: 1,
+        value: "Sẵn sàng phục vụ"
+    },
+    OUT_OF_STOCK: {
+        id: 2,
+        value: "Hết hàng"
+    },
+    OUT_OF_BUSINESS: {
+        id: 3,
+        value: "Ngừng kinh doanh"
     }
 }
 

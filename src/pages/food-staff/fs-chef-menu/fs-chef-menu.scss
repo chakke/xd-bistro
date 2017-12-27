@@ -97,13 +97,14 @@ page-fs-chef-menu {
                 }
             }
             .col-button {
+                padding: 0;
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                .button-select {
+                .fs-button {
+                    padding: 4px;
                     width: 100%;
                     text-align: center;
-                    padding: 3px 5px;
                 }
             }
             .sold-out {

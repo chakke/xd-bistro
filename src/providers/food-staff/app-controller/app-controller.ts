@@ -26,7 +26,7 @@ import { Observable } from 'rxjs/Observable';
 import { FirebaseServiceProvider } from '../firebase-service/firebase-service';
 import { Product, FoodOrder } from '../classes/product';
 import { ProductPool } from '../object-pools/product-pool';
-import { ProductSize, ProductState, ProductType, ProductUnit, ProductCategory } from '../interfaces/product';
+import { ProductSize, ProductType, ProductUnit, ProductCategory } from '../interfaces/product';
 
 import { ScrollController } from '../../scroll-controller';
 import { Floor } from '../classes/floor';
@@ -47,7 +47,6 @@ export class AppControllerProvider {
     productCategory: false,
     productUnit: false,
     productType: false,
-    productState: false,
     productSize: false,
     productSale: false,
     productOption: false,
@@ -88,7 +87,7 @@ export class AppControllerProvider {
 
   productCategories: Array<ProductCategory> = [];
   productSizes: Array<ProductSize> = [];
-  productStates: Array<ProductState> = [];
+
   productTypes: Array<ProductType> = [];
   productUnits: Array<ProductUnit> = [];
 
@@ -336,8 +335,6 @@ export class AppControllerProvider {
           this.fetchProductSales();
           //Get all product size in restaurant
           this.fetchProductSize();
-          //Get all product state in restaurant
-          this.fetchProductState();
           //Get all product type in restaurant
           this.fetchProductType();
           //Get all product unit in restaurant
@@ -367,7 +364,7 @@ export class AppControllerProvider {
     //Fetch product
     this.firebaseService.fetchAllStaffInRestaurant(this.restid).subscribe(data => {
       data.docChanges.forEach(change => {
-        let staffData = change.doc.data();
+        let staffData = change.doc.data(); 
         if (change.type == FIREBASE_CONST.DOCUMENT_CHANGE_TYPE.ADD) {
           let staff = this.userPool.getItem(0);
           staff.mappingFirebaseData(staffData);
@@ -533,44 +530,6 @@ export class AppControllerProvider {
     })
   }
 
-  fetchProductState() {
-    this.firebaseService.fetchProductStates(this.restid).subscribe(data => {
-      data.docChanges.forEach(change => {
-        let stateData = change.doc.data();
-        if (change.type == FIREBASE_CONST.DOCUMENT_CHANGE_TYPE.ADD) {
-          let state: ProductState = {
-            id: stateData.id,
-            code: stateData.code,
-            name: stateData.name
-          };
-          this.productStates.push(state);
-        }
-        if (change.type == FIREBASE_CONST.DOCUMENT_CHANGE_TYPE.MODIFY) {
-          let index = this.products.findIndex(elm => {
-            return elm.id == stateData.id;
-          })
-          if (index > -1) {
-            this.productStates[index] = {
-              id: stateData.id,
-              code: stateData.code,
-              name: stateData.name
-            };
-          }
-        }
-        if (change.type == FIREBASE_CONST.DOCUMENT_CHANGE_TYPE.REMOVE) {
-          let index = this.products.findIndex(elm => {
-            return elm.id == stateData.id;
-          })
-          if (index > -1) {
-            this.productStates.splice(index, 1);
-          }
-        }
-      });
-      this.loadedData.productState = true;
-      this.loadedDataChanel.next("Hàng mới về");
-      console.log("productStates fetched successfully", this.productStates);
-    })
-  }
 
   fetchProductType() {
     this.firebaseService.fetchProductTypes(this.restid).subscribe(data => {
