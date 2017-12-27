@@ -666,7 +666,7 @@ export class AppControllerProvider {
       this.orders.forEach(order => {
         this.orderCollection.set(order.id, order);
       })
-
+      console.log("Order in Firebase changed");
       this.loadedData.order = true;
       this.orderChanel.next("Tùng Sơn vừa ra video mới!");
       this.loadedDataChanel.next("order");

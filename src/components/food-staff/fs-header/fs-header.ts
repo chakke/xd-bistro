@@ -42,7 +42,7 @@ export class FsHeaderComponent {
     this.getOrderLength();
     let showPage = <HTMLElement>this.el.nativeElement.closest('.ion-page');
     if(showPage){
-      this.scrollContent = showPage.querySelector('.scroll-content');
+      this.scrollContent = <HTMLElement>showPage.querySelector('.scroll-content');
     }
   }
   search() {
