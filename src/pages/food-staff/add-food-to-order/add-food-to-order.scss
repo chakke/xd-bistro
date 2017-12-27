@@ -47,6 +47,9 @@ page-add-food-to-order {
         .item {
             padding: 10px;
             background: map-get($map: $FSColors, $key: white);
+            &.highlight {
+                background-color: #FFECB3 !important;
+            }
             &:nth-child(2n) {
                 background-color: map-get($map: $FSColors, $key: background);
             }
@@ -86,11 +89,13 @@ page-add-food-to-order {
         }
     }
     .menu-zone {
-        padding-top: 5px;
         .item {
             padding: 10px;
             background: map-get($map: $FSColors, $key: white);
             position: relative;
+            &.highlight {
+                background-color: #FFECB3 !important;
+            }
             &:nth-child(2n) {
                 background-color: map-get($map: $FSColors, $key: background);
             }

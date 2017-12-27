@@ -34,7 +34,7 @@ export class FirebaseServiceProvider {
     let today = new Date();
     this.todayString = "";
     this.todayString += today.getDate() < 10 ? "0" + today.getDate() : today.getDate();
-    this.todayString += today.getMonth() + 1 < 10 ? "0" + (today.getMonth() + 1) : today.getMonth();
+    this.todayString += (today.getMonth() + 1) < 10 ? "0" + (today.getMonth() + 1) : (today.getMonth() + 1);
     this.todayString += today.getFullYear();
 
     //test
@@ -301,6 +301,17 @@ export class FirebaseServiceProvider {
       food_id: product.foodId,
       price: product.price,
       sale: product.sale,
+      options: product.options,
+      note: product.note,
+    });
+  }
+
+  updateFoodOrder(restId: string, staffId: string, product: FoodOrder): Promise<any> {
+    return this.updateDocument(FIREBASE_PATH.FOOD_ORDER + "/" + restId + "/" + this.todayString + "/" + product.id, {
+      state: product.state,
+      amount_order: product.amountOrder,
+      amount_done: product.amountDone,
+      amount_return: product.amountReturn,
       options: product.options,
       note: product.note,
     });
