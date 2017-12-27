@@ -79,7 +79,7 @@ export class FirebaseServiceProvider {
       this.db.doc(path).get().then(success => {
         console.log("get document succsess", success.data());
         if (success.exists) {
-          let result = success.data(); 
+          let result = success.data();
           resolve(result);
         } else {
           reject("Bản ghi không tồn tại");
@@ -147,7 +147,7 @@ export class FirebaseServiceProvider {
         console.log("firebase get collection success", querySnapshot);
         let result = [];
         querySnapshot.forEach(doc => {
-          let element = doc.data(); 
+          let element = doc.data();
           result.push(element);
         })
         // this.progressController.subtract();
@@ -315,6 +315,10 @@ export class FirebaseServiceProvider {
       options: product.options,
       note: product.note,
     });
+  }
+
+  updateProduct(restId: string, firebaseId: string, value: any): Promise<any> {
+    return this.updateDocument(FIREBASE_PATH.PRODUCT + "/" + restId + "/" + FIREBASE_PATH.FOOD + "/" + firebaseId, value);
   }
 
 }

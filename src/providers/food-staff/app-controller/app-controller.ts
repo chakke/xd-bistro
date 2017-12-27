@@ -790,6 +790,10 @@ export class AppControllerProvider {
     return this.firebaseService.updateFoodOrder(this.restid, this.user.id, product);
   }
 
+  updateProduct(firebaseId: string, value){
+    return this.firebaseService.updateProduct(this.restid, firebaseId, value);
+  }
+
 
   showToast(message: string, duration?: number, position?: string) {
     if (this.toast) this.hideToast();
