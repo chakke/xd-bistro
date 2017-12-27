@@ -66,7 +66,7 @@ export class MyApp {
       if (this.rootPages.indexOf(event.id) == -1) {
         if (!this.user) {
           //Un-comment this for production
-          // this.appController.setRootPage(this.rootPage);
+          this.appController.setRootPage(this.rootPage);
         }
       }
     })

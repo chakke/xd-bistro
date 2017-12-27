@@ -2,6 +2,7 @@ import { FoodInOrder } from "../interfaces/food-in-order";
 import { Table, TableInOrder } from "./table";
 import { Staff } from "./user";
 import { StaffInOrder } from "../interfaces/staff-in-order";
+import { FoodOrder } from "./product";
 
 export class Order {
 	/**ID của Order */
@@ -41,6 +42,11 @@ export class Order {
 	/** ID của khách hàng, nếu đã tồn tại trên hệ thống */
 	custormerId: string;
 
+	/**Những trường không lưu trên data base. Sẽ được thêm vào khi lấy đủ data */
+	// Food
+	foods: Array<FoodOrder>;
+	totalPrice: number;
+
 	constructor() {
 		this.reset();
 	}
@@ -63,6 +69,9 @@ export class Order {
 		this.custormerName = "";
 		this.custormerPhone = "";
 		this.custormerId = "";
+
+		this.foods = [];
+		this.totalPrice = 0;
 	}
 
 	mappingFirebaseData(data) {

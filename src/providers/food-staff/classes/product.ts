@@ -241,3 +241,70 @@ export class Product {
 		this._keyword = value;
 	}
 }
+
+export class FoodOrder {
+	/**ID của food order */
+	id: string;
+	/**ID cuar order */
+	orderId: string;
+	/**Nhân viên gọi món */
+	staffId: string;
+	/**Trạng thái của food trong order , xem thêm FoodOrderState*/
+	state: number;
+	/**Số lượng order */
+	amountOrder: number;
+	/**Số lượng đã chế biến xong */
+	amountDone: number;
+	/**Số lượng đã trả cho khách */
+	amountReturn: number;
+	/** Id món ăn */
+	foodId: string;
+	/**Món ăn */
+	food: Product;
+	/**Tổng tiền toàn bộ của món ăn = amout * food-saled-price */
+	price: number;
+	/**Tổng toàn bộ chiết khấu trên món ăn đó */
+	sale: number;
+	/**Danh sách id của các options */
+	options: Array<string>;
+	/**Ghi chú */
+	note: string;
+
+	constructor() {
+		this.reset();
+	}
+
+	reset() {
+		this.id = "";
+		this.orderId = "";
+		this.staffId = "";
+		this.state = 0;
+		this.amountOrder = 0;
+		this.amountDone = 0;
+		this.amountReturn = 0;
+		this.food = null;
+		this.foodId = "";
+		this.price = 0;
+		this.sale = 0;
+		this.options = [];
+		this.note = "";
+	}
+
+	mappingFirebaseData(data) {
+		if (data) {
+			this.id = data.id;
+			this.orderId = data.order_id;
+			this.staffId = data.staff_id;
+			this.state = data.state;
+			this.amountOrder = data.amount_order;
+			this.amountDone = data.amount_done;
+			this.amountReturn = data.amount_return;
+			this.foodId = data.food_id;
+			this.food = null;
+			this.price = data.price;
+			this.sale = data.sale;
+			this.options = data.options;
+			this.note = data.note;
+		}
+	}
+}

@@ -24,12 +24,13 @@ import { Map as UIMap } from '../classes/map';
 import { MapPool } from '../object-pools/map-pool';
 import { Observable } from 'rxjs/Observable';
 import { FirebaseServiceProvider } from '../firebase-service/firebase-service';
-import { Product } from '../classes/product';
+import { Product, FoodOrder } from '../classes/product';
 import { ProductPool } from '../object-pools/product-pool';
 import { ProductSize, ProductState, ProductType, ProductUnit, ProductCategory } from '../interfaces/product';
 
 import { ScrollController } from '../../scroll-controller';
 import { Floor } from '../classes/floor';
+import { FoodOrderPool } from '../object-pools/food-order-pool';
 
 @Injectable()
 export class AppControllerProvider {
@@ -52,7 +53,8 @@ export class AppControllerProvider {
     table: false,
     order: false,
     area: false,
-    staff: false
+    staff: false,
+    foodOrder: false
   }
 
   user: User;
@@ -68,6 +70,10 @@ export class AppControllerProvider {
   orders: Array<Order> = [];
   orderPool: OrderPool;
   orderCollection: Map<string, Order> = new Map<string, Order>();
+
+  foodOrders: Array<FoodOrder> = [];
+  foodOrderPool: FoodOrderPool;
+  foodOrderCollection: Map<string, FoodOrder> = new Map<string, FoodOrder>();
 
   maps: Array<UIMap> = [];
   mapPool: MapPool;
@@ -101,6 +107,7 @@ export class AppControllerProvider {
   menuChanel: Subject<Array<Menu>> = new Subject<Array<Menu>>();
   userChanel: Subject<User> = new Subject<User>();
   orderChanel: Subject<string> = new Subject<string>();
+  foodOrderChanel: Subject<string> = new Subject<string>();
 
   scrollController: ScrollController = new ScrollController();
 
@@ -120,6 +127,9 @@ export class AppControllerProvider {
     this.orderPool = new OrderPool();
     this.orderPool.initialize(200);
 
+    this.foodOrderPool = new FoodOrderPool();
+    this.foodOrderPool.initialize(1000);
+
     this.mapPool = new MapPool();
     this.loadMaps();
 
@@ -131,6 +141,7 @@ export class AppControllerProvider {
 
     //Mapping data    
     this.loadedDataChanel.asObservable().subscribe((data) => {
+      let dataChange = [];
       //Mapping table to order
       if ((data == "order" || data == "table") && this.loadedData.order && this.loadedData.table) {
         this.orders = this.orders.map(order => {
@@ -142,6 +153,8 @@ export class AppControllerProvider {
           }
           return order;
         })
+        dataChange.push("order");
+
       }
 
       // Mapping staff to order
@@ -152,6 +165,7 @@ export class AppControllerProvider {
           }
           return order;
         })
+        dataChange.push("order");
       }
 
       //Mapping area to order
@@ -162,6 +176,22 @@ export class AppControllerProvider {
           }
           return order;
         })
+        dataChange.push("order");
+      }
+
+      //Mapping foodOrder to order
+      if ((data == "foodOrder") && this.loadedData.order && this.loadedData.foodOrder) {
+        this.foodOrders.forEach(foodOrder => {
+          if (foodOrder.orderId && this.orderCollection.get(foodOrder.orderId)) {
+            this.orderCollection.get(foodOrder.orderId).foods.push(foodOrder);
+            this.orderCollection.get(foodOrder.orderId).totalPrice += foodOrder.price * foodOrder.amountOrder;
+          }
+        })
+        dataChange.push("order");
+      }
+
+      if (dataChange.indexOf("order") >= 0) {
+        this.orderChanel.next("data Change");
       }
     })
 
@@ -306,6 +336,9 @@ export class AppControllerProvider {
           //Get all order in restaurant
           this.fetchOrder();
 
+          //Get all FoodOrder
+          this.fetchFoodOrder();
+
           //Get all area in restaurant
           this.fetchArea();
         }
@@ -323,6 +356,7 @@ export class AppControllerProvider {
         if (change.type == FIREBASE_CONST.DOCUMENT_CHANGE_TYPE.ADD) {
           let staff = this.userPool.getItem(0);
           staff.mappingFirebaseData(staffData);
+          staff.id = change.doc.id;
           this.staffes.push(staff);
         }
         if (change.type == FIREBASE_CONST.DOCUMENT_CHANGE_TYPE.MODIFY) {
@@ -359,6 +393,7 @@ export class AppControllerProvider {
         if (change.type == FIREBASE_CONST.DOCUMENT_CHANGE_TYPE.ADD) {
           let product = this.productPool.getItem();
           product.mappingFirebaseData(foodData);
+          product.id = change.doc.id;
           this.products.push(product);
         }
         if (change.type == FIREBASE_CONST.DOCUMENT_CHANGE_TYPE.MODIFY) {
@@ -606,6 +641,7 @@ export class AppControllerProvider {
         if (change.type == FIREBASE_CONST.DOCUMENT_CHANGE_TYPE.ADD) {
           let table = this.tablePool.getItem();
           table.mappingFirebaseData(tableData);
+          table.id = change.doc.id;
           this.tables.push(table);
         }
         if (change.type == FIREBASE_CONST.DOCUMENT_CHANGE_TYPE.MODIFY) {
@@ -644,6 +680,7 @@ export class AppControllerProvider {
         if (change.type == FIREBASE_CONST.DOCUMENT_CHANGE_TYPE.ADD) {
           let order = this.orderPool.getItem();
           order.mappingFirebaseData(orderData);
+          order.id = change.doc.id;
           this.orders.push(order);
         }
         if (change.type == FIREBASE_CONST.DOCUMENT_CHANGE_TYPE.MODIFY) {
@@ -668,8 +705,47 @@ export class AppControllerProvider {
       })
 
       this.loadedData.order = true;
-      this.orderChanel.next("Tùng Sơn vừa ra video mới!");
+      // this.orderChanel.next("Tùng Sơn vừa ra video mới!");
       this.loadedDataChanel.next("order");
+      console.log("ordes fetched successfully", this.orders);
+    })
+  }
+
+  fetchFoodOrder() {
+    //Fetch order
+    this.firebaseService.fetchAllFoodOrderInRestaurant(this.restid).subscribe(data => {
+      data.docChanges.forEach(change => {
+        let foodOrderData = change.doc.data();
+        if (change.type == FIREBASE_CONST.DOCUMENT_CHANGE_TYPE.ADD) {
+          let foodOrder = this.foodOrderPool.getItem();
+          foodOrder.mappingFirebaseData(foodOrderData);
+          foodOrder.id = change.doc.id;
+          this.foodOrders.push(foodOrder);
+        }
+        if (change.type == FIREBASE_CONST.DOCUMENT_CHANGE_TYPE.MODIFY) {
+          let index = this.foodOrders.findIndex(elm => {
+            return elm.id == foodOrderData.id;
+          })
+          if (index > -1) {
+            this.foodOrders[index].reset();
+            this.foodOrders[index].mappingFirebaseData(foodOrderData);
+          }
+        }
+        if (change.type == FIREBASE_CONST.DOCUMENT_CHANGE_TYPE.REMOVE) {
+          let index = this.orders.findIndex(elm => {
+            return elm.id == foodOrderData.id;
+          })
+          if (index > -1) {
+            this.foodOrders.splice(index, 1);
+          }
+        }
+      });
+      this.foodOrders.forEach(foodOrder => {
+        this.foodOrderCollection.set(foodOrder.id, foodOrder);
+      })
+
+      this.loadedData.foodOrder = true;
+      this.loadedDataChanel.next("foodOrder");
       console.log("ordes fetched successfully", this.orders);
     })
   }
@@ -681,6 +757,7 @@ export class AppControllerProvider {
         if (change.type == FIREBASE_CONST.DOCUMENT_CHANGE_TYPE.ADD) {
           let floor: Floor = new Floor();
           floor.mappingFirebaseData(areaData);
+          floor.id = change.doc.id;
           this.floors.push(floor);
         }
         if (change.type == FIREBASE_CONST.DOCUMENT_CHANGE_TYPE.MODIFY) {
@@ -729,6 +806,10 @@ export class AppControllerProvider {
 
   addOrder(order: Order): Promise<any> {
     return this.firebaseService.addOrder(this.restid, order);
+  }
+
+  addFoodOrder(orderId: string, product: FoodOrder): Promise<any> {
+    return this.firebaseService.addFoodOrder(this.restid, orderId, this.user.id, product);
   }
 
 

@@ -14,8 +14,8 @@
             </span>
         </div>
         <div class="menu">
-            <div class="menu-item" [class.active]="menu.active" (click)="selectMenu(menu)" *ngFor="let menu of menuItems">
-                <span>{{menu.title}}</span>
+            <div class="menu-item" [class.active]="menu.id == selectedMenu.id" (click)="selectMenu(menu)" *ngFor="let menu of menuItems">
+                <span>{{menu.name}}</span>
             </div>
         </div>
         <div class="segment-content">
@@ -61,27 +61,26 @@
                 <div class="fs-divider"></div>
             </div>
             <div class="menu-zone">
-                <div class="item food">
+                <div class="item food" *ngFor="let product of products">
                     <ion-row>
                         <ion-col col-3 class="col-image">
-                            <img src="https://cdn5.norecipes.com/wp-content/uploads/2012/10/23052346/recipespaghetti-meat-sauce-recipe.1024x1024-1.jpg" alt="">
+                            <img src="{{product.image}}" alt="">
                         </ion-col>
                         <ion-col col-6 class="col-detail">
-                            <div class="code">(BS05)</div>
+                            <div class="code">({{product.id}})</div>
                             <div class="name">
-                                Mỳ Ý sốt bò băm
-                                <span class="fs-green">(x2)</span>
+                                {{product.name}}
                             </div>
                         </ion-col>
                         <ion-col class="col-button" col-3>
-                            <button class="button-select fs-button-outline">
+                            <button class="button-select fs-button-outline" (click)="selectProduct(product)" tappable>
                                 Chọn
                             </button>
                         </ion-col>
                     </ion-row>
-                    <div class="sold-out">
+                    <!-- <div class="sold-out">
                         <img src="assets/food-staff/images/icon/out_stock.png" alt="">
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
