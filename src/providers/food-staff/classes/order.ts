@@ -5,6 +5,8 @@ import { StaffInOrder } from "../interfaces/staff-in-order";
 import { FoodOrder } from "./product";
 
 export class Order {
+	// path trên firebase
+	firebaseId: string;
 	/**ID của Order */
 	id: string;
 	/**Mô tả của order */
@@ -52,6 +54,7 @@ export class Order {
 	}
 
 	reset() {
+		this.firebaseId = "";
 		this.areaId = "";
 		this.areaName = "";
 		this.descrition = "";
@@ -76,6 +79,7 @@ export class Order {
 
 	mappingFirebaseData(data) {
 		if (data) {
+			this.firebaseId = data.firebase_id;
 			this.areaId = data.area_id;
 			this.descrition = data.area_description;
 			this.id = data.id;

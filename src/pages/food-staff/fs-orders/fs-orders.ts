@@ -72,7 +72,7 @@ export class FsOrdersPage {
     });
 
     this.showOrders = this.orderCollection.get(+this.selectedOrderStatus);
-    console.log(this.showOrders);
+    console.log("showOrders",this.showOrders);
   }
 
   addNewOrders() {

@@ -42,7 +42,7 @@
                 <div class="fs-divider" *ngIf="orderedFood.length > 0"></div>
             </div>
             <div class="menu-zone">
-                <div class="item food" [class.highlight]="product.highlight" *ngFor="let product of products">
+                <div class="item food" [class.highlight]="product.highlight" *ngFor="let product of products" [hidden]="product.ordered">
                     <ion-row>
                         <ion-col col-3 class="col-image">
                             <img src="{{product.image}}" alt="">
@@ -54,12 +54,15 @@
                             </div>
                         </ion-col>
                         <ion-col class="col-button" col-3>
-                            <button class="button-select fs-button-outline" (click)="selectProduct(product)" tappable>
+                            <button class="button-select fs-button-outline" (click)="selectProduct(product)" tappable *ngIf="!product.ordered">
                                 Chọn
                             </button>
+                            <!-- <button class="button-select fs-button" (click)="selectProduct(product, product.amountOrder)" tappable *ngIf="product.ordered">
+                                Đã Chọn
+                            </button> -->
                         </ion-col>
                     </ion-row>
-                    <!-- <div class="sold-out">
+                    <!-- <div class="sold-out" >
                         <img src="assets/food-staff/images/icon/out_stock.png" alt="">
                     </div> -->
                 </div>

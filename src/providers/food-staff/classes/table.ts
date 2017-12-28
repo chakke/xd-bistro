@@ -12,6 +12,7 @@ export class Table {
     private _status: string;
     private _areaId: string;
     private _areaName: string;
+    private _firebaseId: string;
 
     constructor() {
         this.reset();
@@ -22,6 +23,7 @@ export class Table {
     }
 
     public reset() {
+        this._firebaseId = "";
         this._id = "0";
         this._name = "name";
         this._type = "0";
@@ -32,6 +34,7 @@ export class Table {
     }
 
     public mappingFirebaseData(data) {
+        this._firebaseId = data.firebase_id;
         this._areaId = data.area_id + "";
         this._areaName = data.area_name + "";
         this._id = data.id + "";
@@ -40,6 +43,15 @@ export class Table {
         this._status = data.state + "";
         this._type = data.type + "";
     }
+
+    public get firebaseId(): string {
+        return this._firebaseId;
+    }
+
+    public set firebaseId(value: string) {
+        this._firebaseId = value;
+    }
+
 
     public get id(): string {
         return this._id;

@@ -14,8 +14,14 @@ export class FsLoginPage {
 
   loginType: number = 2; //1 == Đăng nhập bằng tài khoản. 2 == Đăng nhập bằng mạng xã hội
 
+  // Nhan vien chay ban
   account = "xuanduannguyen@gmail.com";
   password = "123456";
+
+  //Nhan vien bep bar
+  // account = "duandz@gmail.com";
+  // password = "123456";
+
   loginForm: FormGroup;
   isSubmitted = false;
   accountErrorMessage = "";

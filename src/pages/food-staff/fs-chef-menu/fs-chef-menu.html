@@ -15,10 +15,10 @@
             <div class="food-list">
                 <div class="item food" *ngFor="let product of products">
                     <ion-row>
-                        <ion-col col-3 class="col-image">
+                        <ion-col col-2 class="col-image">
                             <img src="{{product.image}}" alt="">
                         </ion-col>
-                        <ion-col col-9 class="col-detail">
+                        <ion-col col-7 class="col-detail">
                             <div class="name">
                                 <span class="fs-tilt">
                                       ({{product.id}})
@@ -34,6 +34,10 @@
                               <span class="old-price">100.000 đ</span>
                               <span class="sale-off">(-10%)</span>
                           </div> -->
+                        </ion-col>
+                        <ion-col col-3 class="col-button">
+                            <button class="fs-button" *ngIf="product.state == productState.AVAILABLE.id" (click)="changeState(product, productState.OUT_OF_STOCK.id)" tappable>Báo hết</button>
+                            <button class="fs-button fs-button-outline" *ngIf="product.state == productState.OUT_OF_STOCK.id" (click)="changeState(product, productState.AVAILABLE.id)" tappable>Báo hết</button>
                         </ion-col>
                     </ion-row>
                 </div>
