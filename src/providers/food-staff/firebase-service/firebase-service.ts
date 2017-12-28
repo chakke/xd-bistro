@@ -55,6 +55,7 @@ export class FirebaseServiceProvider {
     // this.progressController.add();
     if (documentId) {
       value["firebase_id"] = documentId;
+      value["id"] = documentId;
       return this.db.collection(collection).doc(documentId).set(value).then(success => {
         // this.progressController.subtract();
       }, error => {
@@ -63,6 +64,7 @@ export class FirebaseServiceProvider {
     } else {
       let newRef = this.db.collection(collection).doc();
       value["firebase_id"] = newRef.id;
+      value["id"] = newRef.id;
       return newRef.set(value).then(success => {
         // this.progressController.subtract();
       }, error => {
@@ -303,6 +305,7 @@ export class FirebaseServiceProvider {
       sale: product.sale,
       options: product.options,
       note: product.note,
+      time_create: product.timeCreate
     });
   }
 

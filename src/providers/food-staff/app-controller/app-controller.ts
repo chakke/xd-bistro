@@ -75,6 +75,9 @@ export class AppControllerProvider {
   foodOrderPool: FoodOrderPool;
   foodOrderCollection: Map<string, FoodOrder> = new Map<string, FoodOrder>();
 
+  chefFoodOrders: Array<FoodOrder> = [];
+  // chefFoodOrderCollection: Map<string, FoodOrder> = new Map<string, FoodOrder>();
+
   maps: Array<UIMap> = [];
   mapPool: MapPool;
 
@@ -179,8 +182,10 @@ export class AppControllerProvider {
         dataChange.push("order");
       }
 
-      //Mapping foodOrder to order
+      //Mapping foodOrder to order and chefFoodOrder
       if ((data == "foodOrder") && this.loadedData.order && this.loadedData.foodOrder) {
+        console.log("food order change");
+        this.chefFoodOrders = [];
         this.foodOrders.forEach(foodOrder => {
           if (foodOrder.orderId && this.orderCollection.get(foodOrder.orderId)) {
             let order = this.orderCollection.get(foodOrder.orderId);
@@ -199,6 +204,16 @@ export class AppControllerProvider {
           if (foodOrder.foodId) {
             foodOrder.food = this.productCollection.get(foodOrder.foodId);
           }
+          if (foodOrder.foodId) {
+            let index = this.chefFoodOrders.findIndex(elm => {
+              return elm.foodId == foodOrder.foodId && elm.state == foodOrder.state;
+            })
+            if (index >= 0) {
+              this.chefFoodOrders[index].amountOrder += foodOrder.amountOrder;
+            } else {
+              this.chefFoodOrders.push(foodOrder);
+            }
+          }
         })
         dataChange.push("order");
         dataChange.push("foodOrder");
@@ -206,6 +221,9 @@ export class AppControllerProvider {
 
       if (dataChange.indexOf("order") >= 0) {
         this.orderChanel.next("data Change");
+      }
+      if (dataChange.indexOf("foodOrder") >= 0) {
+        this.foodOrderChanel.next("data changed");
       }
     })
 
@@ -364,7 +382,7 @@ export class AppControllerProvider {
     //Fetch product
     this.firebaseService.fetchAllStaffInRestaurant(this.restid).subscribe(data => {
       data.docChanges.forEach(change => {
-        let staffData = change.doc.data(); 
+        let staffData = change.doc.data();
         if (change.type == FIREBASE_CONST.DOCUMENT_CHANGE_TYPE.ADD) {
           let staff = this.userPool.getItem(0);
           staff.mappingFirebaseData(staffData);
@@ -704,6 +722,7 @@ export class AppControllerProvider {
             this.foodOrders[index].reset();
             this.foodOrders[index].mappingFirebaseData(foodOrderData);
           }
+          console.log("food order change: ", this.foodOrders[index], foodOrderData);
         }
         if (change.type == FIREBASE_CONST.DOCUMENT_CHANGE_TYPE.REMOVE) {
           let index = this.orders.findIndex(elm => {
@@ -783,6 +802,7 @@ export class AppControllerProvider {
   }
 
   addFoodOrder(orderId: string, product: FoodOrder): Promise<any> {
+    product.timeCreate = new Date();
     return this.firebaseService.addFoodOrder(this.restid, orderId, this.user.id, product);
   }
 
@@ -790,7 +810,7 @@ export class AppControllerProvider {
     return this.firebaseService.updateFoodOrder(this.restid, this.user.id, product);
   }
 
-  updateProduct(firebaseId: string, value){
+  updateProduct(firebaseId: string, value) {
     return this.firebaseService.updateProduct(this.restid, firebaseId, value);
   }
 
