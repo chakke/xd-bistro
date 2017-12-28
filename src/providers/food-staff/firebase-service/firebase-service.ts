@@ -50,7 +50,7 @@ export class FirebaseServiceProvider {
     return type + Date.now();
   }
 
-  getNewFirebaseDocumentId(){
+  getNewFirebaseDocumentId() {
     return this.db.collection('_').doc().id;
   }
   addDocument(collection: string, value: any, documentId?: string): Promise<any> {
@@ -304,16 +304,17 @@ export class FirebaseServiceProvider {
       amount_order: product.amountOrder,
       amount_done: product.amountDone,
       amount_return: product.amountReturn,
+      amount_processing: product.amountProcessing,
       food_id: product.foodId,
       price: product.price,
       sale: product.sale,
       options: product.options,
       note: product.note,
       time_create: product.timeCreate
-    },newId);
+    }, newId);
   }
 
-  removeFoodOrder(restId: string,orderId: string, staffId: string, product: FoodOrder) : Promise<any> {
+  removeFoodOrder(restId: string, orderId: string, staffId: string, product: FoodOrder): Promise<any> {
     return this.deleteDocument(FIREBASE_PATH.FOOD_ORDER + "/" + restId + "/" + this.todayString + "/" + product.id);
   }
 

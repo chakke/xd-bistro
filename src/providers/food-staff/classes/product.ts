@@ -269,6 +269,8 @@ export class FoodOrder {
 	amountDone: number;
 	/**Số lượng đã trả cho khách */
 	amountReturn: number;
+	/**Số lượng đang chế biết */
+	amountProcessing: number;
 	/**Thời gian gọi món */
 	timeCreate: Date;
 	/** Id món ăn */
@@ -297,6 +299,7 @@ export class FoodOrder {
 		this.amountOrder = 0;
 		this.amountDone = 0;
 		this.amountReturn = 0;
+		this.amountProcessing = 0;
 		this.food = null;
 		this.foodId = "";
 		this.price = 0;
@@ -316,6 +319,7 @@ export class FoodOrder {
 			this.amountOrder = data.amount_order;
 			this.amountDone = data.amount_done;
 			this.amountReturn = data.amount_return;
+			this.amountProcessing = data.amount_processing;
 			this.foodId = data.food_id;
 			this.food = null;
 			this.price = data.price;

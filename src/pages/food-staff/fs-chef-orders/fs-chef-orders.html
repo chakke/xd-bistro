@@ -9,10 +9,9 @@
     </div>
     <div class="fs-segment">
         <ion-segment class="segment-md" [class.segment-ios]="false" [(ngModel)]="selectedOrderStatus" (ionChange)="filterFoodOrders()">
-            <ion-segment-button value="{{status.statusId}}" *ngFor="let status of orderStatusData">
-                <!-- <span class="number status-{{status.id}}">{{ orderCollection.get(status.id)?.length}}</span> -->
-                <span class="number status-{{status.statusId}}">{{showFoodOrders.length}}</span>
-                <span class="text"> {{status.title}} </span>
+            <ion-segment-button value="{{state.id}}" *ngFor="let state of chefFoodState">
+                <span class="number status-{{state.id}}">{{showFoodOrders.length}}</span>
+                <span class="text"> {{state.name}} </span>
             </ion-segment-button>
         </ion-segment>
     </div>
@@ -23,8 +22,8 @@
     <scroll-to-top></scroll-to-top>
     <div class="fs-content">
         <div class="segment-content" *ngIf="viewMode == 0">
-            <div class="food-list" *ngFor="let id of ids">
-                <div class="food-item {{getClass(id, food.timeCreate)}}" *ngFor="let food of chefFoodOrderCollection.get(id)">
+            <div class="food-list">
+                <div class="food-item {{getClass(selectedOrderStatus, food.timeCreate)}}" *ngFor="let food of showFoodOrders">
                     <ion-row>
                         <ion-col col-2 class="col-img">
                             <img src="{{food.food.image}}" alt="image">

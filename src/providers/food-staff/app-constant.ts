@@ -223,6 +223,21 @@ export const FOOD_ORDER_STATE = {
     RETURNED: 5
 }
 
+export const CHEF_FOOD_STATE = {
+    WAITING: {
+        id: 0,
+        name: "Đang chờ"
+    },
+    COOKING: {
+        id: 1,
+        name: "Đang chế biến"
+    },
+    DELIVERABLE: {
+        id: 2,
+        name: "Xong"
+    }
+}
+
 export const PAYMENT_STATE = {
     /**Đã thanh toán */
     PAID: 0,
