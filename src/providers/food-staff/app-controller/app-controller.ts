@@ -225,7 +225,7 @@ export class AppControllerProvider {
     return this.scrollController;
   }
 
-  pushPage(page: any) {
+  pushPage(page: any, params?: any) {
     if (this.setActivePage(page)) {
       this.app.getActiveNav().push(page);
     }

@@ -24,16 +24,18 @@ export class OrderDetailPage {
     public navParams: NavParams,
     private appController: AppControllerProvider,
     private modalCtrl: ModalController) {
-    this.order = this.navParams.get("order");
-    this.orderId = this.order.id;
-    this.loadOrderedFood();
+    this.orderId = this.navParams.get("order");
     
-    console.log("Order: ", this.order);
+    // console.log("Order: ", this.order);
     
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad OrderDetailPage');
+    this.loadOrder();
+    this.appController.orderChanel.asObservable().subscribe(()=>{
+      this.loadOrder();
+    })
   }
 
   addNewFood() {
@@ -42,15 +44,21 @@ export class OrderDetailPage {
 
   }
 
- 
+  loadOrder(){
+    this.order = this.appController.orderCollection.get(this.orderId);
+    this.loadOrderedFood();
+    console.log("AddFoodToOrderPage: order change, reload data", this.order);
+  }
 
   loadOrderedFood() {
     this.orderedFood = this.order.foods.filter(product =>{
-      return product.food;
+      return product;
     })
   }
   checkItem() {
-    this.appController.pushPage("CheckItemPage");
+    // this.appController.pushPage("CheckItemPage" ,{order: this.order});
+    let modal = this.modalCtrl.create("CheckItemPage", { order: this.order });
+    modal.present();
   }
 
   showAlert(food){
@@ -83,5 +91,26 @@ export class OrderDetailPage {
       console.log("Hủy món thành công");
       this.appController.hideLoading();
     });
+  }
+
+  showKeyBoard(food: FoodOrder){
+    var amount = food.amountOrder;
+    let modal = this.modalCtrl.create("KeypadModalPage", { number: (amount ? amount : 1) });
+    modal.present();
+    modal.onDidDismiss(data =>{
+      if(data != null && data != undefined && data > 0){
+        let index = this.order.foods.findIndex(foodOrder => {
+          return foodOrder.id == food.id;
+        })
+        if(index > -1){
+          this.order.foods[index].amountOrder = data;
+          this.appController.showLoading();
+          this.appController.updateFoodOrder(this.order.foods[index]).then(data => {
+            console.log("update food order successfully");
+            this.appController.hideLoading();
+          });
+        }
+      }
+    })
   }
 }

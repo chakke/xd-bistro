@@ -32,7 +32,7 @@
         </ion-segment>
         <div class="segment-content" *ngIf="viewMode == '0'">
             <div class="choosen-list">
-                <div class="item food" *ngFor="let food of order.foods">
+                <div class="item food" *ngFor="let food of orderedFood">
                     <ion-row>
                         <ion-col col-3 class="col-image">
                             <img [src]="food.food._image">
@@ -52,7 +52,7 @@
                                 <button class="fs-button-outline" tappable (click)="showAlert(food)">
                                     Hủy món
                                 </button>
-                                <button class="fs-button-outline">
+                                <button class="fs-button-outline" tappable (click)=" showKeyBoard(food)">
                                     Số lượng
                                 </button>
                                 <button class="fs-button">
@@ -72,33 +72,22 @@
                     <ion-col col-2> Số lượng</ion-col>
                     <ion-col col-3 class="stt">Thành tiền</ion-col>
                 </ion-row>
-                <ion-row class="row-item">
-                    <ion-col col-2 class="stt">1</ion-col>
-                    <ion-col col-5 class="food-name">Mỳ ý sốt bò băm (Đĩa)</ion-col>
-                    <ion-col col-2 class="number">2</ion-col>
-                    <ion-col col-3 class="fs-price">118.000 đ</ion-col>
-                    <ion-col col-12>
-                        <ion-row class="row-bonus">
+                <ion-row class="row-item" *ngFor="let food of order.foods; let i = index">
+                    <ion-col col-2 class="stt">{{i+1}}</ion-col>
+                    <ion-col col-5 class="food-name">{{food.food._name}}</ion-col>
+                    <ion-col col-2 class="number">{{food.amountOrder}}</ion-col>
+                    <ion-col col-3 class="fs-price">{{ food.price * food.amountOrder }} đ</ion-col>
+                    <ion-col col-12 *ngIf="food.option">
+                        <ion-row class="row-bonus" *ngFor="let opt of food.option">
                             <ion-col col-2></ion-col>
-                            <ion-col col-5 class="food-name">+Thêm sốt</ion-col>
+                            <ion-col col-5 class="food-name">{{opt}}</ion-col>
                             <ion-col col-2 class="number"></ion-col>
                             <ion-col col-3 class="fs-price">0 đ</ion-col>
                         </ion-row>
                     </ion-col>
                 </ion-row>
-                <ion-row class="row-item">
-                    <ion-col col-2 class="stt">2</ion-col>
-                    <ion-col col-5 class="food-name">Khoai tây chiên (Suất)</ion-col>
-                    <ion-col col-2 class="number">1</ion-col>
-                    <ion-col col-3 class="fs-price">35.000 đ</ion-col>
-                </ion-row>
-                <ion-row class="row-item">
-                    <ion-col col-2 class="stt">3</ion-col>
-                    <ion-col col-5 class="food-name">Cá hồi bỏ lò phô mai (Suất L)</ion-col>
-                    <ion-col col-2 class="number">1</ion-col>
-                    <ion-col col-3 class="fs-price">169.000 đ</ion-col>
-                </ion-row>
-                <ion-row class="row-gift">
+
+                <!-- <ion-row class="row-gift">
                     <ion-col col-7 class="food-name">
                         <span class="fs-blue">
                             Tặng:  
@@ -106,12 +95,12 @@
                     </ion-col>
                     <ion-col class="number" col-2>2</ion-col>
                     <ion-col col-3 class="fs-price">0 đ</ion-col>
-                </ion-row>
+                </ion-row> -->
                 <ion-row class="row-total">
                     <ion-col col-4 class="title">
                         Tổng tiền
                     </ion-col>
-                    <ion-col col-8 class="fs-price">322.000 đ</ion-col>
+                    <ion-col col-8 class="fs-price">{{order.totalPrice}} đ</ion-col>
                 </ion-row>
             </ion-grid>
         </div>

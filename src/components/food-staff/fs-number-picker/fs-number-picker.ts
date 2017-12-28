@@ -8,6 +8,7 @@ import { AppControllerProvider } from '../../../providers/food-staff/app-control
 })
 export class FsNumberPickerComponent {
   @Input() number: number;
+  @Input() amountOrder : number;
   @Output() numberChange: EventEmitter<number> = new EventEmitter<number>();
 
   numpads = [1, 2, 3, 4, 5, 6, 7, 8, 9];
@@ -18,6 +19,7 @@ export class FsNumberPickerComponent {
     private modalCtrl: ModalController) {
     console.log('Hello FsNumberPickerComponent Component');
     this.number = 1;
+    this.amountOrder = 0;
   }
 
   selectNumber() {
@@ -26,10 +28,14 @@ export class FsNumberPickerComponent {
     this.isPicking = true;
     modal.onDidDismiss(data => {
       this.isPicking = false;
-      if (data != null && data != undefined) {
+      if(data > this.amountOrder){
+        this.appController.showToast("Số lượng trả lớn hơn đã order",3000);
+      }
+      if (data != null && data != undefined && data <= this.amountOrder) {
         this.number = data;
         this.numberChange.next(this.number);
       }
+      
     })
   }
 
