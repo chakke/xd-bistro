@@ -58,6 +58,7 @@ export class FirebaseServiceProvider {
     // this.progressController.add();
     if (documentId) {
       value["firebase_id"] = documentId;
+      value["id"] = documentId;
       return this.db.collection(collection).doc(documentId).set(value).then(success => {
         // this.progressController.subtract();
       }, error => {
@@ -66,6 +67,7 @@ export class FirebaseServiceProvider {
     } else {
       let newRef = this.db.collection(collection).doc();
       value["firebase_id"] = newRef.id;
+      value["id"] = newRef.id;
       return newRef.set(value).then(success => {
         // this.progressController.subtract();
       }, error => {
@@ -82,7 +84,7 @@ export class FirebaseServiceProvider {
       this.db.doc(path).get().then(success => {
         console.log("get document succsess", success.data());
         if (success.exists) {
-          let result = success.data(); 
+          let result = success.data();
           resolve(result);
         } else {
           reject("Bản ghi không tồn tại");
@@ -150,7 +152,7 @@ export class FirebaseServiceProvider {
         console.log("firebase get collection success", querySnapshot);
         let result = [];
         querySnapshot.forEach(doc => {
-          let element = doc.data(); 
+          let element = doc.data();
           result.push(element);
         })
         // this.progressController.subtract();
@@ -307,6 +309,7 @@ export class FirebaseServiceProvider {
       sale: product.sale,
       options: product.options,
       note: product.note,
+      time_create: product.timeCreate
     },newId);
   }
 
@@ -323,6 +326,10 @@ export class FirebaseServiceProvider {
       options: product.options,
       note: product.note,
     });
+  }
+
+  updateProduct(restId: string, firebaseId: string, value: any): Promise<any> {
+    return this.updateDocument(FIREBASE_PATH.PRODUCT + "/" + restId + "/" + FIREBASE_PATH.FOOD + "/" + firebaseId, value);
   }
 
 }

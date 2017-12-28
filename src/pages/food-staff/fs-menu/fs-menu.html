@@ -13,7 +13,7 @@
     <div class="fs-content">
         <div class="segment-content">
             <div class="food-list">
-                <div class="item food" *ngFor="let product of products">
+                <div class="item food" [class.out-of-business]="product.state == productState.OUT_OF_BUSINESS.id" *ngFor="let product of products">
                     <ion-row>
                         <ion-col col-3 class="col-image">
                             <img src="{{product.image}}" alt="">
@@ -35,6 +35,12 @@
                                 <span class="sale-off">(-10%)</span>
                             </div> -->
                         </ion-col>
+                        <div class="sold-out" *ngIf="product.state == productState.OUT_OF_STOCK.id">
+                            <img src="assets/food-staff/images/icon/out_stock.png" alt="">
+                        </div>
+                        <div class="stop-business" *ngIf="product.state == productState.OUT_OF_BUSINESS.id">
+                            <span>Ngừng kinh doanh</span>
+                        </div>
                     </ion-row>
                 </div>
                 <!-- <div class="item food">

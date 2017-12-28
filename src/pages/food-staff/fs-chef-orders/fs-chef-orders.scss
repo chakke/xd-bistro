@@ -64,6 +64,11 @@ page-fs-chef-orders {
         &.active {
             background-color: map-get($map: $FSColors, $key: white);
         }
+        .segment-activated {
+            .number {
+                display: inline-block;
+            }
+        }
         .number {
             font-size: 0.8em;
             padding: 0 4px;
@@ -74,6 +79,7 @@ page-fs-chef-orders {
             line-height: 2rem;
             border: solid 1px;
             margin-right: 5px;
+            display: none;
         }
         .segment-button {
             color: map-get($map: $FSColors, $key: black);
@@ -106,6 +112,19 @@ page-fs-chef-orders {
         .row,
         .col {
             padding: 0;
+        }
+        .food-list {
+            &:last-child {
+                .fs-divider {
+                    display: none;
+                }
+            }
+            .food-item {
+                border-bottom: solid 1px map-get($map: $FSColors, $key: lightgray);
+                &:last-child {
+                    border-bottom: none;
+                }
+            }
         }
         .food-item {
             padding: 10px map-get($map: $FSSizes, $key: defaultPadding);

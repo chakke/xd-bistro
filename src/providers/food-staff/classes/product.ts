@@ -269,6 +269,8 @@ export class FoodOrder {
 	amountDone: number;
 	/**Số lượng đã trả cho khách */
 	amountReturn: number;
+	/**Thời gian gọi món */
+	timeCreate: Date;
 	/** Id món ăn */
 	foodId: string;
 	/**Món ăn */
@@ -301,6 +303,7 @@ export class FoodOrder {
 		this.sale = 0;
 		this.options = [];
 		this.note = "";
+		this.timeCreate = new Date();
 	}
 
 	mappingFirebaseData(data) {
@@ -319,6 +322,7 @@ export class FoodOrder {
 			this.sale = data.sale;
 			this.options = data.options;
 			this.note = data.note;
+			this.timeCreate = data.time_create;
 		}
 	}
 }
