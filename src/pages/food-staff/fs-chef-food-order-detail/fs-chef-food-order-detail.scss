@@ -1,280 +1,82 @@
 page-fs-chef-food-order-detail {
-    .fs-number-picker {
-        display: block;
-        width: 100%;
-        text-align: center;
-    }
-    .ion-content {
-        background-color: transparent !important;
-    }
-    .scroll-content {
-        overflow: hidden;
-    }
-    font-size: .9em;
-    $customToggleHeight: 2em;
-    .custom-toggle {
-        position: absolute;
-        right: 10px;
-        top: 50%;
-        transform: translateY(-50%);
-        height: $customToggleHeight;
-        border-radius: 20px;
-        padding: 2px;
-        background-color: map-get($map: $FSColors, $key: gray);
-        .icon,
-        i,
-        {
-            margin: auto;
-        }
-        .custom-toggle-button {
-            height: 100%;
-            padding: 0 10px;
-            display: -webkit-box;
-            display: -ms-flexbox;
+    .food-detail {
+        padding: 10px 15px;
+        border-bottom: solid 1px map-get($map: $FSColors, $key: lightgray);
+        .col-img {
             display: flex;
-            -webkit-display: flex;
-            border-radius: 20px;
-            background-color: transparent;
-            -webkit-transition: all 1s;
-            transition: all 1s;
-            color: map-get($map: $FSColors, $key: white);
+            align-items: center;
+            justify-content: center;
+            img {
+                width: 100%;
+                object-fit: contain;
+                border-radius: 50%;
+            }
         }
-        span.active {
-            background-color: map-get($FSColors, primary)
-        }
-    }
-    .custom-toggle-left-button {
-        float: left;
-    }
-    .custom-toggle-right-button {
-        float: right;
-    }
-    .backdrop {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        z-index: 1;
-        background-color: rgb(0, 0, 0);
-        opacity: .4;
-    }
-    .main-content {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background-color: map-get($map: $FSColors, $key: white);
-        z-index: 2;
-        width: 90%;
-        border-radius: 10px;
-        .order-header {
-            text-align: center;
-            padding: 0 16px;
+        .col-detail {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            align-items: flex-start;
             .title {
-                font-size: 1.2em;
                 font-weight: bold;
-                color: map-get($map: $FSColors, $key: black);
+                font-size: map-get($map: $FSSizes, $key: big);
+            }
+            .number {
+                font-size: map-get($map: $FSSizes, $key: big);
+                font-weight: bold;
             }
         }
-        .order-footer {
-            text-align: center;
-            padding: 0 16px;
-            .button-group {
+    }
+    .order-list {
+        .order {
+            padding: 10px 0;
+            border-bottom: solid 1px map-get($map: $FSColors, $key: lightgray);
+            &:last-child {
+                border-bottom: none;
+            }
+            .col-code,
+            .col-time {
                 display: flex;
-                justify-content: space-evenly;
+                justify-content: center;
                 align-items: center;
-                margin: 15px 0;
             }
-            .fs-divider-full {
-                background-position: top;
+            .col-button {
+                display: flex;
+                justify-content: flex-end;
+                align-items: center;
             }
-        }
-    }
-    .fs-divider {
-        background-position: bottom;
-    }
-    .fs-form {
-        $inputHeight: 2.5em;
-        margin: 0;
-        .input-div {
-            padding: 0;
-            margin: 5px 0;
-            .icon {
-                width: $inputHeight;
-            }
-            .text-input {
-                padding-left: $inputHeight;
-                color: map-get($map: $FSColors, $key: gray);
-            }
-            .button-map {
-                width: 1.5* $inputHeight;
-                height: $inputHeight;
-                display: inline-block;
-                text-align: center;
-                line-height: $inputHeight;
-                margin-left: 10px;
-                color: map-get($map: $FSColors, $key: white);
-                background-color: map-get($map: $FSColors, $key: primary);
-                border-radius: 20px;
-            }
-        }
-        .row {
-            padding: 0;
-        }
-        .col {
-            padding: 0;
-        }
-    }
-    $headerHeight: map-get($map: $FSSizes, $key: lineheight) * 2;
-    .action-sheet {
-        position: absolute;
-        top: 150%;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 3;
-        transition: all 400ms;
-        &.show {
-            top: 0;
-        }
-        .action-sheet-backdrop {
-            position: absolute;
-            top: 0;
-            left: 0;
-            bottom: 0;
-            right: 0;
-            background-color: #000;
-            z-index: 4;
-            opacity: .4;
-        }
-        .action-sheet-content {
-            position: absolute;
-            bottom: 0px;
-            left: 0;
-            right: 0;
-            background-color: #FFF;
-            z-index: 5;
-            &.full-height {
-                min-height: 100%;
-            }
-            .sheet-header {
-                padding: 0 16px;
-                height: $headerHeight;
-                background-color: map-get($map: $FSColors, $key: background);
-                position: relative;
-                .button-left {
-                    height: $headerHeight;
-                    float: left;
-                    line-height: $headerHeight;
+            .col-number {
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                span {
+                    margin-right: 3px;
                 }
-                .button-right {
-                    height: $headerHeight;
-                    float: right;
-                    line-height: $headerHeight;
+                .waitting {
+                    color: map-get($map: $FSColors, $key: gray);
+                }
+                .cooking {
                     color: map-get($map: $FSColors, $key: primary);
                 }
-            }
-            .sheet-body {
-                .floors {
-                    display: flex;
-                    width: 100%;
-                    flex-wrap: nowrap;
-                    white-space: nowrap;
-                    height: $headerHeight;
-                    overflow-x: auto;
-                    background-color: map-get($map: $FSColors, $key: lightgray);
-                    border-top: solid 1px map-get($map: $FSColors, $key: lightgray);
-                    .floor {
-                        padding: 0 10px;
-                        height: $headerHeight;
-                        line-height: $headerHeight;
-                        background-color: map-get($map: $FSColors, $key: lightgray);
-                        flex: 1;
-                        text-align: center;
-                        &.active {
-                            color: map-get($map: $FSColors, $key: primary);
-                            background-color: map-get($map: $FSColors, $key: white);
-                        }
-                    }
-                }
-                .table-list {
-                    $tableHeight: $headerHeight * 2;
-                    display: flex;
-                    flex-wrap: wrap;
-                    justify-content: center;
-                    max-height: 3* $tableHeight;
-                    overflow-y: auto;
-                    .table {
-                        flex: 1;
-                        min-width: $tableHeight;
-                        height: $tableHeight;
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;
-                        position: relative;
-                        .table-icon {
-                            font-size: 1.3*$headerHeight;
-                            color: map-get($map: $FSColors, $key: gray);
-                        }
-                        .table-name {
-                            position: absolute;
-                            top: 50%;
-                            left: 50%;
-                            transform: translate(-50%, -50%);
-                            font-weight: bold;
-                        }
-                        &.status-3 {
-                            .table-icon {
-                                color: map-get($map: $FSColors, $key: yellow);
-                            }
-                            .table-name {
-                                color: map-get($map: $FSColors, $key: orange);
-                            }
-                        }
-                        &:hover {
-                            .table-icon {
-                                color: map-get($map: $FSColors, $key: primary);
-                            }
-                            .table-name {
-                                color: map-get($map: $FSColors, $key: white);
-                            }
-                        }
-                    }
-                }
-                .table-map {
-                    min-height: 100%;
-                    position: absolute;
-                    top: 2*$headerHeight;
-                    left: 0;
-                    right: 0;
-                    bottom: 0;
-                    overflow-y: auto;
+                .done {
+                    color: map-get($map: $FSColors, $key: green);
                 }
             }
+            .code {
+                font-weight: bold;
+                margin-left: 5px;
+            }
+            .time {
+                padding: 1px 5px;
+                background-color: map-get($map: $FSColors, $key: green);
+                color: map-get($map: $FSColors, $key: white);
+                border-radius: 20px;
+            }
+            .fs-button {
+                padding: 4px 12px;
+                font-size: 1em;
+                margin-right: 15px;
+            }
         }
-    }
-    .size-holder {
-        position: absolute;
-        top: $headerHeight;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        z-index: -1;
-        opacity: 0;
-    }
-    .map-container {
-        position: relative;
-        margin-top: 16px;
-        margin-left: 16px;
-        display: flex;
-        overflow: visible;
-        .map {
-            border: solid 1px green;
-        }
-    }
-    .number-input {
-        white-space: nowrap;
-        overflow: hidden;
     }
 }

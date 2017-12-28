@@ -109,7 +109,9 @@ export class AddFoodToOrderPage {
         if (index > -1) {
           this.order.foods[index].amountOrder = data;
           this.appController.showLoading();
-          this.appController.updateFoodOrder(this.order.foods[index]).then(data => {
+          this.appController.updateFoodOrder(this.order.foods[index].firebaseId, {
+            amount_order: this.order.foods[index].amountOrder
+          }).then(data => {
             console.log("update food order successfully");
             this.appController.hideLoading();
           });
@@ -142,7 +144,9 @@ export class AddFoodToOrderPage {
       if (data) {
         if (data > 0) {
           foodOrder.amountOrder = data;
-          this.appController.updateFoodOrder(foodOrder);
+          this.appController.updateFoodOrder(foodOrder.firebaseId, {
+            amount_order: foodOrder.amountOrder
+          });
         } else {
           this.appController.showToast("Số lượng phải lớn hơn 0");
         }

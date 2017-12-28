@@ -11,8 +11,7 @@ import { AppControllerProvider } from '../../../providers/food-staff/app-control
 })
 export class FsChefOrdersPage {
   searchKeyword = "";
-  placholder = "Tìm kiếm";
-  viewMode: number = 0;
+  placholder = "Tìm kiếm"; 
   selectedOrderStatus = "0";
 
   chefFoodState = [];
@@ -56,17 +55,12 @@ export class FsChefOrdersPage {
       }
     });
     this.filterFoodOrders();
-    console.log("Load food order done", this.chefFoodOrderCollection, this.showFoodOrders, this.appController.foodOrders);
   }
 
   search() {
 
   }
-
-  onClickToggleView() {
-    this.viewMode = 1 - this.viewMode;
-  }
-
+ 
   filterFoodOrders() {
     this.showFoodOrders = this.chefFoodOrderCollection.get(+this.selectedOrderStatus);
   }
@@ -84,7 +78,6 @@ export class FsChefOrdersPage {
   }
 
   getClass(collectionId: number, timeCreate: Date) {
-    console.log("get class", CHEF_FOOD_STATE.WAITING.id, collectionId);
     if (timeCreate) {
       let wattingWarning = {
         cool: {
@@ -102,13 +95,13 @@ export class FsChefOrdersPage {
       }
       let warningCollection = new Map<number, any>();
       warningCollection.set(CHEF_FOOD_STATE.WAITING.id, wattingWarning);
-      let warning = warningCollection.get(collectionId);
+      let warning = warningCollection.get(+collectionId);
       let status = 0;
       let minute = (Date.now() - timeCreate.getTime()) / 1000 / 60; 
+
       for (const key in warning) {
         if (warning.hasOwnProperty(key)) {
           const element = warning[key];
-          console.log("warning", status, element.value);
           if (minute >= element.minute && element.value > status) {
             status = element.value;
           }

@@ -1,0 +1,102 @@
+<ion-header>
+    <fs-header [showBackButton]="2" [title]="'Danh sách món'"></fs-header>
+    <!-- <div class="search-bar">
+        <ion-searchbar class="searchbar-ios" [class.searchbar-md]="false" placeholder="{{placholder}}" [(ngModel)]="searchKeyword" (ionInput)="search()"></ion-searchbar>
+    </div> -->
+    <div class="fs-segment">
+        <ion-segment class="segment-md" [class.segment-ios]="false" [(ngModel)]="selectedOrderStatus" (ionChange)="filterFoodOrders()">
+            <ion-segment-button value="{{state.id}}" *ngFor="let state of chefFoodState">
+                <span class="number status-{{state.id}}">{{showFoodOrders.length}}</span>
+                <span class="text"> {{state.name}} </span>
+            </ion-segment-button>
+        </ion-segment>
+    </div>
+</ion-header>
+
+<ion-content>
+    <scroll-to-top></scroll-to-top>
+    <div class="fs-content">
+        <div class="segment-content">
+            <div class="food-list" *ngIf="selectedOrderStatus == chefFoodStateData.WAITING.id">
+                <div class="food-item {{getClass(selectedOrderStatus, food.timeCreate)}}" *ngFor="let food of showFoodOrders">
+                    <ion-row>
+                        <ion-col col-2 class="col-img">
+                            <img src="{{food.food.image}}" alt="image">
+                        </ion-col>
+                        <ion-col col-8 class="col-detail">
+                            <div class="name"><span class="code">({{food.food.id}})</span> {{food.food.name}}</div>
+                            <div class="table">
+                                <ion-icon name="fs-table-3-o"></ion-icon>
+                                <span>{{food.orderId}}</span>
+                            </div>
+                        </ion-col>
+                        <ion-col col-2 class="col-number">
+                            <span>{{food.amountOrder - food.amountDone - food.amountReturn - food.amountProcessing}} suất</span>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row class="row-action">
+                        <ion-col col-2 class="col-time">
+                            <span class="time">{{getDiffTime(food.timeCreate)}}</span>
+                        </ion-col>
+                        <ion-col col-10 class="col-button">
+                            <button class="fs-button fs-button-outline" (click)="makeOutOfStock(food)" tappable> Báo hết</button>
+                            <button class="fs-button" (click)="processing(food)" tappable>Chế biến</button>
+                        </ion-col>
+                    </ion-row>
+                </div>
+            </div>
+            <div class="food-list" *ngIf="selectedOrderStatus == chefFoodStateData.COOKING.id">
+                <div class="food-item {{getClass(selectedOrderStatus, food.timeCreate)}}" *ngFor="let food of showFoodOrders">
+                    <ion-row>
+                        <ion-col col-2 class="col-img">
+                            <img src="{{food.food.image}}" alt="image">
+                        </ion-col>
+                        <ion-col col-8 class="col-detail">
+                            <div class="name"><span class="code">({{food.food.id}})</span> {{food.food.name}}</div>
+                            <div class="table">
+                                <ion-icon name="fs-table-3-o"></ion-icon>
+                                <span>{{food.orderId}}</span>
+                            </div>
+                        </ion-col>
+                        <ion-col col-2 class="col-number">
+                            <span>{{food.amountProcessing}} suất</span>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row class="row-action">
+                        <ion-col col-2 class="col-time">
+                            <span class="time">{{getDiffTime(food.timeCreate)}}</span>
+                        </ion-col>
+                        <ion-col col-10 class="col-button">
+                            <button class="fs-button fs-button-outline" (click)="makeOutOfStock(food)" tappable> Báo hết</button>
+                            <button class="fs-button" (click)="done(food)" tappable>Báo xong</button>
+                        </ion-col>
+                    </ion-row>
+                </div>
+            </div>
+            <div class="food-list" *ngIf="selectedOrderStatus == chefFoodStateData.DELIVERABLE.id">
+                <div class="food-item {{getClass(selectedOrderStatus, food.timeCreate)}}" *ngFor="let food of showFoodOrders">
+                    <ion-row>
+                        <ion-col col-2 class="col-img">
+                            <img src="{{food.food.image}}" alt="image">
+                        </ion-col>
+                        <ion-col col-8 class="col-detail">
+                            <div class="name"><span class="code">({{food.food.id}})</span> {{food.food.name}}</div>
+                            <div class="table">
+                                <ion-icon name="fs-table-3-o"></ion-icon>
+                                <span>{{food.orderId}}</span>
+                            </div>
+                        </ion-col>
+                        <ion-col col-2 class="col-number">
+                            <span>{{food.amountDone}} suất</span>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row class="row-action">
+                        <ion-col col-2 class="col-time">
+                            <span class="time">{{getDiffTime(food.timeCreate)}}</span>
+                        </ion-col>
+                    </ion-row>
+                </div>
+            </div>
+        </div>
+    </div>
+</ion-content>

@@ -318,15 +318,8 @@ export class FirebaseServiceProvider {
     return this.deleteDocument(FIREBASE_PATH.FOOD_ORDER + "/" + restId + "/" + this.todayString + "/" + product.id);
   }
 
-  updateFoodOrder(restId: string, staffId: string, product: FoodOrder): Promise<any> {
-    return this.updateDocument(FIREBASE_PATH.FOOD_ORDER + "/" + restId + "/" + this.todayString + "/" + product.id, {
-      state: product.state,
-      amount_order: product.amountOrder,
-      amount_done: product.amountDone,
-      amount_return: product.amountReturn,
-      options: product.options,
-      note: product.note,
-    });
+  updateFoodOrder(restId: string, firebaseId: string, value: any): Promise<any> {
+    return this.updateDocument(FIREBASE_PATH.FOOD_ORDER + "/" + restId + "/" + this.todayString + "/" + firebaseId, value);
   }
 
   updateProduct(restId: string, firebaseId: string, value: any): Promise<any> {

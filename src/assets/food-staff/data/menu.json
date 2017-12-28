@@ -3,18 +3,18 @@
     "content": [{
             "role": 0,
             "menu": [{
+                    "id": 3,
+                    "name": "DS món",
+                    "icon": "fs-order-o",
+                    "page": "FsChefFoodOrdersPage",
+                    "link": "fs-chef-food-orders"
+                },
+                {
                     "id": 1,
                     "name": "Order",
                     "icon": "fs-food-menu-o",
                     "page": "FsChefOrdersPage",
                     "link": "fs-chef-orders"
-                },
-                {
-                    "id": 3,
-                    "name": "Trả món",
-                    "icon": "fs-order-o",
-                    "page": "FsServePage",
-                    "link": "fs-serve"
                 },
                 {
                     "id": 6,
