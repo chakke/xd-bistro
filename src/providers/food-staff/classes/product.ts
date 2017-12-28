@@ -269,6 +269,10 @@ export class FoodOrder {
 	amountDone: number;
 	/**Số lượng đã trả cho khách */
 	amountReturn: number;
+	/**Số lượng đang chế biến */
+	amountProcessing: number;
+	/**Số lượng đợi chế biến */
+	//amountOrder - amountDone - amountReturn - amountProcessing
 	/**Thời gian gọi món */
 	timeCreate: Date;
 	/** Id món ăn */

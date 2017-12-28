@@ -61,7 +61,7 @@ export class OrderDetailPage {
     modal.present();
   }
 
-  showAlert(food){
+  showAlert(food,i){
     let alert = this.alertCtrl.create({
       title:"Hủy món",
       message: "Bạn có chắc chắn muốn hủy món ăn này không ?",
@@ -77,7 +77,7 @@ export class OrderDetailPage {
           text: "Có",
           handler : () =>{
             console.log("Click Có");
-            this.removeDocument(food);
+            this.removeDocument(food,i);
           }
         }
       ]
@@ -85,8 +85,10 @@ export class OrderDetailPage {
     alert.present();
   }
 
-  removeDocument(food){
+  removeDocument(food,i){
     this.appController.showLoading();
+    this.order.totalPrice -= food.price * food.amountOrder;
+    this.order.foods.splice(i,1);
     this.appController.removeFoodOrder(this.orderId,food).then((res: any)=>{
       console.log("Hủy món thành công");
       this.appController.hideLoading();
@@ -104,6 +106,11 @@ export class OrderDetailPage {
         })
         if(index > -1){
           this.order.foods[index].amountOrder = data;
+          var sum = 0;
+          for(let i = 0 ; i< this.order.foods.length ; i++){
+            sum += this.order.foods[i].amountOrder * this.order.foods[i].price; 
+          }
+          this.order.totalPrice = sum;
           this.appController.showLoading();
           this.appController.updateFoodOrder(this.order.foods[index]).then(data => {
             console.log("update food order successfully");

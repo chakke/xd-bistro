@@ -108,6 +108,13 @@ export class AddFoodToOrderPage {
         })
         if (index > -1) {
           this.order.foods[index].amountOrder = data;
+          var sum = 0;
+          for(let i = 0 ; i< this.order.foods.length ; i++){
+            sum += this.order.foods[i].amountOrder * this.order.foods[i].price; 
+          }
+          console.log(sum);
+          
+          this.order.totalPrice = sum;
           this.appController.showLoading();
           this.appController.updateFoodOrder(this.order.foods[index]).then(data => {
             console.log("update food order successfully");
@@ -133,7 +140,7 @@ export class AddFoodToOrderPage {
     })
   }
 
-  changeAmount(foodOrder: FoodOrder) {
+  changeAmount(foodOrder: FoodOrder,i) {
     foodOrder["highlight"] = true;
     let modal = this.modalCtrl.create("KeypadModalPage", { number: foodOrder.amountOrder });
     modal.present();
@@ -142,6 +149,14 @@ export class AddFoodToOrderPage {
       if (data) {
         if (data > 0) {
           foodOrder.amountOrder = data;
+          this.order.foods[i] = foodOrder;
+          var sum = 0;
+          for(let i = 0 ; i< this.order.foods.length ; i++){
+            sum += this.order.foods[i].amountOrder * this.order.foods[i].price; 
+          }
+          console.log(sum);
+          
+          this.order.totalPrice = sum;
           this.appController.updateFoodOrder(foodOrder);
         } else {
           this.appController.showToast("Số lượng phải lớn hơn 0");

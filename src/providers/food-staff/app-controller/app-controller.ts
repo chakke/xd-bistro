@@ -731,6 +731,7 @@ export class AppControllerProvider {
           if (index > -1) {
             this.foodOrders.splice(index, 1);
           }
+          console.log("remove")
         }
       });
       this.foodOrders.forEach(foodOrder => {
