@@ -8,8 +8,8 @@ import { FirebaseQuery, FirebaseOrder } from '../interfaces/firebase';
 import { Observable } from 'rxjs/Observable';
 import { Order } from '../classes/order';
 import { Product, FoodOrder } from '../classes/product';
+import { AngularFirestore } from 'angularfire2/firestore';
 
-// import { AngularFirestore } from 'angularfire2/firestore';
 
 @Injectable()
 export class FirebaseServiceProvider {
@@ -50,6 +50,9 @@ export class FirebaseServiceProvider {
     return type + Date.now();
   }
 
+  getNewFirebaseDocumentId(){
+    return this.db.collection('_').doc().id;
+  }
   addDocument(collection: string, value: any, documentId?: string): Promise<any> {
     console.log("firebase add document", collection, documentId);
     // this.progressController.add();
@@ -292,8 +295,9 @@ export class FirebaseServiceProvider {
   }
 
   addFoodOrder(restId: string, orderId: string, staffId: string, product: FoodOrder): Promise<any> {
+    var newId = this.getNewFirebaseDocumentId();
     return this.addDocument(FIREBASE_PATH.FOOD_ORDER + "/" + restId + "/" + this.todayString, {
-      id: "",
+      id: newId,
       order_id: orderId,
       staff_id: staffId,
       state: FOOD_ORDER_STATE.WAITING,
@@ -306,7 +310,11 @@ export class FirebaseServiceProvider {
       options: product.options,
       note: product.note,
       time_create: product.timeCreate
-    });
+    },newId);
+  }
+
+  removeFoodOrder(restId: string,orderId: string, staffId: string, product: FoodOrder) : Promise<any> {
+    return this.deleteDocument(FIREBASE_PATH.FOOD_ORDER + "/" + restId + "/" + this.todayString + "/" + product.id);
   }
 
   updateFoodOrder(restId: string, staffId: string, product: FoodOrder): Promise<any> {

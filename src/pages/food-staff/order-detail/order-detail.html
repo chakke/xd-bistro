@@ -32,21 +32,24 @@
         </ion-segment>
         <div class="segment-content" *ngIf="viewMode == '0'">
             <div class="choosen-list">
-                <div class="item food">
+                <div class="item food" *ngFor="let food of order.foods">
                     <ion-row>
                         <ion-col col-3 class="col-image">
-                            <img src="https://cdn5.norecipes.com/wp-content/uploads/2012/10/23052346/recipespaghetti-meat-sauce-recipe.1024x1024-1.jpg" alt="">
+                            <img [src]="food.food._image">
+                            <!-- <img src="https://cdn5.norecipes.com/wp-content/uploads/2012/10/23052346/recipespaghetti-meat-sauce-recipe.1024x1024-1.jpg" alt=""> -->
                         </ion-col>
                         <ion-col col-9 class="col-detail">
                             <div class="name">
-                                Mỳ Ý sốt bò băm
-                                <span class="fs-green">(x2)</span>
+                                <!-- Mỳ Ý sốt bò băm -->
+                                {{food.food._name}}
+                                <span class="fs-green">(x{{food.amountOrder}})</span>
                             </div>
                             <div class="fs-price">
-                                59.000 đ
+                                <!-- 59.000 đ -->
+                                {{food.price}} đ
                             </div>
                             <div class="button-group">
-                                <button class="fs-button-outline">
+                                <button class="fs-button-outline" tappable (click)="showAlert(food)">
                                     Hủy món
                                 </button>
                                 <button class="fs-button-outline">

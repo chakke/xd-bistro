@@ -7,7 +7,8 @@ import { StatusBar } from '@ionic-native/status-bar';
 
 // import { AngularFireModule } from 'angularfire2';
 // import { AngularFireDatabaseModule, AngularFireDatabase } from 'angularfire2/database';
-// import { AngularFireAuthModule } from 'angularfire2/auth';
+// import { AngularFirestoreModule} from 'angularfire2/firestore';
+// import * as firebase from 'firebase';
 
 import { Facebook } from '@ionic-native/facebook';
 import { GooglePlus } from '@ionic-native/google-plus';
@@ -31,6 +32,8 @@ import { FirebaseServiceProvider } from '../providers/food-staff/firebase-servic
 //   messagingSenderId: "773087969883"
 // };
 
+// firebase.initializeApp(firebaseConfig);
+
 @NgModule({
   declarations: [
     MyApp
@@ -38,11 +41,13 @@ import { FirebaseServiceProvider } from '../providers/food-staff/firebase-servic
   imports: [
     BrowserModule,
     HttpModule,
+    // AngularFirestoreModule,
+    // AngularFireModule.initializeApp(firebaseConfig),
     IonicModule.forRoot(MyApp, {
       scrollPadding: false,
       scrollAssist: false,
       autoFocusAssist: false
-    }) 
+    })
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -50,7 +55,7 @@ import { FirebaseServiceProvider } from '../providers/food-staff/firebase-servic
   ],
   providers: [
     StatusBar,
-    SplashScreen,    
+    SplashScreen,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     AppControllerProvider,
     Facebook,
@@ -59,7 +64,7 @@ import { FirebaseServiceProvider } from '../providers/food-staff/firebase-servic
     HttpService,
     ProgressControllerProvider,
     ResourceLoader,
-    File, 
+    File,
     FirebaseServiceProvider
   ]
 })

@@ -53,12 +53,13 @@ export class FsOrdersPage {
     console.log('ionViewDidLoad FsOrdersPage');
     this.loadOrders();
     this.appController.orderChanel.asObservable().subscribe(data => {
+      console.log("Order in app controller change", data);
       this.loadOrders();
     })
   }
 
   loadOrders() {
-    this.allOrders = this.appController.getAllOrders();      
+    this.allOrders = this.appController.getAllOrders();
     this.filterOrders();
   }
 
@@ -71,7 +72,7 @@ export class FsOrdersPage {
     });
 
     this.showOrders = this.orderCollection.get(+this.selectedOrderStatus);
-    console.log(this.showOrders);
+    console.log("showOrders",this.showOrders);
   }
 
   addNewOrders() {

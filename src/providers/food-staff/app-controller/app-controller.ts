@@ -695,7 +695,7 @@ export class AppControllerProvider {
       this.orders.forEach(order => {
         this.orderCollection.set(order.id, order);
       })
-
+      console.log("Order in Firebase changed");
       this.loadedData.order = true;
       // this.orderChanel.next("Tùng Sơn vừa ra video mới!");
       this.loadedDataChanel.next("order");
@@ -804,6 +804,10 @@ export class AppControllerProvider {
   addFoodOrder(orderId: string, product: FoodOrder): Promise<any> {
     product.timeCreate = new Date();
     return this.firebaseService.addFoodOrder(this.restid, orderId, this.user.id, product);
+  }
+
+  removeFoodOrder(orderId: string , product: FoodOrder) : Promise<any> {
+    return this.firebaseService.removeFoodOrder(this.restid,orderId, this.user.id, product);
   }
 
   updateFoodOrder(product: FoodOrder): Promise<any> {
