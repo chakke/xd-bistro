@@ -1,26 +1,73 @@
-<ion-content class="ion-content">
-    <div class="backdrop" #backdrop></div>
-    <div class="main-content">
-        <div class="order-header">
+<ion-header>
+    <fs-header [showBackButton]="1" [title]="title"></fs-header>
+</ion-header>
+<ion-content>
+    <scroll-to-top></scroll-to-top>
+    <div class="fs-content">
+        <div class="food-detail">
             <ion-row>
                 <ion-col col-3 class="col-img">
-                    <img src="http://media.phunutoday.vn/files/upload_images/2016/01/21/cach-lam-banh-my-trung-ngon-1-phunutoday_vn.jpg" alt="image">
+                    <img src="http://7monngonmoingay.vn/wp-content/uploads/2016/07/cach-lam-pho-bo-sot-vang-thom-ngon-nuc-mui.jpg" alt="image">
                 </ion-col>
-                <ion-col col-9 class="col-title">
-                    <span class="title">
-                    <span class="code">(BS01) Bánh mỳ trứng ngải cứu </span>
-                    </span>
+                <ion-col col-9 class="col-detail">
+                    <div class="title">Phở bò sốt vang</div>
+                    <div class="number-div">
+                        <span>Tổng số:</span>
+                        <span class="number">12 </span>suất
+                    </div>
                 </ion-col>
             </ion-row>
         </div>
-        <div class="order-body">
-
-        </div>
-        <div class="order-footer">
-            <div class="fs-divider-full"></div>
-            <div class="button-group">
-                <button type="button" class="fs-button-outline">Hủy bỏ</button>
-                <button type="button" class="fs-button">Tạo order mới</button>
+        <div class="order-list">
+            <div class="order">
+                <ion-row>
+                    <ion-col col-5 class="col-code">
+                        <span>Order: </span>
+                        <span class="code">#123</span>
+                    </ion-col>
+                    <ion-col col-7 class="col-number">
+                        <span>Số lượng: </span>
+                        <span>
+                            <span class="waitting">1</span>/
+                        <span class="cooking">2</span>/
+                        <span class="done">1</span>
+                        </span>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col col-5 class="col-time">
+                        <span class="time">1m</span>
+                    </ion-col>
+                    <ion-col col-7 class="col-button">
+                        <button class="fs-button fs-button-outline">Báo hết</button>
+                        <button class="fs-button">Chế biến</button>
+                    </ion-col>
+                </ion-row>
+            </div>
+            <div class="order">
+                <ion-row>
+                    <ion-col col-5 class="col-code">
+                        <span>Order: </span>
+                        <span class="code">#123</span>
+                    </ion-col>
+                    <ion-col col-7 class="col-number">
+                        <span>Số lượng: </span>
+                        <span>
+                            <span class="waitting">1</span>/
+                        <span class="cooking">2</span>/
+                        <span class="done">1</span>
+                        </span>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col col-5 class="col-time">
+                        <span class="time">1m</span>
+                    </ion-col>
+                    <ion-col col-7 class="col-button">
+                        <button class="fs-button fs-button-outline">Báo hết</button>
+                        <button class="fs-button">Chế biến</button>
+                    </ion-col>
+                </ion-row>
             </div>
         </div>
     </div>

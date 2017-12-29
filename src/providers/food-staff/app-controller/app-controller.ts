@@ -45,11 +45,11 @@ export class AppControllerProvider {
   loadedData = {
     product: false,
     productCategory: false,
-    productUnit: false,
-    productType: false,
-    productSize: false,
-    productSale: false,
-    productOption: false,
+    productUnit: true,
+    productType: true,
+    productSize: true,
+    productSale: true,
+    productOption: true,
     table: false,
     order: false,
     area: false,
@@ -347,16 +347,17 @@ export class AppControllerProvider {
 
           //Get all product in restaurant
           this.fetchProduct();
-          //Get all product option in restaurant
-          this.fetchProductOption();
-          //Get all product sale in restaurant
-          this.fetchProductSales();
-          //Get all product size in restaurant
-          this.fetchProductSize();
-          //Get all product type in restaurant
-          this.fetchProductType();
-          //Get all product unit in restaurant
-          this.fetchProductUnit();
+
+          // //Get all product option in restaurant
+          // this.fetchProductOption();
+          // //Get all product sale in restaurant
+          // this.fetchProductSales();
+          // //Get all product size in restaurant
+          // this.fetchProductSize();
+          // //Get all product type in restaurant
+          // this.fetchProductType();
+          // //Get all product unit in restaurant
+          // this.fetchProductUnit();
           //Get all product category in restaurant
           this.fetchProductCategory();
 
@@ -708,6 +709,8 @@ export class AppControllerProvider {
     this.firebaseService.fetchAllFoodOrderInRestaurant(this.restid).subscribe(data => {
       data.docChanges.forEach(change => {
         let foodOrderData = change.doc.data();
+        console.log("foodOrderData change",foodOrderData);
+        
         if (change.type == FIREBASE_CONST.DOCUMENT_CHANGE_TYPE.ADD) {
           let foodOrder = this.foodOrderPool.getItem();
           foodOrder.mappingFirebaseData(foodOrderData);
@@ -725,13 +728,16 @@ export class AppControllerProvider {
           console.log("food order change: ", this.foodOrders[index], foodOrderData);
         }
         if (change.type == FIREBASE_CONST.DOCUMENT_CHANGE_TYPE.REMOVE) {
-          let index = this.orders.findIndex(elm => {
+          let index = this.foodOrders.findIndex(elm => {
             return elm.id == foodOrderData.id;
           })
+          console.log(index);
+          console.log("Before remove food order" ,this.foodOrders);
+          
           if (index > -1) {
             this.foodOrders.splice(index, 1);
           }
-          console.log("remove")
+          console.log("remove food order", this.foodOrders);
         }
       });
       this.foodOrders.forEach(foodOrder => {
@@ -807,12 +813,12 @@ export class AppControllerProvider {
     return this.firebaseService.addFoodOrder(this.restid, orderId, this.user.id, product);
   }
 
-  removeFoodOrder(orderId: string , product: FoodOrder) : Promise<any> {
-    return this.firebaseService.removeFoodOrder(this.restid,orderId, this.user.id, product);
+  removeFoodOrder(firebaseId: string): Promise<any>{
+    return this.firebaseService.removeFoodOrder(this.restid,firebaseId);
   }
 
-  updateFoodOrder(product: FoodOrder): Promise<any> {
-    return this.firebaseService.updateFoodOrder(this.restid, this.user.id, product);
+  updateFoodOrder(firebaseId: string, value): Promise<any> {
+    return this.firebaseService.updateFoodOrder(this.restid, firebaseId, value);
   }
 
   updateProduct(firebaseId: string, value) {
@@ -820,8 +826,7 @@ export class AppControllerProvider {
   }
 
 
-  showToast(message: string, duration?: number, position?: string) {
-    if (this.toast) this.hideToast();
+  showToast(message: string, duration?: number, position?: string) { 
     this.toast = this.toastCtrl.create({
       message: message,
       duration: (duration ? duration : 3000),

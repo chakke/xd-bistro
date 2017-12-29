@@ -1,4 +1,4 @@
-page-fs-chef-orders {
+page-fs-chef-food-orders {
     $headerRowHeight: 45px;
     $customToggleHeight: 2em;
     .header {
@@ -105,6 +105,9 @@ page-fs-chef-orders {
             }
         }
     }
+    .fs-content {
+        background-color: map-get($map: $FSColors, $key: white);
+    }
     .segment-content {
         background-color: map-get($map: $FSColors, $key: white);
         $iconSize: 4em;
@@ -114,6 +117,7 @@ page-fs-chef-orders {
             padding: 0;
         }
         .food-list {
+            padding-top: 5px;
             &:last-child {
                 .fs-divider {
                     display: none;
@@ -152,17 +156,17 @@ page-fs-chef-orders {
                         font-style: italic;
                     }
                 }
-                .info {
-                    display: flex;
-                    color: map-get($map: $FSColors, $key: gray);
-                    .number {
-                        margin-right: 20px;
-                    }
-                    .icon {
-                        color: map-get($map: $FSColors, $key: primary);
-                        margin-right: 5px;
-                    }
+                .icon {
+                    color: map-get($map: $FSColors, $key: primary);
+                    margin-right: 5px;
                 }
+            }
+            .col-number {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-size: map-get($map: $FSSizes, $key: big);
+                font-weight: bold;
             }
             .row-action {
                 padding-top: 10px;
@@ -189,112 +193,24 @@ page-fs-chef-orders {
                     color: #5d991f;
                 }
             }
+            // &.warning-1 {
+            //     .time {
+            //         background-color: map-get($map: $FSColors, $key: gray);
+            //         color: map-get($map: $FSColors, $key: black);
+            //     }
+            // }
             &.warning-1 {
-                .time {
-                    background-color: map-get($map: $FSColors, $key: gray);
-                    color: map-get($map: $FSColors, $key: black);
-                }
-            }
-            &.warning-2 {
                 background-color: #ffedb3;
                 .time {
                     background-color: #ffc300;
                     color: #ab6200;
                 }
             }
-            &.warning-3 {
+            &.warning-2 {
                 background-color: #fce0dc;
                 .time {
                     background-color: #fe9aa0;
                     color: #ce452b;
-                }
-            }
-        }
-        .order-list {
-            .order-item {
-                padding: 10px map-get($map: $FSSizes, $key: defaultPadding);
-                border-bottom: solid 1px map-get($map: $FSColors, $key: lightgray);
-                .item-detail {
-                    &:last-of-type {
-                        border-bottom: 0;
-                    }
-                    .col-table {
-                        min-width: $iconSize;
-                        min-height: $iconSize;
-                        padding: 0;
-                        flex: 0;
-                        position: relative;
-                        .icon {
-                            font-size: 4em;
-                            z-index: 1;
-                            position: absolute;
-                            top: 50%;
-                            left: 50%;
-                            transform: translate(-50%, -50%);
-                            color: map-get($map: $FSColors, $key: primary);
-                        }
-                        .table-number {
-                            position: absolute;
-                            top: 50%;
-                            left: 50%;
-                            transform: translate(-50%, -50%);
-                            z-index: 2;
-                            color: map-get($map: $FSColors, $key: white);
-                            font-weight: bold;
-                        }
-                    }
-                    .col-detail {
-                        display: flex;
-                        flex-direction: column;
-                        justify-content: space-evenly;
-                        flex: 1;
-                        padding-left: 10px;
-                        .icon {
-                            color: map-get($map: $FSColors, $key: primary);
-                            vertical-align: text-bottom;
-                        }
-                        .staff {
-                            color: map-get($map: $FSColors, $key: black);
-                            font-weight: bold;
-                        }
-                        .detail {
-                            color: map-get($map: $FSColors, $key: gray);
-                            display: flex;
-                            justify-content: space-between;
-                        }
-                    }
-                    .col-price {
-                        flex: 0;
-                        display: flex;
-                        .price {
-                            white-space: nowrap;
-                            color: map-get($map: $FSColors, $key: orange);
-                            font-weight: bold;
-                        }
-                    }
-                }
-                .item-action {
-                    margin-top: 10px;
-                    .col-id {
-                        flex: 0;
-                        min-width: $iconSize;
-                        text-align: center;
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;
-                        span {
-                            background-color: map-get($map: $FSColors, $key: lightgray);
-                            color: map-get($map: $FSColors, $key: black);
-                            padding: 0px 5px;
-                            border-radius: 20px;
-                        }
-                    }
-                    .col-button {
-                        text-align: center;
-                        justify-content: flex-end;
-                        display: flex;
-                        align-items: center;
-                    }
                 }
             }
         }

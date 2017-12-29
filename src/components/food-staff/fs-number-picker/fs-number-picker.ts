@@ -19,7 +19,6 @@ export class FsNumberPickerComponent {
     private modalCtrl: ModalController) {
     console.log('Hello FsNumberPickerComponent Component');
     this.number = 1;
-    this.amountOrder = 0;
   }
 
   selectNumber() {
@@ -28,10 +27,10 @@ export class FsNumberPickerComponent {
     this.isPicking = true;
     modal.onDidDismiss(data => {
       this.isPicking = false;
-      if(data > this.amountOrder){
+      if(this.amountOrder && data > this.amountOrder){
         this.appController.showToast("Số lượng trả lớn hơn đã order",3000);
       }
-      if (data != null && data != undefined && data <= this.amountOrder) {
+      if (data != null && data != undefined || (this.amountOrder && data <= this.amountOrder)) {
         this.number = data;
         this.numberChange.next(this.number);
       }

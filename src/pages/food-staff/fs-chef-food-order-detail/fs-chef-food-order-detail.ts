@@ -7,7 +7,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'fs-chef-food-order-detail.html',
 })
 export class FsChefFoodOrderDetailPage {
-
+  title = "Chi tiết món";
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 

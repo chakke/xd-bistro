@@ -116,7 +116,9 @@ export class AddFoodToOrderPage {
           
           this.order.totalPrice = sum;
           this.appController.showLoading();
-          this.appController.updateFoodOrder(this.order.foods[index]).then(data => {
+          this.appController.updateFoodOrder(this.order.foods[index].firebaseId, {
+            amount_order: this.order.foods[index].amountOrder
+          }).then(data => {
             console.log("update food order successfully");
             this.appController.hideLoading();
           });
@@ -157,7 +159,9 @@ export class AddFoodToOrderPage {
           console.log(sum);
           
           this.order.totalPrice = sum;
-          this.appController.updateFoodOrder(foodOrder);
+          this.appController.updateFoodOrder(foodOrder.firebaseId, {
+            amount_order: foodOrder.amountOrder
+          });
         } else {
           this.appController.showToast("Số lượng phải lớn hơn 0");
         }

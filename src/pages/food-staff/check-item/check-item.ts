@@ -27,7 +27,7 @@ export class CheckItemPage {
     if(number!=null && number!=undefined && number > -1 && number <= this.order.foods[this.pickIndex].amountOrder){
       this.order.foods[this.pickIndex].amountReturn = number;
       this.appController.showLoading();
-      this.appController.updateFoodOrder(this.order.foods[this.pickIndex]).then(()=>{
+      this.appController.updateFoodOrder(this.order.foods[this.pickIndex].firebaseId,this.order.foods[this.pickIndex]).then(()=>{
         console.log("Update so luong tra thanh cong");
         this.appController.hideLoading();
       }).catch(err=>{

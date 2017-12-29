@@ -272,6 +272,7 @@
         border-radius: 20px;
         color: map-get($FSColors, white);
         background-color: map-get($FSColors, primary);
+        border: solid 1px map-get($map: $FSColors, $key: primary);
     }
     
     .fs-button-outline {

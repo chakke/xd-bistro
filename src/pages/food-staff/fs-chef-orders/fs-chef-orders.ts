@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { ORDER_STATE, FOOD_ORDER_STATE } from '../../../providers/food-staff/app-constant';
+import { ORDER_STATE, CHEF_FOOD_STATE } from '../../../providers/food-staff/app-constant';
 import { FoodOrder } from '../../../providers/food-staff/classes/product';
 import { AppControllerProvider } from '../../../providers/food-staff/app-controller/app-controller';
 
@@ -11,29 +11,23 @@ import { AppControllerProvider } from '../../../providers/food-staff/app-control
 })
 export class FsChefOrdersPage {
   searchKeyword = "";
-  placholder = "Tìm kiếm";
-  viewMode: number = 0;
+  placholder = "Tìm kiếm"; 
   selectedOrderStatus = "0";
-  ids = [];
-  orderStatusData = [
-    {
-      statusId: 0,
-      ids: [FOOD_ORDER_STATE.WAITING, FOOD_ORDER_STATE.COOKING],
-      title: "Đang chờ"
-    },
-    {
-      statusId: 1,
-      ids: [FOOD_ORDER_STATE.DELIVERABLE, FOOD_ORDER_STATE.DELIVERED],
-      title: "Đã hoàn tất"
-    }
-  ]
 
+  chefFoodState = [];
   chefFoodOrderCollection: Map<number, Array<FoodOrder>> = new Map<number, Array<FoodOrder>>();
   showFoodOrders: Array<FoodOrder> = [];
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     private appController: AppControllerProvider) {
+    for (const key in CHEF_FOOD_STATE) {
+      if (CHEF_FOOD_STATE.hasOwnProperty(key)) {
+        const state = CHEF_FOOD_STATE[key];
+        this.chefFoodState.push(state);
+      }
+    }
   }
 
   ionViewDidLoad() {
@@ -45,36 +39,30 @@ export class FsChefOrdersPage {
   }
 
   loadFoodOrder() {
-    Object.keys(FOOD_ORDER_STATE).forEach(key => {
-      this.chefFoodOrderCollection.set(FOOD_ORDER_STATE[key], []);
+    Object.keys(CHEF_FOOD_STATE).forEach(key => {
+      this.chefFoodOrderCollection.set(CHEF_FOOD_STATE[key].id, []);
     });
-    this.appController.chefFoodOrders.forEach(foodOrder => {
-      this.chefFoodOrderCollection.get(foodOrder.state).push(foodOrder);
+    this.appController.foodOrders.forEach(foodOrder => {
+      //Check amount waitting
+      if (foodOrder.amountOrder - foodOrder.amountDone - foodOrder.amountReturn - foodOrder.amountProcessing > 0) {
+        this.chefFoodOrderCollection.get(CHEF_FOOD_STATE.WAITING.id).push(foodOrder);
+      }
+      if (foodOrder.amountProcessing > 0) {
+        this.chefFoodOrderCollection.get(CHEF_FOOD_STATE.COOKING.id).push(foodOrder);
+      }
+      if (foodOrder.amountDone > 0) {
+        this.chefFoodOrderCollection.get(CHEF_FOOD_STATE.DELIVERABLE.id).push(foodOrder);
+      }
     });
     this.filterFoodOrders();
-    console.log("load fucker", this.appController.chefFoodOrders);
   }
 
   search() {
 
   }
-
-  onClickToggleView() {
-    this.viewMode = 1 - this.viewMode;
-  }
-
+ 
   filterFoodOrders() {
-    this.ids = [];
-    this.showFoodOrders = [];
-    for (const key in this.orderStatusData) {
-      if (this.orderStatusData.hasOwnProperty(key)) {
-        const element = this.orderStatusData[key];
-        if (element.statusId == +this.selectedOrderStatus) this.ids = element.ids;
-      }
-    }
-    this.ids.forEach(id => {
-      this.showFoodOrders = this.showFoodOrders.concat(this.chefFoodOrderCollection.get(id));
-    });
+    this.showFoodOrders = this.chefFoodOrderCollection.get(+this.selectedOrderStatus);
   }
 
   getDiffTime(time: Date) {
@@ -97,7 +85,7 @@ export class FsChefOrdersPage {
           value: 0
         },
         warm: {
-          minute: 10,
+          minute: 5,
           value: 1
         },
         hot: {
@@ -106,10 +94,11 @@ export class FsChefOrdersPage {
         }
       }
       let warningCollection = new Map<number, any>();
-      warningCollection.set(FOOD_ORDER_STATE.WAITING, wattingWarning);
-      let warning = warningCollection.get(collectionId);
+      warningCollection.set(CHEF_FOOD_STATE.WAITING.id, wattingWarning);
+      let warning = warningCollection.get(+collectionId);
       let status = 0;
-      let minute = (Date.now() - timeCreate.getTime()) / 1000 / 60;
+      let minute = (Date.now() - timeCreate.getTime()) / 1000 / 60; 
+
       for (const key in warning) {
         if (warning.hasOwnProperty(key)) {
           const element = warning[key];
@@ -118,7 +107,6 @@ export class FsChefOrdersPage {
           }
         }
       }
-      console.log("status", status, minute, warning);
       return "warning-" + status;
     }
     return "warning-0";

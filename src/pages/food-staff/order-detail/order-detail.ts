@@ -87,36 +87,33 @@ export class OrderDetailPage {
 
   removeDocument(food,i){
     this.appController.showLoading();
-    this.order.totalPrice -= food.price * food.amountOrder;
-    this.order.foods.splice(i,1);
-    this.appController.removeFoodOrder(this.orderId,food).then((res: any)=>{
-      console.log("Hủy món thành công");
+    this.appController.removeFoodOrder(food.firebaseId).then(()=>{
       this.appController.hideLoading();
-    });
+      console.log("Xoa thanh cong");
+      
+    }).catch(err=>{
+      this.appController.hideLoading();
+    })
   }
 
-  showKeyBoard(food: FoodOrder){
+  showKeyBoard(food,i){
     var amount = food.amountOrder;
     let modal = this.modalCtrl.create("KeypadModalPage", { number: (amount ? amount : 1) });
     modal.present();
     modal.onDidDismiss(data =>{
       if(data != null && data != undefined && data > 0){
-        let index = this.order.foods.findIndex(foodOrder => {
-          return foodOrder.id == food.id;
-        })
-        if(index > -1){
-          this.order.foods[index].amountOrder = data;
+          this.order.foods[i].amountOrder = data;
+          food.amountOrder = data;
           var sum = 0;
           for(let i = 0 ; i< this.order.foods.length ; i++){
             sum += this.order.foods[i].amountOrder * this.order.foods[i].price; 
           }
           this.order.totalPrice = sum;
           this.appController.showLoading();
-          this.appController.updateFoodOrder(this.order.foods[index]).then(data => {
+          this.appController.updateFoodOrder(food.firebaseId,food).then(data => {
             console.log("update food order successfully");
             this.appController.hideLoading();
           });
-        }
       }
     })
   }
