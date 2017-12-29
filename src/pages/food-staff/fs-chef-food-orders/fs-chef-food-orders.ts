@@ -33,8 +33,7 @@ export class FsChefFoodOrdersPage {
     }
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad FsChefOrdersPage');
+  ionViewDidLoad() { 
     this.loadFoodOrder();
     this.appController.foodOrderChanel.asObservable().subscribe(() => {
       this.loadFoodOrder();
@@ -69,9 +68,10 @@ export class FsChefFoodOrdersPage {
 
   filterFoodOrders() {
     this.showFoodOrders = this.chefFoodOrderCollection.get(+this.selectedOrderStatus);
+    this.appController.foodOrders.forEach(food => { 
+    })
     this.showFoodOrders.sort((a, b) => {
-      if (a.timeCreate && b.timeCreate) {
-        console.log("whoop");
+      if (a.timeCreate && b.timeCreate) { 
         if (+this.selectedOrderStatus == this.chefFoodStateData.DELIVERABLE.id) {
           return -a.timeCreate.getTime() + b.timeCreate.getTime();
         }
@@ -115,17 +115,17 @@ export class FsChefFoodOrdersPage {
           value: 0
         },
         warm: {
-          minute: 5,
+          minute: 10,
           value: 1
         },
         hot: {
-          minute: 10,
+          minute: 15,
           value: 2
         }
       }
       let warningCollection = new Map<number, any>();
       warningCollection.set(CHEF_FOOD_STATE.WAITING.id, wattingWarning);
-      warningCollection.set(CHEF_FOOD_STATE.COOKING.id, wattingWarning);
+      warningCollection.set(CHEF_FOOD_STATE.COOKING.id, cookingWarning);
       let warning = warningCollection.get(+collectionId);
       let status = 0;
       let minute = (Date.now() - timeCreate.getTime()) / 1000 / 60;
@@ -166,15 +166,36 @@ export class FsChefFoodOrdersPage {
   }
 
   processing(food: FoodOrder) {
-    this.appController.showLoading();
-    this.appController.updateFoodOrder(food.firebaseId, {
-      state: FOOD_ORDER_STATE.COOKING,
-      amount_processing: food.amountOrder - food.amountDone - food.amountReturn
-    }).then(() => {
-      this.appController.hideLoading();
-    }, error => {
-      this.appController.hideLoading();
+    let alert = this.alertCtrl.create({
+      message: "Chọn số lượng muốn chế biến",
+      inputs: [{
+        type: "number",
+        value: food.amountOrder - food.amountDone - food.amountReturn - food.amountProcessing + ""
+      }],
+      buttons: [{
+        text: "Hủy",
+        role: "cancel"
+      }, {
+        text: "OK",
+        handler: (data) => { 
+          if (data && data[0] && data[0] > 0) {
+            let number = parseInt(data[0])
+            if (number > food.amountOrder - food.amountDone - food.amountReturn - food.amountProcessing) {
+              this.appController.showToast("Số lượng chế biến phải nhỏ hơn số lượng gọi");
+            } else {
+              this.appController.updateFoodOrder(food.firebaseId, {
+                state: FOOD_ORDER_STATE.COOKING,
+                amount_processing: food.amountProcessing + number
+              })
+            }
+          } else {
+            this.appController.showToast("Số lượng phải lớn hơn 0");
+          }
+        }
+      }]
     })
+    alert.present();
+
   }
 
   done(food: FoodOrder) {
@@ -189,8 +210,7 @@ export class FsChefFoodOrdersPage {
         role: "cancel"
       }, {
         text: "OK",
-        handler: (data) => {
-          console.log("data", data);
+        handler: (data) => { 
           if (data && data[0] && data[0] > 0) {
             let number = parseInt(data[0])
             if (number > food.amountProcessing) {
@@ -210,5 +230,9 @@ export class FsChefFoodOrdersPage {
     alert.present();
   }
 
-
+  gotoFoodOrderDetail(food: FoodOrder) { 
+    this.appController.pushPage("FsChefFoodOrderDetailPage", {
+      food: food.food
+    });
+  }
 }

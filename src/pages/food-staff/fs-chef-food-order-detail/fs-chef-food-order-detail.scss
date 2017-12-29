@@ -28,27 +28,56 @@ page-fs-chef-food-order-detail {
         }
     }
     .order-list {
+        &.processing-list {
+            .order {
+                background-color: #FFECB3;
+                .status {
+                    color: map-get($map: $FSColors, $key: green);
+                }
+            }
+        }
+        &.waitting-list {
+            .order {
+                background-color: #DCEDC8;
+                .status {
+                    color: map-get($map: $FSColors, $key: primary);
+                }
+            }
+        }
         .order {
             padding: 10px 0;
             border-bottom: solid 1px map-get($map: $FSColors, $key: lightgray);
-            &:last-child {
-                border-bottom: none;
-            }
+            margin-bottom: 3px;
             .col-code,
             .col-time {
                 display: flex;
-                justify-content: center;
+                justify-content: space-evenly;
                 align-items: center;
+            }
+            .col-time {
+                flex-wrap: wrap
+            }
+            .status {
+                text-align: center;
             }
             .col-button {
                 display: flex;
-                justify-content: flex-end;
+                justify-content: space-evenly;
                 align-items: center;
+                padding-right: 10px;
             }
             .col-number {
                 display: flex;
                 justify-content: flex-start;
                 align-items: center;
+                .icon {
+                    color: map-get($map: $FSColors, $key: primary);
+                    margin-right: 5px;
+                }
+                .number {
+                    font-size: map-get($map: $FSSizes, $key: big);
+                    font-weight: bold;
+                }
                 span {
                     margin-right: 3px;
                 }
@@ -75,7 +104,6 @@ page-fs-chef-food-order-detail {
             .fs-button {
                 padding: 4px 12px;
                 font-size: 1em;
-                margin-right: 15px;
             }
         }
     }

@@ -289,7 +289,7 @@ export class FoodOrder {
 	constructor() {
 		this.reset();
 	}
-
+ 
 	reset() {
 		this.firebaseId = "";
 		this.id = "";

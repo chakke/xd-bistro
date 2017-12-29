@@ -20,17 +20,17 @@
             <div class="food-list" *ngIf="selectedOrderStatus == chefFoodStateData.WAITING.id">
                 <div class="food-item {{getClass(selectedOrderStatus, food.timeCreate)}}" *ngFor="let food of showFoodOrders">
                     <ion-row>
-                        <ion-col col-2 class="col-img">
+                        <ion-col col-2 class="col-img" (click)="gotoFoodOrderDetail(food)" tappable>
                             <img src="{{food.food.image}}" alt="image">
                         </ion-col>
                         <ion-col col-8 class="col-detail">
-                            <div class="name"><span class="code">({{food.food.id}})</span> {{food.food.name}}</div>
+                            <div class="name" (click)="gotoFoodOrderDetail(food)" tappable><span class="code">({{food.food.id}})</span> {{food.food.name}}</div>
                             <div class="table">
                                 <ion-icon name="fs-table-3-o"></ion-icon>
                                 <span>{{food.orderId}}</span>
                             </div>
                         </ion-col>
-                        <ion-col col-2 class="col-number">
+                        <ion-col col-2 class="col-number" (click)="gotoFoodOrderDetail(food)" tappable>
                             <span>{{food.amountOrder - food.amountDone - food.amountReturn - food.amountProcessing}} suất</span>
                         </ion-col>
                     </ion-row>
@@ -48,17 +48,17 @@
             <div class="food-list" *ngIf="selectedOrderStatus == chefFoodStateData.COOKING.id">
                 <div class="food-item {{getClass(selectedOrderStatus, food.timeCreate)}}" *ngFor="let food of showFoodOrders">
                     <ion-row>
-                        <ion-col col-2 class="col-img">
+                        <ion-col col-2 class="col-img" (click)="gotoFoodOrderDetail(food)" tappable>
                             <img src="{{food.food.image}}" alt="image">
                         </ion-col>
                         <ion-col col-8 class="col-detail">
-                            <div class="name"><span class="code">({{food.food.id}})</span> {{food.food.name}}</div>
+                            <div class="name" (click)="gotoFoodOrderDetail(food)" tappable><span class="code">({{food.food.id}})</span> {{food.food.name}}</div>
                             <div class="table">
                                 <ion-icon name="fs-table-3-o"></ion-icon>
                                 <span>{{food.orderId}}</span>
                             </div>
                         </ion-col>
-                        <ion-col col-2 class="col-number">
+                        <ion-col col-2 class="col-number" (click)="gotoFoodOrderDetail(food)" tappable>
                             <span>{{food.amountProcessing}} suất</span>
                         </ion-col>
                     </ion-row>

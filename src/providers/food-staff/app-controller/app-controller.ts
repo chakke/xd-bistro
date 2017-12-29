@@ -75,7 +75,7 @@ export class AppControllerProvider {
   foodOrderPool: FoodOrderPool;
   foodOrderCollection: Map<string, FoodOrder> = new Map<string, FoodOrder>();
 
-  chefFoodOrders: Array<FoodOrder> = [];
+  // chefFoodOrders: Array<FoodOrder> = [];
   // chefFoodOrderCollection: Map<string, FoodOrder> = new Map<string, FoodOrder>();
 
   maps: Array<UIMap> = [];
@@ -185,7 +185,7 @@ export class AppControllerProvider {
       //Mapping foodOrder to order and chefFoodOrder
       if ((data == "foodOrder") && this.loadedData.order && this.loadedData.foodOrder) {
         console.log("food order change");
-        this.chefFoodOrders = [];
+        // this.chefFoodOrders = [];
         this.foodOrders.forEach(foodOrder => {
           if (foodOrder.orderId && this.orderCollection.get(foodOrder.orderId)) {
             let order = this.orderCollection.get(foodOrder.orderId);
@@ -201,19 +201,20 @@ export class AppControllerProvider {
             }
 
           }
+          //add food to foodorder
           if (foodOrder.foodId) {
             foodOrder.food = this.productCollection.get(foodOrder.foodId);
-          }
-          if (foodOrder.foodId) {
-            let index = this.chefFoodOrders.findIndex(elm => {
-              return elm.foodId == foodOrder.foodId && elm.state == foodOrder.state;
-            })
-            if (index >= 0) {
-              this.chefFoodOrders[index].amountOrder += foodOrder.amountOrder;
-            } else {
-              this.chefFoodOrders.push(foodOrder);
-            }
-          }
+          } 
+          // if (foodOrder.foodId) {
+          //   let index = this.chefFoodOrders.findIndex(elm => {
+          //     return elm.foodId == foodOrder.foodId && elm.state == foodOrder.state;
+          //   })
+          //   if (index >= 0) {
+          //     this.chefFoodOrders[index].amountOrder += foodOrder.amountOrder;
+          //   } else {
+          //     this.chefFoodOrders.push(foodOrder);
+          //   }
+          // }
         })
         dataChange.push("order");
         dataChange.push("foodOrder");
@@ -243,9 +244,9 @@ export class AppControllerProvider {
     return this.scrollController;
   }
 
-  pushPage(page: any) {
+  pushPage(page: any, navParam?: any) {
     if (this.setActivePage(page)) {
-      this.app.getActiveNav().push(page);
+      this.app.getActiveNav().push(page, navParam);
     }
   }
 
@@ -709,6 +710,7 @@ export class AppControllerProvider {
     this.firebaseService.fetchAllFoodOrderInRestaurant(this.restid).subscribe(data => {
       data.docChanges.forEach(change => {
         let foodOrderData = change.doc.data();
+        console.log("food order data", foodOrderData.firebase_id, foodOrderData.amount_order);
         if (change.type == FIREBASE_CONST.DOCUMENT_CHANGE_TYPE.ADD) {
           let foodOrder = this.foodOrderPool.getItem();
           foodOrder.mappingFirebaseData(foodOrderData);
@@ -735,6 +737,7 @@ export class AppControllerProvider {
         }
       });
       this.foodOrders.forEach(foodOrder => {
+        console.log("food order object", foodOrder.firebaseId, foodOrder.amountOrder);
         this.foodOrderCollection.set(foodOrder.id, foodOrder);
       })
 
@@ -820,7 +823,7 @@ export class AppControllerProvider {
   }
 
 
-  showToast(message: string, duration?: number, position?: string) { 
+  showToast(message: string, duration?: number, position?: string) {
     this.toast = this.toastCtrl.create({
       message: message,
       duration: (duration ? duration : 3000),
