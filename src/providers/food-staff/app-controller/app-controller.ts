@@ -183,8 +183,7 @@ export class AppControllerProvider {
       }
 
       //Mapping foodOrder to order and chefFoodOrder
-      if ((data == "foodOrder") && this.loadedData.order && this.loadedData.foodOrder) {
-        console.log("food order change");
+      if ((data == "foodOrder") && this.loadedData.order && this.loadedData.foodOrder) { 
         // this.chefFoodOrders = [];
         this.foodOrders.forEach(foodOrder => {
           if (foodOrder.orderId && this.orderCollection.get(foodOrder.orderId)) {
@@ -225,6 +224,7 @@ export class AppControllerProvider {
       }
       if (dataChange.indexOf("foodOrder") >= 0) {
         this.foodOrderChanel.next("data changed");
+        console.log("food order change", this.foodOrders);
       }
     })
 
@@ -410,8 +410,7 @@ export class AppControllerProvider {
       });
       this.staffes.forEach(staff => {
         this.staffCollection.set(staff.id, staff);
-      })
-      console.log("staff change", this.staffes);
+      }) 
       this.loadedData.staff = true;
       this.loadedDataChanel.next("staff");
     })
@@ -451,8 +450,7 @@ export class AppControllerProvider {
 
       this.loadedData.product = true;
       this.productChanel.next("Treeboo vừa ra video mới!");
-      this.loadedDataChanel.next("Hàng mới về");
-      console.log("products fetched successfully", this.products);
+      this.loadedDataChanel.next("Hàng mới về"); 
     })
   }
 
@@ -506,8 +504,7 @@ export class AppControllerProvider {
         }
       });
       this.loadedData.productCategory = true;
-      this.loadedDataChanel.next("Hàng mới về");
-      console.log("productCategory fetched successfully", this.productCategories);
+      this.loadedDataChanel.next("Hàng mới về"); 
     })
   }
 
@@ -545,8 +542,7 @@ export class AppControllerProvider {
         }
       });
       this.loadedData.productSize = true;
-      this.loadedDataChanel.next("Hàng mới về");
-      console.log("productSizes fetched successfully", this.productSizes);
+      this.loadedDataChanel.next("Hàng mới về"); 
     })
   }
 
@@ -583,8 +579,7 @@ export class AppControllerProvider {
         }
       });
       this.loadedData.productType = true;
-      this.loadedDataChanel.next("Hàng mới về");
-      console.log("productTypes fetched successfully", this.productTypes);
+      this.loadedDataChanel.next("Hàng mới về"); 
     })
   }
 
@@ -622,8 +617,7 @@ export class AppControllerProvider {
         }
       });
       this.loadedData.productUnit = true;
-      this.loadedDataChanel.next("Hàng mới về");
-      console.log("productUnits fetched successfully", this.productUnits);
+      this.loadedDataChanel.next("Hàng mới về"); 
     })
   }
 
@@ -661,8 +655,7 @@ export class AppControllerProvider {
 
       this.loadedData.table = true;
       this.tableChanel.next("Lệ rơi vừa ra video mới!");
-      this.loadedDataChanel.next("table");
-      console.log("tables fetched successfully", this.tables);
+      this.loadedDataChanel.next("table"); 
     })
   }
 
@@ -696,12 +689,10 @@ export class AppControllerProvider {
       });
       this.orders.forEach(order => {
         this.orderCollection.set(order.id, order);
-      })
-      console.log("Order in Firebase changed");
+      }) 
       this.loadedData.order = true;
       // this.orderChanel.next("Tùng Sơn vừa ra video mới!");
-      this.loadedDataChanel.next("order");
-      console.log("ordes fetched successfully", this.orders);
+      this.loadedDataChanel.next("order"); 
     })
   }
 
@@ -709,8 +700,7 @@ export class AppControllerProvider {
     //Fetch order
     this.firebaseService.fetchAllFoodOrderInRestaurant(this.restid).subscribe(data => {
       data.docChanges.forEach(change => {
-        let foodOrderData = change.doc.data();
-        console.log("food order data", foodOrderData.firebase_id, foodOrderData.amount_order);
+        let foodOrderData = change.doc.data(); 
         if (change.type == FIREBASE_CONST.DOCUMENT_CHANGE_TYPE.ADD) {
           let foodOrder = this.foodOrderPool.getItem();
           foodOrder.mappingFirebaseData(foodOrderData);
@@ -724,8 +714,7 @@ export class AppControllerProvider {
           if (index > -1) {
             this.foodOrders[index].reset();
             this.foodOrders[index].mappingFirebaseData(foodOrderData);
-          }
-          console.log("food order change: ", this.foodOrders[index], foodOrderData);
+          } 
         }
         if (change.type == FIREBASE_CONST.DOCUMENT_CHANGE_TYPE.REMOVE) {
           let index = this.orders.findIndex(elm => {
@@ -736,14 +725,12 @@ export class AppControllerProvider {
           }
         }
       });
-      this.foodOrders.forEach(foodOrder => {
-        console.log("food order object", foodOrder.firebaseId, foodOrder.amountOrder);
+      this.foodOrders.forEach(foodOrder => { 
         this.foodOrderCollection.set(foodOrder.id, foodOrder);
       })
 
       this.loadedData.foodOrder = true;
-      this.loadedDataChanel.next("foodOrder");
-      console.log("ordes fetched successfully", this.orders);
+      this.loadedDataChanel.next("foodOrder"); 
     })
   }
 
@@ -780,16 +767,14 @@ export class AppControllerProvider {
       })
 
       this.loadedData.area = true;
-      this.loadedDataChanel.next("area");
-      console.log("floors fetched successfully", this.productTypes);
+      this.loadedDataChanel.next("area"); 
     })
   }
 
   getMenu() {
     if (this.user) {
       this.httpService.getMenu(this.user.staffRole).then(data => {
-        if (data && data.menu) {
-          console.log("get menu success", this.user.staffRole, data.menu);
+        if (data && data.menu) { 
           this.menuItems = [];
           data.menu.forEach(element => {
             let menu = new Menu(element.id, element.name, element.icon, false, element.page, element.link);
@@ -864,8 +849,7 @@ export class AppControllerProvider {
         data.content.forEach(element => {
           let table = this.tableInOrderPool.getItemWithData(element);
           this.tableInOrders.push(table);
-        });
-        console.log("table in order", this.tableInOrders);
+        }); 
       }
     });
   }
@@ -879,8 +863,7 @@ export class AppControllerProvider {
       return elm.id == id;
     })
 
-    if (index > -1) {
-      console.log("get table by id", id, index);
+    if (index > -1) { 
       return this.tableInOrders[index];
     }
     return undefined;

@@ -33,7 +33,7 @@ export class FsChefFoodOrdersPage {
     }
   }
 
-  ionViewDidLoad() { 
+  ionViewDidLoad() {
     this.loadFoodOrder();
     this.appController.foodOrderChanel.asObservable().subscribe(() => {
       this.loadFoodOrder();
@@ -68,10 +68,10 @@ export class FsChefFoodOrdersPage {
 
   filterFoodOrders() {
     this.showFoodOrders = this.chefFoodOrderCollection.get(+this.selectedOrderStatus);
-    this.appController.foodOrders.forEach(food => { 
+    this.appController.foodOrders.forEach(food => {
     })
     this.showFoodOrders.sort((a, b) => {
-      if (a.timeCreate && b.timeCreate) { 
+      if (a.timeCreate && b.timeCreate) {
         if (+this.selectedOrderStatus == this.chefFoodStateData.DELIVERABLE.id) {
           return -a.timeCreate.getTime() + b.timeCreate.getTime();
         }
@@ -177,7 +177,7 @@ export class FsChefFoodOrdersPage {
         role: "cancel"
       }, {
         text: "OK",
-        handler: (data) => { 
+        handler: (data) => {
           if (data && data[0] && data[0] > 0) {
             let number = parseInt(data[0])
             if (number > food.amountOrder - food.amountDone - food.amountReturn - food.amountProcessing) {
@@ -210,7 +210,7 @@ export class FsChefFoodOrdersPage {
         role: "cancel"
       }, {
         text: "OK",
-        handler: (data) => { 
+        handler: (data) => {
           if (data && data[0] && data[0] > 0) {
             let number = parseInt(data[0])
             if (number > food.amountProcessing) {
@@ -230,9 +230,15 @@ export class FsChefFoodOrdersPage {
     alert.present();
   }
 
-  gotoFoodOrderDetail(food: FoodOrder) { 
+  gotoFoodOrderDetail(food: FoodOrder) {
     this.appController.pushPage("FsChefFoodOrderDetailPage", {
       food: food.food
     });
+  }
+
+  gotoOrderDetail(orderId: string) {
+    this.appController.pushPage("FsChefOrderDetailPage", {
+      orderId: orderId
+    })
   }
 }

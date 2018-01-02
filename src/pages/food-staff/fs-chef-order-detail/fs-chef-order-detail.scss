@@ -1,3 +1,228 @@
 page-fs-chef-order-detail {
-
+    $headerRowHeight: 45px;
+    $customToggleHeight: 2em;
+    .header {
+        &::after {
+            display: none;
+        }
+    }
+    .custom-toggle {
+        position: absolute;
+        right: 10px;
+        top: $headerRowHeight / 2;
+        transform: translateY(-50%);
+        height: $customToggleHeight;
+        border-radius: 20px;
+        padding: 2px;
+        background-color: #760d14;
+        .icon,
+        i,
+        {
+            margin: auto;
+        }
+        .custom-toggle-button {
+            height: 100%;
+            padding: 0 10px;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-display: flex;
+            border-radius: 20px;
+            background-color: transparent;
+            -webkit-transition: all 1s;
+            transition: all 1s;
+            color: map-get($map: $FSColors, $key: white);
+        }
+        span.active {
+            background-color: map-get($FSColors, primary)
+        }
+    }
+    .custom-toggle-left-button {
+        float: left;
+    }
+    .custom-toggle-right-button {
+        float: right;
+    }
+    .search-bar {
+        background-color: map-get($map: $FSColors, $key: background);
+        .searchbar-ios {
+            border: none;
+        }
+        .searchbar-input {
+            border: solid 1px lightgray;
+        }
+    }
+    .fs-segment {
+        font-size: map-get($map: $FSSizes, $key: small);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: map-get($map: $FSColors, $key: background);
+        &::after {
+            display: none;
+        }
+        &.active {
+            background-color: map-get($map: $FSColors, $key: white);
+        }
+        .segment-activated {
+            .number {
+                display: inline-block;
+            }
+        }
+        .number {
+            font-size: 0.8em;
+            padding: 0 4px;
+            border-radius: 50%;
+            display: inline-block;
+            height: 2rem;
+            min-width: 2rem;
+            line-height: 2rem;
+            border: solid 1px;
+            margin-right: 5px;
+            display: none;
+        }
+        .segment-button {
+            color: map-get($map: $FSColors, $key: black);
+            &.segment-activated {
+                background-color: map-get($map: $FSColors, $key: white);
+                font-weight: bold;
+            }
+            .status-2 {
+                background-color: map-get($map: $FSColors, $key: green);
+                color: map-get($map: $FSColors, $key: white);
+            }
+            // .status-2 {
+            //     background-color: map-get($map: $FSColors, $key: green);
+            //     color: map-get($map: $FSColors, $key: white);
+            // }
+            .status-0 {
+                background-color: map-get($map: $FSColors, $key: gray);
+                color: map-get($map: $FSColors, $key: black);
+            }
+            .status-1 {
+                background-color: map-get($map: $FSColors, $key: primary);
+                color: map-get($map: $FSColors, $key: white);
+            }
+        }
+    }
+    .fs-content {
+        background-color: map-get($map: $FSColors, $key: white);
+    }
+    .segment-content {
+        background-color: map-get($map: $FSColors, $key: white);
+        $iconSize: 4em;
+        position: relative;
+        .row,
+        .col {
+            padding: 0;
+        }
+        .food-list {
+            padding-top: 5px;
+            &:last-child {
+                .fs-divider {
+                    display: none;
+                }
+            }
+            .food-item {
+                border-bottom: solid 1px map-get($map: $FSColors, $key: lightgray);
+                &:last-child {
+                    border-bottom: none;
+                }
+            }
+        }
+        .food-item {
+            padding: 10px map-get($map: $FSSizes, $key: defaultPadding);
+            // border-bottom: solid 1px map-get($map: $FSColors, $key: lightgray);
+            background-color: map-get($map: $FSColors, $key: white);
+            margin-bottom: 5px;
+            .col-img {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: 0 5px;
+                img {
+                    object-fit: cover;
+                    border-radius: 50%;
+                }
+            }
+            .col-detail {
+                padding-left: 10px;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-evenly;
+                .name {
+                    font-weight: bold;
+                    .code {
+                        font-style: italic;
+                    }
+                }
+                .icon {
+                    color: map-get($map: $FSColors, $key: primary);
+                    margin-right: 5px;
+                }
+            }
+            .col-number {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-size: map-get($map: $FSSizes, $key: big);
+                font-weight: bold;
+            }
+            .row-action {
+                padding-top: 10px;
+                .col-time {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    .time {
+                        width: 100%;
+                        text-align: center;
+                        font-weight: 500;
+                        border-radius: 20px;
+                    }
+                }
+                .col-button {
+                    display: flex;
+                    justify-content: flex-end;
+                    align-items: center;
+                }
+            }
+            &.warning-0 {
+                .time {
+                    background-color: #b5e287;
+                    color: #5d991f;
+                }
+            }
+            // &.warning-1 {
+            //     .time {
+            //         background-color: map-get($map: $FSColors, $key: gray);
+            //         color: map-get($map: $FSColors, $key: black);
+            //     }
+            // }
+            &.warning-1 {
+                background-color: #ffedb3;
+                .time {
+                    background-color: #ffc300;
+                    color: #ab6200;
+                }
+            }
+            &.warning-2 {
+                background-color: #fce0dc;
+                .time {
+                    background-color: #fe9aa0;
+                    color: #ce452b;
+                }
+            }
+        }
+        .fs-button {
+            padding: 4px 12px;
+            margin-left: 10px;
+            font-size: 1em;
+            border: solid 1px map-get($map: $FSColors, $key: primary);
+        }
+    }
+    .scroll-top {
+        left: 16px;
+        right: auto;
+    }
 }

@@ -4,14 +4,14 @@
     <!-- <div class="search-bar">
         <ion-searchbar class="searchbar-ios" [class.searchbar-md]="false" placeholder="{{placholder}}" [(ngModel)]="searchKeyword" (ionInput)="search()"></ion-searchbar>
     </div> -->
-    <div class="fs-segment">
+    <!-- <div class="fs-segment">
         <ion-segment class="segment-md" [class.segment-ios]="false" [(ngModel)]="selectedOrderStatus" (ionChange)="filterFoodOrders()">
             <ion-segment-button value="{{state.id}}" *ngFor="let state of chefFoodState">
                 <span class="number status-{{state.id}}">{{showFoodOrders.length}}</span>
                 <span class="text"> {{state.name}} </span>
             </ion-segment-button>
         </ion-segment>
-    </div>
+    </div> -->
 </ion-header>
 
 
@@ -21,30 +21,30 @@
 
         <div class="segment-content">
             <div class="order-list">
-                <div class="order-item">
+                <div class="order-item" *ngFor="let order of showChefOrder">
                     <ion-row class="item-detail">
                         <ion-col class="col-table">
                             <ion-icon name="fs-table"></ion-icon>
-                            <span class="table-number">G14</span>
+                            <span class="table-number">{{order.tables ? order.tables.join(" ") :  ""}}</span>
                         </ion-col>
                         <ion-col class="col-detail">
                             <div class="staff">
                                 <ion-icon name="fs-service-o"></ion-icon>
-                                <span class="staff-name">(NV104) Nguyễn Văn A</span>
+                                <span class="staff-name">({{order.staffId}}) {{order.staffName}}</span>
                             </div>
                             <div class="detail">
                                 <div class="person">
                                     <ion-icon name="fs-group-o"></ion-icon>
-                                    <span>10 người</span>
+                                    <span>{{order.numberCustormer}} người</span>
                                 </div>
                                 <div class="time">
                                     <ion-icon name="fs-time-o"></ion-icon>
-                                    <span>48:04:28</span>
+                                    <span>{{order.timeCreate | date: 'hh:mm:ss'}}</span>
                                 </div>
                                 <div class="piece">
                                     <ion-icon name="logo-buffer"></ion-icon>
                                     <span>
-                                        <span class="fs-green">14</span> /24 suất
+                                        <span class="fs-green">{{order.doneFood}}</span> / {{order.totalFood}} món
                                     </span>
                                 </div>
                             </div>
@@ -55,45 +55,7 @@
                             <span> #123 </span>
                         </ion-col>
                         <ion-col class="col-button">
-                            <button class="fs-button" (click)="pay()">Xem order</button>
-                        </ion-col>
-                    </ion-row>
-                </div>
-                <div class="order-item">
-                    <ion-row class="item-detail">
-                        <ion-col class="col-table">
-                            <ion-icon name="fs-table"></ion-icon>
-                            <span class="table-number">G14</span>
-                        </ion-col>
-                        <ion-col class="col-detail">
-                            <div class="staff">
-                                <ion-icon name="fs-service-o"></ion-icon>
-                                <span class="staff-name">(NV104) Nguyễn Văn A</span>
-                            </div>
-                            <div class="detail">
-                                <div class="person">
-                                    <ion-icon name="fs-group-o"></ion-icon>
-                                    <span>10 người</span>
-                                </div>
-                                <div class="time">
-                                    <ion-icon name="fs-time-o"></ion-icon>
-                                    <span>48:04:28</span>
-                                </div>
-                                <div class="piece">
-                                    <ion-icon name="logo-buffer"></ion-icon>
-                                    <span>
-                                        <span class="fs-green">14</span> /24 suất
-                                    </span>
-                                </div>
-                            </div>
-                        </ion-col>
-                    </ion-row>
-                    <ion-row class="item-action">
-                        <ion-col class="col-id">
-                            <span> #123 </span>
-                        </ion-col>
-                        <ion-col class="col-button">
-                            <button class="fs-button" (click)="pay()">Xem order</button>
+                            <button class="fs-button" (click)="gotoOrderDetail(order)">Xem order</button>
                         </ion-col>
                     </ion-row>
                 </div>

@@ -21,6 +21,14 @@ export class FirebaseServiceProvider {
   constructor(
     // private agf: AngularFirestore
   ) {
+    // firebase.initializeApp({
+    //   apiKey: "AIzaSyDG_pauTdXELEjd-kB2FuEji4PJUURVQ78",
+    //   authDomain: "bistro-dancer.firebaseapp.com",
+    //   databaseURL: "https://bistro-dancer.firebaseio.com",
+    //   projectId: "bistro-dancer",
+    //   storageBucket: "bistro-dancer.appspot.com",
+    //   messagingSenderId: "796575514827"
+    // });
     firebase.initializeApp({
       apiKey: "AIzaSyDMEZoEtmor-T166lP9bGCR9FxqQP4eGik",
       authDomain: "bistrodancerapp.firebaseapp.com",
