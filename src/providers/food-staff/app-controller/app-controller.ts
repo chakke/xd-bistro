@@ -75,7 +75,7 @@ export class AppControllerProvider {
   foodOrderPool: FoodOrderPool;
   foodOrderCollection: Map<string, FoodOrder> = new Map<string, FoodOrder>();
 
-  chefFoodOrders: Array<FoodOrder> = [];
+  // chefFoodOrders: Array<FoodOrder> = [];
   // chefFoodOrderCollection: Map<string, FoodOrder> = new Map<string, FoodOrder>();
 
   maps: Array<UIMap> = [];
@@ -184,36 +184,48 @@ export class AppControllerProvider {
 
       //Mapping foodOrder to order and chefFoodOrder
       if ((data == "foodOrder") && this.loadedData.order && this.loadedData.foodOrder) {
-        console.log("food order change");
-        this.chefFoodOrders = [];
+        console.log("food order change", this.foodOrders);
+        console.log("orders",this.orders);
+        
+        // this.chefFoodOrders = [];
         this.foodOrders.forEach(foodOrder => {
           if (foodOrder.orderId && this.orderCollection.get(foodOrder.orderId)) {
             let order = this.orderCollection.get(foodOrder.orderId);
+
+            console.log("order", order);
+            
             let index = order.foods.findIndex(elm => {
               return elm.id == foodOrder.id;
             })
+            console.log("index in mapingfirebase",index);
+            
             if (index > -1) {
+              console.log("if");
+              
               this.orderCollection.get(foodOrder.orderId).totalPrice += foodOrder.price * (order.foods[index].amountOrder - foodOrder.amountOrder);
               Utils.copyObject(foodOrder, order.foods[index]);
             } else {
               order.foods.push(foodOrder);
               this.orderCollection.get(foodOrder.orderId).totalPrice += foodOrder.price * foodOrder.amountOrder;
+              console.log("else");
+              
             }
 
           }
+          //add food to foodorder
           if (foodOrder.foodId) {
             foodOrder.food = this.productCollection.get(foodOrder.foodId);
-          }
-          if (foodOrder.foodId) {
-            let index = this.chefFoodOrders.findIndex(elm => {
-              return elm.foodId == foodOrder.foodId && elm.state == foodOrder.state;
-            })
-            if (index >= 0) {
-              this.chefFoodOrders[index].amountOrder += foodOrder.amountOrder;
-            } else {
-              this.chefFoodOrders.push(foodOrder);
-            }
-          }
+          } 
+          // if (foodOrder.foodId) {
+          //   let index = this.chefFoodOrders.findIndex(elm => {
+          //     return elm.foodId == foodOrder.foodId && elm.state == foodOrder.state;
+          //   })
+          //   if (index >= 0) {
+          //     this.chefFoodOrders[index].amountOrder += foodOrder.amountOrder;
+          //   } else {
+          //     this.chefFoodOrders.push(foodOrder);
+          //   }
+          // }
         })
         dataChange.push("order");
         dataChange.push("foodOrder");
@@ -243,9 +255,9 @@ export class AppControllerProvider {
     return this.scrollController;
   }
 
-  pushPage(page: any, params?: any) {
+  pushPage(page: any, navParam?: any) {
     if (this.setActivePage(page)) {
-      this.app.getActiveNav().push(page);
+      this.app.getActiveNav().push(page, navParam);
     }
   }
 
@@ -711,6 +723,7 @@ export class AppControllerProvider {
         let foodOrderData = change.doc.data();
         console.log("foodOrderData change",foodOrderData);
         
+        console.log("food order data", foodOrderData.firebase_id, foodOrderData.amount_order);
         if (change.type == FIREBASE_CONST.DOCUMENT_CHANGE_TYPE.ADD) {
           let foodOrder = this.foodOrderPool.getItem();
           foodOrder.mappingFirebaseData(foodOrderData);
@@ -728,19 +741,29 @@ export class AppControllerProvider {
           console.log("food order change: ", this.foodOrders[index], foodOrderData);
         }
         if (change.type == FIREBASE_CONST.DOCUMENT_CHANGE_TYPE.REMOVE) {
+
+          // fix this.orders = this.foodOrders
           let index = this.foodOrders.findIndex(elm => {
             return elm.id == foodOrderData.id;
           })
-          console.log(index);
-          console.log("Before remove food order" ,this.foodOrders);
+        
+          let order = this.orderCollection.get(foodOrderData.order_id);
+
+          let foodOrderIndex = order.foods.findIndex(elm =>{
+            return elm.id == foodOrderData.id;
+          })
+
           
-          if (index > -1) {
+          if (index > -1 && foodOrderIndex > -1) {
             this.foodOrders.splice(index, 1);
+            this.orderCollection.get(foodOrderData.order_id).foods.splice(foodOrderIndex,1);
           }
-          console.log("remove food order", this.foodOrders);
+
+          console.log("remove food order");
         }
       });
       this.foodOrders.forEach(foodOrder => {
+        // console.log("food order object", foodOrder.firebaseId, foodOrder.amountOrder);
         this.foodOrderCollection.set(foodOrder.id, foodOrder);
       })
 
@@ -826,7 +849,7 @@ export class AppControllerProvider {
   }
 
 
-  showToast(message: string, duration?: number, position?: string) { 
+  showToast(message: string, duration?: number, position?: string) {
     this.toast = this.toastCtrl.create({
       message: message,
       duration: (duration ? duration : 3000),

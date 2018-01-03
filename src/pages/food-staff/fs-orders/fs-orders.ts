@@ -85,7 +85,7 @@ export class FsOrdersPage {
   }
 
   gotoDetail(order) {
-    let modal = this.modalCtrl.create("OrderDetailPage", { order: order.id });
+    let modal = this.modalCtrl.create("OrderDetailPage", { orderId: order.id });
     modal.present();
   }
 

@@ -4,68 +4,70 @@
 <ion-content>
     <scroll-to-top></scroll-to-top>
     <div class="fs-content">
-        <div class="food-detail">
+        <div class="food-detail" *ngIf="food">
             <ion-row>
                 <ion-col col-3 class="col-img">
-                    <img src="http://7monngonmoingay.vn/wp-content/uploads/2016/07/cach-lam-pho-bo-sot-vang-thom-ngon-nuc-mui.jpg" alt="image">
+                    <img src="{{food.image}}" alt="image">
                 </ion-col>
                 <ion-col col-9 class="col-detail">
-                    <div class="title">Phở bò sốt vang</div>
+                    <div class="title">{{food.name}}</div>
                     <div class="number-div">
                         <span>Tổng số:</span>
-                        <span class="number">12 </span>suất
+                        <span class="number">{{totalAmount}} </span>suất
                     </div>
                 </ion-col>
             </ion-row>
         </div>
-        <div class="order-list">
-            <div class="order">
+        <div class="order-list processing-list">
+            <div class="order" *ngFor="let foodOrder of processingFoodOrders">
                 <ion-row>
-                    <ion-col col-5 class="col-code">
+                    <ion-col col-8 class="col-code">
                         <span>Order: </span>
-                        <span class="code">#123</span>
+                        <span class="code">{{foodOrder.orderId}}</span>
                     </ion-col>
-                    <ion-col col-7 class="col-number">
-                        <span>Số lượng: </span>
-                        <span>
-                            <span class="waitting">1</span>/
-                        <span class="cooking">2</span>/
-                        <span class="done">1</span>
+                    <ion-col col-4 class="col-number">
+                        <ion-icon name="logo-buffer"></ion-icon>
+                        <span class="number">
+                             {{foodOrder.amountProcessing}} suất
                         </span>
                     </ion-col>
                 </ion-row>
                 <ion-row>
                     <ion-col col-5 class="col-time">
-                        <span class="time">1m</span>
+                        <span class="time">{{getDiffTime(foodOrder.timeCreate)}}</span>
+                        <span class="status">Đang chế biến</span>
                     </ion-col>
                     <ion-col col-7 class="col-button">
-                        <button class="fs-button fs-button-outline">Báo hết</button>
-                        <button class="fs-button">Chế biến</button>
+                        <button class="fs-button fs-button-outline" *ngIf="food.state == foodStateData.AVAILABLE.id" (click)="makeOutOfStock(foodOrder)" tappable>Báo hết</button>
+                        <button class="fs-button fs-button-outline" *ngIf="food.state == foodStateData.OUT_OF_STOCK.id" (click)="makeInStock(foodOrder)" tappable>Báo còn</button>
+                        <button class="fs-button" (click)="done(foodOrder)" tappable>Báo xong</button>
                     </ion-col>
                 </ion-row>
             </div>
-            <div class="order">
+        </div>
+        <div class="order-list waitting-list">
+            <div class="order" *ngFor="let foodOrder of wattingFoodOrders">
                 <ion-row>
-                    <ion-col col-5 class="col-code">
+                    <ion-col col-8 class="col-code">
                         <span>Order: </span>
-                        <span class="code">#123</span>
+                        <span class="code">{{foodOrder.orderId}}</span>
                     </ion-col>
-                    <ion-col col-7 class="col-number">
-                        <span>Số lượng: </span>
-                        <span>
-                            <span class="waitting">1</span>/
-                        <span class="cooking">2</span>/
-                        <span class="done">1</span>
+                    <ion-col col-4 class="col-number">
+                        <ion-icon name="logo-buffer"></ion-icon>
+                        <span class="number">
+                             {{foodOrder.amountOrder - foodOrder.amountDone - foodOrder.amountReturn - foodOrder.amountProcessing}} suất
                         </span>
                     </ion-col>
                 </ion-row>
                 <ion-row>
                     <ion-col col-5 class="col-time">
-                        <span class="time">1m</span>
+                        <span class="time">{{getDiffTime(foodOrder.timeCreate)}}</span>
+                        <span class="status">Đợi chế biến</span>
                     </ion-col>
                     <ion-col col-7 class="col-button">
-                        <button class="fs-button fs-button-outline">Báo hết</button>
-                        <button class="fs-button">Chế biến</button>
+                        <button class="fs-button fs-button-outline" *ngIf="food.state == foodStateData.AVAILABLE.id" (click)="makeOutOfStock(foodOrder)" tappable>Báo hết</button>
+                        <button class="fs-button fs-button-outline" *ngIf="food.state == foodStateData.OUT_OF_STOCK.id" (click)="makeInStock(foodOrder)" tappable>Báo còn</button>
+                        <button class="fs-button" (click)="processing(foodOrder)" tappable>Chế biến</button>
                     </ion-col>
                 </ion-row>
             </div>

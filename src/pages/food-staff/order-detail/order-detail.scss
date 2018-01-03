@@ -74,6 +74,14 @@ page-order-detail {
                 .name {
                     font-weight: 500;
                 }
+                .quantity {
+                    .quantity-done {
+                        color: map-get($map: $FSColors, $key: blue);
+                    }
+                    .quantity-ordered {
+                        color: map-get($map: $FSColors, $key: primary);
+                    }
+                }
                 .button-group {
                     display: flex;
                     width: 100%;
@@ -165,5 +173,15 @@ page-order-detail {
     .fab-button.high {
         bottom: $footerHeight;
         margin-bottom: 16px;
+    }
+    .footer-md::before,
+    .tabs-md[tabsPlacement="bottom"]>.tabbar::before {
+        height: 0 !important;
+        background: none !important;
+    }
+    .footer-ios::before,
+    .tabs-ios[tabsPlacement="bottom"]>.tabbar::before {
+        height: 0 !important;
+        background: none !important;
     }
 }

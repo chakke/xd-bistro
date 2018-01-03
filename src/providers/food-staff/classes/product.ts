@@ -27,6 +27,7 @@ export class Product {
 	private _type: string;
 	private _unit: string;
 	private _keyword: string;
+	private _ordered: boolean;
 
 	// constructor(id: number, name: string, price: number, image: string, description: string, unit: string, waittingTime: number, keyword: string) {
 	// 	this._id = id;
@@ -63,6 +64,7 @@ export class Product {
 		this._state = "";
 		this._type = "";
 		this._unit = "";
+		this._ordered = false;
 	}
 
 	mappingFirebaseData(data) {
@@ -291,7 +293,7 @@ export class FoodOrder {
 	constructor() {
 		this.reset();
 	}
-
+ 
 	reset() {
 		this.firebaseId = "";
 		this.id = "";

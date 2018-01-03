@@ -32,7 +32,7 @@
         </ion-segment>
         <div class="segment-content" *ngIf="viewMode == '0'">
             <div class="choosen-list">
-                <div class="item food" *ngFor="let food of orderedFood;let i = index">
+                <div class="item food" *ngFor="let food of orderedFood;let i = index" [hidden]="food.remove">
                     <ion-row>
                         <ion-col col-3 class="col-image">
                             <img [src]="food.food._image">
@@ -44,15 +44,19 @@
                                 {{food.food._name}}
                                 <span class="fs-green">(x{{food.amountOrder}})</span>
                             </div>
+                            <div class="quantity">
+                                <span class="quantity-done">{{food.amountDone}} </span> /
+                                <span class="quantity-ordered">{{food.amountOrder}}</span>
+                            </div>
                             <div class="fs-price">
                                 <!-- 59.000 đ -->
                                 {{food.price}} đ
                             </div>
                             <div class="button-group">
-                                <button class="fs-button-outline" tappable (click)="showAlert(food,i)">
+                                <button class="fs-button-outline" tappable (click)="deleteFood(food,i)">
                                     Hủy món
                                 </button>
-                                <button class="fs-button-outline" tappable (click)=" showKeyBoard(food,i)">
+                                <button class="fs-button-outline" tappable (click)="updateFood(food,i)">
                                     Số lượng
                                 </button>
                                 <button class="fs-button">
@@ -72,7 +76,7 @@
                     <ion-col col-2> Số lượng</ion-col>
                     <ion-col col-3 class="stt">Thành tiền</ion-col>
                 </ion-row>
-                <ion-row class="row-item" *ngFor="let food of order.foods; let i = index">
+                <ion-row class="row-item" *ngFor="let food of orderedFood; let i = index">
                     <ion-col col-2 class="stt">{{i+1}}</ion-col>
                     <ion-col col-5 class="food-name">{{food.food._name}}</ion-col>
                     <ion-col col-2 class="number">{{food.amountOrder}}</ion-col>
@@ -105,15 +109,21 @@
             </ion-grid>
         </div>
     </div>
-    <div class="fs-footer" ion-fixed *ngIf="viewMode == '1'">
-        <button class="fs-button-outline" (click)="checkItem()">
-            Kiểm đồ
-        </button>
-        <button class="fs-button">
-            Thanh toán
-        </button>
-    </div>
-    <div class="fab-button" [class.high]="viewMode == '1'" ion-fixed (click)="addNewFood()">
+    <!-- <div class="fs-footer" ion-fixed>
+      
+    </div> -->
+    <div class="fab-button " ion-fixed (click)="addNewFood()">
         <i class="fa fa-plus"></i>
     </div>
 </ion-content>
+<ion-footer class="fs-footer">
+    <button class="fs-button-outline" (click)="checkItem()" *ngIf="viewMode == '1'">
+                Kiểm đồ
+            </button>
+    <button class="fs-button" *ngIf="viewMode == '1'">
+                Thanh toán
+            </button>
+    <button class="fs-button" *ngIf="viewMode == '0'" (click)="updateItem()">
+                Update
+            </button>
+</ion-footer>

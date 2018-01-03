@@ -5,9 +5,9 @@
 <ion-content>
     <div class="fs-content">
         <div class="search-bar">
-            <!-- <span class="button-left">
+            <span class="button-left" (click)="back1()" tappable>
               Hủy bỏ
-            </span> -->
+            </span>
             <ion-searchbar class="searchbar-ios" [class.searchbar-md]="false" placeholder="{{placholder}}" [(ngModel)]="keyword" (ionInput)="search()"></ion-searchbar>
             <span class="button-right" (click)="back()" tappable>
               Xong
@@ -20,7 +20,7 @@
         </div>
         <div class="segment-content">
             <div class="ordered-zone">
-                <div class="item food" [class.highlight]="food.highlight" *ngFor="let food of orderedFood">
+                <div class="item food" [class.highlight]="food.highlight" *ngFor="let food of orderedFood;let i = index" [hidden]="food.remove">
                     <ion-row>
                         <ion-col col-3 class="col-image">
                             <img src="{{food.food.image}}" alt="image">
@@ -42,7 +42,7 @@
                 <div class="fs-divider" *ngIf="orderedFood.length > 0"></div>
             </div>
             <div class="menu-zone">
-                <div class="item food" [class.highlight]="product.highlight" *ngFor="let product of products" [hidden]="product.ordered">
+                <div class="item food" [class.highlight]="product.highlight" *ngFor="let product of products; let i = index" [hidden]="product.ordered">
                     <ion-row>
                         <ion-col col-3 class="col-image">
                             <img src="{{product.image}}" alt="">
