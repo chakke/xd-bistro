@@ -503,7 +503,7 @@
         top: 0;
         left: 0;
         display: inline-block;
-        border: solid 1px gray;
+        border: dashed 1px gray;
         background-color: map-get($map: $FSColors, $key: lightgray);
         &.selected {
             border-color: map-get($map: $FSColors, $key: blue) !important;
@@ -560,8 +560,10 @@
             font-size: 1.6rem;
             span {
                 padding: 5px;
-                background-color: rgba(238, 238, 238, 0.7);
+                // background-color: rgba(238, 238, 238, 0.7);
                 font-weight: bold;
+                text-align: center;
+                color: map-get($map: $FSColors, $key: black);
             }
         }
         .content {
@@ -571,6 +573,13 @@
             left: 0;
             right: 0;
             bottom: 0;
+        }
+        .icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: map-get($map: $FSColors, $key: gray);
         }
     }
     
@@ -648,19 +657,24 @@
     }
     
     .ui-table {
-        background-image: url('../assets/food-staff/images/map-icon/table-icon.jpg');
+        // background-image: url('../assets/food-staff/images/map-icon/table-icon.jpg');
+        .title {
+            span {
+                background-color: transparent;
+            }
+        }
     }
     
     .ui-wc {
-        background-image: url('../assets/food-staff/images/map-icon/wc-icon.png');
+        // background-image: url('../assets/food-staff/images/map-icon/wc-icon.png');
     }
     
     .ui-bar {
-        background-image: url('../assets/food-staff/images/map-icon/bar-icon.png');
+        // background-image: url('../assets/food-staff/images/map-icon/bar-icon.png');
     }
     
     .ui-stair {
-        background-image: url('../assets/food-staff/images/map-icon/stair-icon.png');
+        // background-image: url('../assets/food-staff/images/map-icon/stair-icon.png');
     }
     
     .ui-kitchen {}

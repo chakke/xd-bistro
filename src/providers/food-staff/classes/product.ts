@@ -26,8 +26,7 @@ export class Product {
 	private _state: string;
 	private _type: string;
 	private _unit: string;
-	private _keyword: string;
-	private _ordered: boolean;
+	private _keyword: string; 
 
 	// constructor(id: number, name: string, price: number, image: string, description: string, unit: string, waittingTime: number, keyword: string) {
 	// 	this._id = id;
@@ -63,8 +62,7 @@ export class Product {
 		this._size = "";
 		this._state = "";
 		this._type = "";
-		this._unit = "";
-		this._ordered = false;
+		this._unit = ""; 
 	}
 
 	mappingFirebaseData(data) {

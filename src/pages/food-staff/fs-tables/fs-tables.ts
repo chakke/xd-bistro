@@ -1,8 +1,8 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform, Content } from 'ionic-angular';
 import { Table } from '../../../providers/food-staff/classes/table';
 import { AppControllerProvider } from '../../../providers/food-staff/app-controller/app-controller';
-import { TABLE_STATUS, MAP_RATIO, ComponentType } from '../../../providers/food-staff/app-constant';
+import { TABLE_STATUS, MAP_RATIO, ComponentType, TABLE_STATE } from '../../../providers/food-staff/app-constant';
 import { OrderInTable } from '../../../providers/food-staff/interfaces/order-in-table';
 import { Order } from '../../../providers/food-staff/classes/order';
 import { Map as MyMap } from "../../../providers/food-staff/classes/map";
@@ -19,39 +19,33 @@ import { DomSanitizer } from '@angular/platform-browser';
 
 export class FsTablesPage {
   @ViewChild("sizeHolder") sizeHolderRef: ElementRef;
+  @ViewChild(Content) content: Content;
   sizeHolder: HTMLElement;
 
   viewMode: number = 0;
   searchKeyword: string = "";
   placholder = "Tìm kiếm bàn";
-  tableStatus: string = "0";
+  tableStatus: string = "-1";
   tableStatusData = [];
 
   allTables: Array<Table> = [];
   userTables: Array<Table> = [];
   showTables: Array<Table> = [];
+  showUserTable: Array<Table> = [];
   tableCollection: Map<any, Array<Table>> = new Map<any, Array<Table>>();
- 
+
   width = 0;
   height = 0;
   scale = 1;
   rotate = 0;
 
   mapPadding = 16;
-
+  maps: Array<MyMap> = [];
   selectedMap: MyMap;
   selectedComponent: UIComponent;
   defaultWidth = 50;
   defaultHeight = 50;
 
-  floors = [
-    { id: 1, name: "Tầng 1" },
-    { id: 2, name: "Tầng 2" },
-    { id: 3, name: "Tầng 3" },
-    { id: 4, name: "Tầng 4" }
-  ]
-
-  selectedFloor = 1;
 
   constructor(
     public navCtrl: NavController,
@@ -70,17 +64,15 @@ export class FsTablesPage {
 
   ionViewDidLoad() {
     this.loadTables();
+    this.appController.tableChanel.asObservable().subscribe(() => {
+      this.loadTables();
+    })
     this.sizeHolder = this.sizeHolderRef.nativeElement;
   }
-  ionViewDidEnter() {
+  ionViewDidEnter() { 
+    this.appController.showLoading("xx", "ss");
+    this.maps = this.appController.maps;
     this.selectedMap = this.appController.maps[0];
-    this.selectedMap.components.map(elm=>{
-      console.log(elm);
-      // if(elm.getIcon()){
-      //   elm.innerHtml = `<ion-icon name="${elm.getIcon()}"></ion-icon>`;
-      // }
-      return elm;
-    })
     this.onResize();
     this.platform.resize.subscribe(() => {
       this.onResize();
@@ -88,12 +80,28 @@ export class FsTablesPage {
   }
 
   onResize() {
-    let maxWidth = this.sizeHolder.offsetWidth - 2* this.mapPadding;
-    let maxHeight = this.sizeHolder.offsetHeight - 2* this.mapPadding;
+    this.selectedMap.components.map(component => {
+      component["icon"] = this.getComponentIcon(component.type, component["capacity"]);
+      let short = component.width;
+      if (component.width > component.height) {
+        short = component.height;
+      }
+      component["iconSize"] = short;
+      if (component.table) {
+        component.classList.push("status-" + component.table.status);
+      }
+    })
+    let maxWidth = this.sizeHolder.offsetWidth - 2 * this.mapPadding;
+    let maxHeight = this.sizeHolder.offsetHeight - 2 * this.mapPadding;
     let ratio = maxWidth / maxHeight;
+    if (this.selectedMap.getWidth() > this.selectedMap.getHeight()) {
+      this.width = this.selectedMap.getWidth();
+      this.height = this.selectedMap.getHeight();
+    } else {
+      this.width = this.selectedMap.getHeight();
+      this.height = this.selectedMap.getWidth();
+    }
 
-     this.width = this.selectedMap.getWidth();
-    this.height = this.selectedMap.getHeight();
 
     //Giả sử rằng map.height < map.width
     if (ratio >= 1) {
@@ -144,38 +152,69 @@ export class FsTablesPage {
 
   onClickToggleView() {
     this.viewMode = 1 - this.viewMode;
+    setTimeout(() => {
+      this.content.resize();
+    }, 80);
   }
 
   search() {
     this.showTables = this.allTables.filter(table => {
       return (table.status == this.tableStatus || +this.tableStatus == TABLE_STATUS.ALL.id) && table.name.toLowerCase().includes(this.searchKeyword.trim().toLowerCase())
     })
+    this.showUserTable = this.userTables.filter(table => {
+      return (table.status == this.tableStatus || +this.tableStatus == TABLE_STATUS.ALL.id) && table.name.toLowerCase().includes(this.searchKeyword.trim().toLowerCase())
+    })
+
     console.log("Hello from the other side", this.searchKeyword, this.showTables);
   }
 
   loadTables() {
+    console.log("load tables", this.appController.tables);
     this.allTables = this.appController.tables;
-    this.allTables.forEach(table => {
-      let orders = [];
-      // table.orders.forEach(shortOrder => {
-      //   let order = this.appController.getOrderById(shortOrder.id);
-      //   orders.push(order);
-      // });
-      // table.orders = orders;
-      // (<any>table)["missingFoods"] = this.getMissingFoods((<any>table).orders);
+    let orderIds = [];
+    let userTableIds = [];
+    this.appController.foodOrders.forEach(foodOrder => {
+      if (foodOrder.staffId == this.appController.user.id) {
+        if (orderIds.indexOf(foodOrder.orderId) == -1) {
+          orderIds.push(foodOrder.orderId);
+        }
+      }
+    })
+    this.appController.orders.forEach(order => {
+      if (order.staffId == this.appController.user.id) {
+        if (orderIds.indexOf(order.id) == -1) {
+          orderIds.push(order.id);
+        }
+      }
+    })
+
+    orderIds.forEach(id => {
+      let order = this.appController.orderCollection.get(id);
+      if (order) {
+        order.tableIds.forEach(tableId => {
+          if (userTableIds.indexOf(tableId) == -1) {
+            userTableIds.push({ tableId: tableId, orderId: id });
+          }
+        })
+      }
     });
-    this.userTables = this.allTables.filter(table => {
-      // return table.staffs.indexOf(this.appController.user.id) > -1;
+
+    userTableIds.forEach(elm => {
+      let table = this.appController.tableCollection.get(elm.tableId);
+      let order = this.appController.orderCollection.get(elm.orderId);
+      table["currentPerson"] = order.numberCustormer;
+      table["orderId"] = order.id;
+      this.userTables.push(table);
     })
+
     this.userTables = this.userTables.sort((a, b) => {
-      return +a.status - +b.status;
+      return +b.status - +a.status;
     })
+    this.showUserTable = this.userTables;
     this.filterTable();
   }
 
   filterTable() {
-    console.log("filter table", this.tableStatus);
-
     this.tableCollection.clear();
     this.tableStatusData.forEach(element => {
       this.tableCollection.set(element.id, this.allTables.filter(table => {
@@ -184,7 +223,6 @@ export class FsTablesPage {
     });
 
     this.showTables = this.tableCollection.get(+this.tableStatus);
-    console.log(this.tableCollection, this.userTables);
   }
 
   getOrderIds(orders: Array<OrderInTable>) {
@@ -220,7 +258,59 @@ export class FsTablesPage {
     if (index) return this.tableStatusData[index].name;
   }
 
-  selectFloor(floorId: number) {
-    this.selectedFloor = floorId;
+  selectMap(map) {
+    this.selectedMap = map;
+    this.onResize();
+  }
+
+  gotoOrderDetail(orderId) {
+    this.appController.pushPage("OrderDetailPage", { orderId: orderId });
+  }
+
+  getComponentIcon(type, capacity) {
+    switch (type.type) {
+      case ComponentType.TABLE.type: {
+        if (capacity && capacity >= 6) {
+          return "fs-family-table";
+        } else {
+          return "fs-couple-table";
+        }
+      }
+      case ComponentType.WC.type: {
+        return "fs-wc";
+      }
+      case ComponentType.BAR.type: {
+        return "fs-bar";
+      }
+      case ComponentType.STAIR.type: {
+        return "fs-stairs";
+      }
+      case ComponentType.KITCHEN.type: {
+        return "fs-kitchen";
+      }
+    }
+
+  }
+
+  selectComponent(component) {
+    if (component.table.status == TABLE_STATE.HAS_ORDER) {
+      let orderResult = this.appController.orders.find(order => {
+        return order.tableIds.indexOf(component.table.id) > -1;
+      });
+      if (orderResult) {
+        this.gotoOrderDetail(orderResult.id);
+      }
+    }
+  }
+
+  selectTable(table) {
+    if (table.status == TABLE_STATE.HAS_ORDER) {
+      let orderResult = this.appController.orders.find(order => {
+        return order.tableIds.indexOf(table.id) > -1;
+      });
+      if (orderResult) {
+        this.gotoOrderDetail(orderResult.id);
+      }
+    }
   }
 }

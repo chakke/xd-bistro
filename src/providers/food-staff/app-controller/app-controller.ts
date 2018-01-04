@@ -192,22 +192,22 @@ export class AppControllerProvider {
             let order = this.orderCollection.get(foodOrder.orderId);
 
             console.log("order", order);
-            
+
             let index = order.foods.findIndex(elm => {
               return elm.id == foodOrder.id;
             })
-            console.log("index in mapingfirebase",index);
-            
+            console.log("index in mapingfirebase", index);
+
             if (index > -1) {
               console.log("if");
-              
+
               this.orderCollection.get(foodOrder.orderId).totalPrice += foodOrder.price * (order.foods[index].amountOrder - foodOrder.amountOrder);
               Utils.copyObject(foodOrder, order.foods[index]);
             } else {
               order.foods.push(foodOrder);
               this.orderCollection.get(foodOrder.orderId).totalPrice += foodOrder.price * foodOrder.amountOrder;
               console.log("else");
-              
+
             }
 
           }
@@ -233,9 +233,21 @@ export class AppControllerProvider {
       if (dataChange.indexOf("order") >= 0) {
         this.orderChanel.next("data Change");
       }
+
       if (dataChange.indexOf("foodOrder") >= 0) {
         this.foodOrderChanel.next("data changed");
         console.log("food order change", this.foodOrders);
+      }
+
+      //Mapping table to UITable
+      if (data == "table") {
+        this.maps.forEach(map => {
+          map.components.forEach(component => {
+            if (component.tableId) {
+              component.table = this.tableCollection.get(component.tableId);
+            }
+          });
+        })
       }
     })
 
@@ -495,7 +507,7 @@ export class AppControllerProvider {
           this.productCategories.push(category);
         }
         if (change.type == FIREBASE_CONST.DOCUMENT_CHANGE_TYPE.MODIFY) {
-          let index = this.products.findIndex(elm => {
+          let index = this.productCategories.findIndex(elm => {
             return elm.id == categoryData.id;
           })
           if (index > -1) {
@@ -510,7 +522,7 @@ export class AppControllerProvider {
           }
         }
         if (change.type == FIREBASE_CONST.DOCUMENT_CHANGE_TYPE.REMOVE) {
-          let index = this.products.findIndex(elm => {
+          let index = this.productCategories.findIndex(elm => {
             return elm.id == categoryData.id;
           })
           if (index > -1) {
@@ -536,7 +548,7 @@ export class AppControllerProvider {
           this.productSizes.push(size);
         }
         if (change.type == FIREBASE_CONST.DOCUMENT_CHANGE_TYPE.MODIFY) {
-          let index = this.products.findIndex(elm => {
+          let index = this.productSizes.findIndex(elm => {
             return elm.id == sizeData.id;
           })
           if (index > -1) {
@@ -548,7 +560,7 @@ export class AppControllerProvider {
           }
         }
         if (change.type == FIREBASE_CONST.DOCUMENT_CHANGE_TYPE.REMOVE) {
-          let index = this.products.findIndex(elm => {
+          let index = this.productSizes.findIndex(elm => {
             return elm.id == sizeData.id;
           })
           if (index > -1) {
@@ -574,7 +586,7 @@ export class AppControllerProvider {
           this.productTypes.push(type);
         }
         if (change.type == FIREBASE_CONST.DOCUMENT_CHANGE_TYPE.MODIFY) {
-          let index = this.products.findIndex(elm => {
+          let index = this.productTypes.findIndex(elm => {
             return elm.id == typeData.id;
           })
           if (index > -1) {
@@ -585,7 +597,7 @@ export class AppControllerProvider {
           }
         }
         if (change.type == FIREBASE_CONST.DOCUMENT_CHANGE_TYPE.REMOVE) {
-          let index = this.products.findIndex(elm => {
+          let index = this.productTypes.findIndex(elm => {
             return elm.id == typeData.id;
           })
           if (index > -1) {
@@ -611,7 +623,7 @@ export class AppControllerProvider {
           this.productUnits.push(unit);
         }
         if (change.type == FIREBASE_CONST.DOCUMENT_CHANGE_TYPE.MODIFY) {
-          let index = this.products.findIndex(elm => {
+          let index = this.productUnits.findIndex(elm => {
             return elm.id == unitData.id;
           })
           if (index > -1) {
@@ -623,7 +635,7 @@ export class AppControllerProvider {
           }
         }
         if (change.type == FIREBASE_CONST.DOCUMENT_CHANGE_TYPE.REMOVE) {
-          let index = this.products.findIndex(elm => {
+          let index = this.productUnits.findIndex(elm => {
             return elm.id == unitData.id;
           })
           if (index > -1) {
@@ -648,15 +660,17 @@ export class AppControllerProvider {
           this.tables.push(table);
         }
         if (change.type == FIREBASE_CONST.DOCUMENT_CHANGE_TYPE.MODIFY) {
-          let index = this.products.findIndex(elm => {
+
+          let index = this.tables.findIndex(elm => {
             return elm.id == tableData.id;
           })
           if (index > -1) {
             this.tables[index].mappingFirebaseData(tableData);
           }
+          console.log("modify table", tableData, index, this.tables[index]);
         }
         if (change.type == FIREBASE_CONST.DOCUMENT_CHANGE_TYPE.REMOVE) {
-          let index = this.products.findIndex(elm => {
+          let index = this.tables.findIndex(elm => {
             return elm.id == tableData.id;
           })
           if (index > -1) {
@@ -737,17 +751,17 @@ export class AppControllerProvider {
           let index = this.foodOrders.findIndex(elm => {
             return elm.id == foodOrderData.id;
           })
-        
+
           let order = this.orderCollection.get(foodOrderData.order_id);
 
-          let foodOrderIndex = order.foods.findIndex(elm =>{
+          let foodOrderIndex = order.foods.findIndex(elm => {
             return elm.id == foodOrderData.id;
           })
 
-          
+
           if (index > -1 && foodOrderIndex > -1) {
             this.foodOrders.splice(index, 1);
-            this.orderCollection.get(foodOrderData.order_id).foods.splice(foodOrderIndex,1);
+            this.orderCollection.get(foodOrderData.order_id).foods.splice(foodOrderIndex, 1);
           }
 
           console.log("remove food order");
@@ -816,7 +830,11 @@ export class AppControllerProvider {
                 let component = map.componentFactory.getComponent(componentData.id, componentData.type.type, componentData.title,
                   componentData.x, componentData.y, componentData.width, componentData.height,
                   componentData.z_index, componentData.rotate);
-                component["table"] = componentData.table;
+
+                if (componentData.table) {
+                  component.tableId = componentData.table.id;
+                  component.table = this.tableCollection.get(componentData.table.id);
+                }
 
                 map.components.push(component);
               }
@@ -890,8 +908,8 @@ export class AppControllerProvider {
     return this.firebaseService.addFoodOrder(this.restid, orderId, this.user.id, product);
   }
 
-  removeFoodOrder(firebaseId: string): Promise<any>{
-    return this.firebaseService.removeFoodOrder(this.restid,firebaseId);
+  removeFoodOrder(firebaseId: string): Promise<any> {
+    return this.firebaseService.removeFoodOrder(this.restid, firebaseId);
   }
 
   updateFoodOrder(firebaseId: string, value): Promise<any> {
@@ -900,6 +918,10 @@ export class AppControllerProvider {
 
   updateProduct(firebaseId: string, value) {
     return this.firebaseService.updateProduct(this.restid, firebaseId, value);
+  }
+
+  updateTable(firebaseId: string, value) {
+    return this.firebaseService.updateTable(this.restid, firebaseId, value);
   }
 
 
@@ -919,13 +941,14 @@ export class AppControllerProvider {
     }
   }
 
-  showLoading(content?: string) {
+  showLoading(content?: string, cssClass?: string) {
     if (this.loading) {
       this.loading.dismiss();
     }
     this.loading = this.loadingCtrl.create({
       dismissOnPageChange: true,
-      content: content ? content : "Xin đợi!"
+      content: content ? content : "Xin đợi!",
+      cssClass: cssClass ? cssClass : ""
     })
     this.loading.present();
   }

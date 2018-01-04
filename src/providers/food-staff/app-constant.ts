@@ -94,6 +94,15 @@ export const TABLE_TYPE = {
     }
 }
 
+export const TABLE_STATE = {
+    /**Bàn trống */
+    NO_ORDER: 0,
+    /**Bàn trống nhưng có người đặt trước */
+    BOOKED: 1,
+    /**Đang phục vụ */
+    HAS_ORDER: 2,
+}
+
 
 // export const ORDER_STATUS = {
 //     UN_CONFIRM: {
