@@ -25,8 +25,7 @@ export class KeypadModalPage {
     }
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad KeypadModalPage');
+  ionViewDidLoad() { 
   }
 
   backdropClick() {
@@ -34,11 +33,11 @@ export class KeypadModalPage {
   }
 
   done() {
-    this.viewCtrl.dismiss(+this.numberInKeyboard);
+    this.viewCtrl.dismiss(+this.numberInKeyboard);     
   }
 
-  numpadClick(numpad) {
-    console.log("numpad click", numpad);
+
+  numpadClick(numpad) { 
     this.numberInKeyboard += "" + numpad;
   }
 
@@ -50,8 +49,7 @@ export class KeypadModalPage {
     let length = this.numberInKeyboard.length;
     if (length && length > 0) {
       this.numberInKeyboard = this.numberInKeyboard.substr(0, length - 1);
-    }
-    console.log("length", length);
+    } 
   }
 
 }

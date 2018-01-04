@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { Floor } from '../../../providers/food-staff/classes/floor';
@@ -50,6 +50,8 @@ export class CreateOrderPage {
   defaultHeight = 50;
 
   constructor(
+    public mChangeDetectorRef: ChangeDetectorRef,
+
     public navCtrl: NavController,
     public navParams: NavParams,
     public viewCtrl: ViewController,
@@ -165,10 +167,21 @@ export class CreateOrderPage {
   }
 
   updateNumberOfPerson(number) {
-    if(number==0 || number==undefined || number == "")number =  1;
-    this.numberOfPerson = number;
+    console.log("updateNumberOfPerson", number);
+
+    // if(parseInt(number)==0 || number==undefined || number == "" || number == null)number =  1;
+    if (!number || number == 0) {
+      this.numberOfPerson = 0;
+      this.mChangeDetectorRef.detectChanges();
+      this.numberOfPerson = 10; 
+    } else {
+      this.numberOfPerson = number;
+    }
+    this.mChangeDetectorRef.detectChanges();
+
     this.order.numberCustormer = number;
-    console.log("fucker update", number);
+    console.log("thisnumberperson", this.numberOfPerson);
+
   }
 
   createOrder() {
