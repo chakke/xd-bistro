@@ -126,8 +126,14 @@ export class OrderDetailPage {
     })
   }
 
-  caculateTotalPrice() {
-
+  caculateTotalPrice(): number{
+    var sum: number = 0;
+    if(this.orderedFood && this.orderedFood.length > 0){
+      this.orderedFood.forEach(element => {
+        sum+= element.amountOrder * element.price;
+      });
+    }
+    return sum;
   }
 
   updateItem() {

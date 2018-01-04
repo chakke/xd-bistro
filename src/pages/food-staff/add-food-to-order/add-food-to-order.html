@@ -1,5 +1,5 @@
 <ion-header>
-    <fs-header [showBackButton]="1" [title]="'Order'"></fs-header>
+    <fs-header [showBackButton]="1" [title]="'Chọn món'"></fs-header>
 </ion-header>
 
 <ion-content>
@@ -53,18 +53,18 @@
                                 {{product.name}}
                             </div>
                         </ion-col>
-                        <ion-col class="col-button" col-3>
-                            <button class="button-select fs-button-outline" (click)="selectProduct(product)" tappable *ngIf="!product.ordered">
+                        <ion-col class="col-button" col-3 *ngIf="product.state=='1'">
+                            <button class=" button-select fs-button-outline " (click)="selectProduct(product) " tappable *ngIf="!product.ordered ">
                                 Chọn
                             </button>
-                            <!-- <button class="button-select fs-button" (click)="selectProduct(product, product.amountOrder)" tappable *ngIf="product.ordered">
+                            <!-- <button class="button-select fs-button " (click)="selectProduct(product, product.amountOrder) " tappable *ngIf="product.ordered ">
                                 Đã Chọn
                             </button> -->
                         </ion-col>
                     </ion-row>
-                    <!-- <div class="sold-out" >
-                        <img src="assets/food-staff/images/icon/out_stock.png" alt="">
-                    </div> -->
+                    <div class="sold-out " *ngIf="product.state=='2' ">
+                        <img src="assets/food-staff/images/icon/out_stock.png " alt=" ">
+                    </div>
                 </div>
             </div>
         </div>

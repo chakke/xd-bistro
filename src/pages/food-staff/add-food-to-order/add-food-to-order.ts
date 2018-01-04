@@ -26,7 +26,12 @@ export class AddFoodToOrderPage {
     public modalCtrl: ModalController,
     public viewCtrl: ViewController) {
     if(navParams.get("order"))this.order = this.navParams.get("order");
-    if(navParams.get("foods"))this.foods = this.navParams.get("foods");
+    if(navParams.get("foods")){
+      let data = this.navParams.get("foods");
+      data.forEach(element => {
+        this.foods.push(new FoodOrder(element));
+      });
+    }
   }
 
   ionViewDidLoad() {
