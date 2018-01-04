@@ -45,12 +45,13 @@
                                 <span class="fs-green">(x{{food.amountOrder}})</span>
                             </div>
                             <div class="quantity">
-                                <span class="quantity-done">{{food.amountDone}} </span> /
+                                <span class="quantity-processing"> {{food.amountProcessing}}</span> /
+                                <span class="quantity-done">{{food.amountReturn}} </span> /
                                 <span class="quantity-ordered">{{food.amountOrder}}</span>
                             </div>
                             <div class="fs-price">
                                 <!-- 59.000 đ -->
-                                {{food.price}} đ
+                                {{food.price | number }} đ
                             </div>
                             <div class="button-group">
                                 <button class="fs-button-outline" tappable (click)="deleteFood(food,i)">
@@ -80,7 +81,7 @@
                     <ion-col col-2 class="stt">{{i+1}}</ion-col>
                     <ion-col col-5 class="food-name">{{food.food._name}}</ion-col>
                     <ion-col col-2 class="number">{{food.amountOrder}}</ion-col>
-                    <ion-col col-3 class="fs-price">{{ food.price * food.amountOrder }} đ</ion-col>
+                    <ion-col col-3 class="fs-price">{{ food.price * food.amountOrder | number }} đ</ion-col>
                     <ion-col col-12 *ngIf="food.option">
                         <ion-row class="row-bonus" *ngFor="let opt of food.option">
                             <ion-col col-2></ion-col>
@@ -104,7 +105,7 @@
                     <ion-col col-4 class="title">
                         Tổng tiền
                     </ion-col>
-                    <ion-col col-8 class="fs-price">{{order.totalPrice}} đ</ion-col>
+                    <ion-col col-8 class="fs-price">{{caculateTotalPrice() | number }} đ</ion-col>
                 </ion-row>
             </ion-grid>
         </div>

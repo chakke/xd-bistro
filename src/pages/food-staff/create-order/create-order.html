@@ -13,7 +13,7 @@
                             <ion-icon name="fs-table-3-o"></ion-icon>
                         </span>
                         <span class="text-input" (click)="showTableList()">{{order.tables.length > 0 ? order.tables.join(", ") : "Chọn bàn"}}</span>
-                        <!-- <span class="button-map" (click)="showTableMap()"><i class="fa fa-map"></i></span> -->
+                        <!-- <span class="button-map" (click)="showTableMap()"><i clpass="fa fa-map"></i></span> -->
                     </div>
                     <!-- <span *ngIf="!loginForm.controls.account.valid && isSubmitted" class="validate-message">{{accountErrorMessage}}</span> -->
 
@@ -32,7 +32,7 @@
                                   <ion-icon name="fs-group-o"></ion-icon>
                                 </span>
                                 <span class="text-input number-input">
-                                    <fs-number-picker (numberChange)="updateNumberOfPerson($event)"></fs-number-picker>
+                                    <fs-number-picker (numberChange)="updateNumberOfPerson($event)" [neworder]="'1'"></fs-number-picker>
                                 </span>
                             </div>
                         </ion-col>

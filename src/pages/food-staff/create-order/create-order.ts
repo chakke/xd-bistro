@@ -165,6 +165,7 @@ export class CreateOrderPage {
   }
 
   updateNumberOfPerson(number) {
+    if(number==0 || number==undefined || number == "")number =  1;
     this.numberOfPerson = number;
     this.order.numberCustormer = number;
     console.log("fucker update", number);

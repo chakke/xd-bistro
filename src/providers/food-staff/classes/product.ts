@@ -1,5 +1,6 @@
 import { SEPARATOR } from "../app-constant";
 import { Utils } from "../../app-utils";
+import { FoodInOrder } from "../interfaces/food-in-order";
 
 /**
  * Class Product là sản phẩm của nhà hàng
@@ -64,7 +65,6 @@ export class Product {
 		this._state = "";
 		this._type = "";
 		this._unit = "";
-		this._ordered = false;
 	}
 
 	mappingFirebaseData(data) {
@@ -290,8 +290,28 @@ export class FoodOrder {
 	/**Ghi chú */
 	note: string;
 
-	constructor() {
+	constructor(obj ?: FoodOrder) {
 		this.reset();
+		if(obj)this.copyObject(obj);
+	}
+
+	copyObject(obj : FoodOrder){
+		this.firebaseId = obj.firebaseId;
+		this.amountDone = obj.amountDone;
+		this.amountOrder= obj.amountOrder;
+		this.amountProcessing = obj.amountProcessing;
+		this.amountReturn = obj.amountReturn;
+		this.food = obj.food;
+		this.foodId = obj.foodId;
+		this.id = obj.id;
+		this.note = obj.note;
+		this.options = obj.options;
+		this.timeCreate = obj.timeCreate;
+		this.price = obj.price;
+		this.sale = obj.sale;
+		this.orderId = obj.orderId;
+		this.state = obj.state;
+		this.staffId = obj.staffId;
 	}
  
 	reset() {

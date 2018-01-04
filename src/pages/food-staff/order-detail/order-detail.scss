@@ -75,11 +75,14 @@ page-order-detail {
                     font-weight: 500;
                 }
                 .quantity {
+                    .quantity-processing {
+                        color: map-get($map: $FSColors, $key: red)
+                    }
                     .quantity-done {
                         color: map-get($map: $FSColors, $key: blue);
                     }
                     .quantity-ordered {
-                        color: map-get($map: $FSColors, $key: primary);
+                        color: map-get($map: $FSColors, $key: black);
                     }
                 }
                 .button-group {
