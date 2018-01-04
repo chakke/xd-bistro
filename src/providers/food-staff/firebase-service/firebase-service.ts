@@ -30,6 +30,13 @@ export class FirebaseServiceProvider {
     //   messagingSenderId: "796575514827"
     // });
     firebase.initializeApp({
+      // apiKey: "AIzaSyDG_pauTdXELEjd-kB2FuEji4PJUURVQ78",
+      // authDomain: "bistro-dancer.firebaseapp.com",
+      // databaseURL: "https://bistro-dancer.firebaseio.com",
+      // projectId: "bistro-dancer",
+      // storageBucket: "bistro-dancer.appspot.com",
+      // messagingSenderId: "796575514827"
+  
       apiKey: "AIzaSyDMEZoEtmor-T166lP9bGCR9FxqQP4eGik",
       authDomain: "bistrodancerapp.firebaseapp.com",
       databaseURL: "https://bistrodancerapp.firebaseio.com",
@@ -330,8 +337,8 @@ export class FirebaseServiceProvider {
     }, newId);
   }
 
-  removeFoodOrder(restId: string, orderId: string, staffId: string, product: FoodOrder): Promise<any> {
-    return this.deleteDocument(FIREBASE_PATH.FOOD_ORDER + "/" + restId + "/" + this.todayString + "/" + product.id);
+  removeFoodOrder(restId: string,firebaseId: string): Promise<any>{
+    return this.deleteDocument(FIREBASE_PATH.FOOD_ORDER + "/" + restId + "/" + this.todayString + "/" + firebaseId);
   }
 
   updateFoodOrder(restId: string, firebaseId: string, value: any): Promise<any> {

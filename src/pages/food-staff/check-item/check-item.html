@@ -12,22 +12,22 @@
                 <ion-col col-2 class="stt"> S.lg gọi</ion-col>
                 <ion-col col-2 class="stt">S.lg trả</ion-col>
             </ion-row>
-            <ion-row class="row-item">
-                <ion-col col-2 class="stt">1</ion-col>
-                <ion-col col-6 class="food-name">Mỳ ý sốt bò băm (Đĩa)</ion-col>
-                <ion-col col-2 class="number-order">1</ion-col>
-                <ion-col col-2 class="number-serve">
-                    <fs-number-picker [number]="1"></fs-number-picker>
+            <ion-row class="row-item" *ngFor="let foodorder of order.foods; let i = index">
+                <ion-col col-2 class="stt"> {{ i+1 }}</ion-col>
+                <ion-col col-6 class="food-name">{{foodorder.food._name}}</ion-col>
+                <ion-col col-2 class="number-order">{{foodorder.amountOrder}}</ion-col>
+                <ion-col col-2 class="number-serve" tappable (click)="pickDate(i)">
+                    <fs-number-picker [number]="foodorder.amountReturn" [amountOrder]="foodorder.amountOrder" (numberChange)="changeNumber($event)"></fs-number-picker>
                 </ion-col>
             </ion-row>
-            <ion-row class="row-item">
+            <!-- <ion-row class="row-item">
                 <ion-col col-2 class="stt">2</ion-col>
                 <ion-col col-6 class="food-name">Khoai tây chiên (Suất)</ion-col>
                 <ion-col col-2 class="number-order">1</ion-col>
                 <ion-col col-2 class="number-serve">
                     <fs-number-picker [number]="0"></fs-number-picker>
                 </ion-col>
-            </ion-row>
+            </ion-row> -->
         </ion-grid>
     </div>
 </ion-content>

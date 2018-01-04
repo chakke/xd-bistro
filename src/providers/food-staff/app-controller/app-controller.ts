@@ -190,15 +190,24 @@ export class AppControllerProvider {
         this.foodOrders.forEach(foodOrder => {
           if (foodOrder.orderId && this.orderCollection.get(foodOrder.orderId)) {
             let order = this.orderCollection.get(foodOrder.orderId);
+
+            console.log("order", order);
+            
             let index = order.foods.findIndex(elm => {
               return elm.id == foodOrder.id;
             })
+            console.log("index in mapingfirebase",index);
+            
             if (index > -1) {
+              console.log("if");
+              
               this.orderCollection.get(foodOrder.orderId).totalPrice += foodOrder.price * (order.foods[index].amountOrder - foodOrder.amountOrder);
               Utils.copyObject(foodOrder, order.foods[index]);
             } else {
               order.foods.push(foodOrder);
               this.orderCollection.get(foodOrder.orderId).totalPrice += foodOrder.price * foodOrder.amountOrder;
+              console.log("else");
+              
             }
 
           }
@@ -723,12 +732,25 @@ export class AppControllerProvider {
           }
         }
         if (change.type == FIREBASE_CONST.DOCUMENT_CHANGE_TYPE.REMOVE) {
-          let index = this.orders.findIndex(elm => {
+
+          // fix this.orders = this.foodOrders
+          let index = this.foodOrders.findIndex(elm => {
             return elm.id == foodOrderData.id;
           })
-          if (index > -1) {
+        
+          let order = this.orderCollection.get(foodOrderData.order_id);
+
+          let foodOrderIndex = order.foods.findIndex(elm =>{
+            return elm.id == foodOrderData.id;
+          })
+
+          
+          if (index > -1 && foodOrderIndex > -1) {
             this.foodOrders.splice(index, 1);
+            this.orderCollection.get(foodOrderData.order_id).foods.splice(foodOrderIndex,1);
           }
+
+          console.log("remove food order");
         }
       });
       this.foodOrders.forEach(foodOrder => {
@@ -868,8 +890,8 @@ export class AppControllerProvider {
     return this.firebaseService.addFoodOrder(this.restid, orderId, this.user.id, product);
   }
 
-  removeFoodOrder(orderId: string, product: FoodOrder): Promise<any> {
-    return this.firebaseService.removeFoodOrder(this.restid, orderId, this.user.id, product);
+  removeFoodOrder(firebaseId: string): Promise<any>{
+    return this.firebaseService.removeFoodOrder(this.restid,firebaseId);
   }
 
   updateFoodOrder(firebaseId: string, value): Promise<any> {

@@ -18,34 +18,25 @@ export class AddFoodToOrderPage {
   orderId: string = "";
   order: Order;
   orderedFood: Array<FoodOrder> = [];
-
+  foods: Array<FoodOrder> = [];
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     public appController: AppControllerProvider,
     public modalCtrl: ModalController,
     public viewCtrl: ViewController) {
-    this.orderId = this.navParams.get("orderId");
-    if (!this.orderId) {
-      this.orderId = "PlqBVw6F8Z0rJCNNhy2e";
-    }
+    if(navParams.get("order"))this.order = this.navParams.get("order");
+    if(navParams.get("foods"))this.foods = this.navParams.get("foods");
   }
 
   ionViewDidLoad() {
     this.loadMenu()
     this.loadOrder();
-    this.appController.orderChanel.asObservable().subscribe(() => {
-      this.loadOrder();
-    })
     this.loadProducts();
-    this.appController.productChanel.asObservable().subscribe(() => {
-      this.loadProducts();
-    })
   }
 
   loadMenu() {
     this.menuItems = this.appController.productCategories;
-    // console.log("menu", this.menuItems);
     if (this.menuItems.length > 0)
       this.selectedMenu = this.menuItems[0]
   }
@@ -54,30 +45,31 @@ export class AddFoodToOrderPage {
     this.products = this.appController.products.filter(elm => {
       return (elm.category == this.selectedMenu.id && (this.keyword == "" || (this.keyword && elm.keyword.includes(this.keyword.toLowerCase()))));
     });
-    // console.log("load product", this.products);
+
     this.products.forEach(product => {
+
       let index = this.orderedFood.findIndex(foodOrder => {
         return foodOrder.foodId == product.id;
       })
-      if (index >= 0) {
-        product["ordered"] = true;
-        product["amountOrder"] = this.orderedFood[index].amountOrder;
 
+      if (index >= 0) {
+          product["ordered"] = true;
+          product["amountOrder"] = this.orderedFood[index].amountOrder;
       } else {
         product["ordered"] = false;
       }
+
     });
+
     console.log("load product", this.appController.products, this.selectedMenu.id, this.keyword);
   }
 
   loadOrder() {
-    this.order = this.appController.orderCollection.get(this.orderId);
     this.loadOrderedFood();
-    console.log("AddFoodToOrderPage: order change, reload data", this.order);
   }
 
   loadOrderedFood() {
-    this.orderedFood = this.order.foods.filter(food => {
+    this.orderedFood = this.foods.filter(food => {
       if (food.food) {
         return food.food.category == this.selectedMenu.id && (this.keyword == "" || (this.keyword && food.food.keyword.includes(this.keyword.toLowerCase())));
       }
@@ -96,46 +88,31 @@ export class AddFoodToOrderPage {
     this.loadProducts();
   }
 
-  selectProduct(product, amount?: number) {
+  selectProduct(product) {
     product.highlight = true;
-    let modal = this.modalCtrl.create("KeypadModalPage", { number: (amount ? amount : 1) });
+    let modal = this.modalCtrl.create("KeypadModalPage", { number: 1 });
     modal.present();
     modal.onDidDismiss(data => {
       product.highlight = false;
       if (data != null && data != undefined && data > 0) {
-        let index = this.order.foods.findIndex(foodOrder => {
-          return foodOrder.food.id == product.id;
-        })
-        if (index > -1) {
-          this.order.foods[index].amountOrder = data;
-          this.appController.showLoading();
-          this.appController.updateFoodOrder(this.order.foods[index].firebaseId, {
-            amount_order: this.order.foods[index].amountOrder
-          }).then(data => {
-            console.log("update food order successfully");
-            this.appController.hideLoading();
-          });
-        } else {
-          //Add food to order  
-          let foodOrder = new FoodOrder();
-          foodOrder.foodId = product.id;
-          foodOrder.food = product;
-          foodOrder.orderId = this.orderId;
-          foodOrder.price = product.price;
-          foodOrder.amountOrder = data;
-          this.appController.showLoading();
-          this.appController.addFoodOrder(this.orderId, foodOrder).then(data => {
-            console.log("Thêm món thành công", data);
-            this.appController.hideLoading();
-          }, error => {
-            this.appController.hideLoading();
-          });
-        }
+
+        product["ordered"] = true;
+
+        let foodOrder = new FoodOrder();
+        foodOrder.foodId = product.id;
+        foodOrder.food = product;
+        foodOrder.orderId = this.order.id;
+        foodOrder.price = product.price;
+        foodOrder.amountOrder = data;
+
+        this.orderedFood.push(foodOrder);
+        this.foods.push(foodOrder);
+
       }
     })
   }
 
-  changeAmount(foodOrder: FoodOrder) {
+  changeAmount(foodOrder: FoodOrder, i) {
     foodOrder["highlight"] = true;
     let modal = this.modalCtrl.create("KeypadModalPage", { number: foodOrder.amountOrder });
     modal.present();
@@ -144,9 +121,13 @@ export class AddFoodToOrderPage {
       if (data) {
         if (data > 0) {
           foodOrder.amountOrder = data;
-          this.appController.updateFoodOrder(foodOrder.firebaseId, {
-            amount_order: foodOrder.amountOrder
-          });
+          this.orderedFood[i].amountOrder = data;
+          let index = this.foods.findIndex(ele=>{
+            return ele.foodId == foodOrder.foodId;
+          })
+          if(index >= 0){
+            this.foods[index].amountOrder = data;
+          }
         } else {
           this.appController.showToast("Số lượng phải lớn hơn 0");
         }
@@ -155,6 +136,10 @@ export class AddFoodToOrderPage {
   }
 
   back() {
+    this.viewCtrl.dismiss(this.foods);
+  }
+
+  back1() {
     this.viewCtrl.dismiss();
   }
 }
