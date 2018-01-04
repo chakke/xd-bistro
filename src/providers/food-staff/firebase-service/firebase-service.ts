@@ -284,6 +284,14 @@ export class FirebaseServiceProvider {
     return this.fetchCollection(FIREBASE_PATH.RESTAURANT + "/" + restId + "/" + FIREBASE_PATH.AREA);
   }
 
+  fetchMaps(restId: string): Observable<any> {
+    return this.fetchCollection(FIREBASE_PATH.RESTAURANT + "/" + restId + "/" + FIREBASE_PATH.MAP);
+  }
+
+  fetchComponents(restId: string, mapId: string): Observable<any> {
+    return this.fetchCollection(FIREBASE_PATH.RESTAURANT + "/" + restId + "/" + FIREBASE_PATH.MAP + "/" + mapId + "/" + FIREBASE_PATH.COMPONENT);
+  }
+
   addOrder(restId: string, order: Order): Promise<any> {
     return this.addDocument(FIREBASE_PATH.ORDER + "/" + restId + "/" + this.todayString, {
       id: order.id,

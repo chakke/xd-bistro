@@ -178,6 +178,8 @@ export const FIREBASE_PATH = {
     STAFF: "staffs",
     ORDER: "orders",
     AREA: "areas",
+    MAP: "maps",
+    COMPONENT: "components",
     FOOD_ORDER: "foodorders"
 }
 

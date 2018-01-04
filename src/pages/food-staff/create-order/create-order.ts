@@ -75,7 +75,7 @@ export class CreateOrderPage {
       this.showTables = this.tableCollection.get(this.selectedFloor.id);
     }
 
-    this.selectedMap = new MyMap(0, 0, "Map 1", []);
+    this.selectedMap = new MyMap("0", "0", "Map 1", []);
     this.order.timeCreate = new Date();
     this.order.staffId = this.appController.user.id;
     this.order.staffAvatar = this.appController.user.avatar;

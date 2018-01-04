@@ -65,7 +65,7 @@ export class FsTablesPage {
         this.tableStatusData.push(element);
       }
     }
-    this.selectedMap = new MyMap(0, 0, "Map 1", []);
+    this.selectedMap = new MyMap("0", "0", "Map 1", []);
   }
 
   ionViewDidLoad() {

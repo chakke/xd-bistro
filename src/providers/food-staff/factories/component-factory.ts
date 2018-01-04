@@ -3,7 +3,7 @@ import { UIComponent, Area, Bar, Door, Kitchen, Receptionist, Stair, Table, WC, 
 import { ComponentType } from "../app-constant";
 
 export class ComponentFactory {
-    public getComponent(id: number, componentType: string, title?: string, x?: number, y?: number, width?: number, height?: number, zIndex?: number, rotate?: number): UIComponent {
+    public getComponent(id: string, componentType: string, title?: string, x?: number, y?: number, width?: number, height?: number, zIndex?: number, rotate?: number): UIComponent {
 
         if (componentType) {
             switch (componentType.toLocaleLowerCase()) {

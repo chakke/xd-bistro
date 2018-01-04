@@ -6,7 +6,7 @@ export class MapPool {
     }
 
     getItem(): Map {
-        return new Map(0, 0, "", []);
+        return new Map("0", "0", "", []);
     }
 
     getItemWithData(data: any) {

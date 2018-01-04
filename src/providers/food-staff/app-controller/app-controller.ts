@@ -32,6 +32,7 @@ import { ScrollController } from '../../scroll-controller';
 import { Floor } from '../classes/floor';
 import { FoodOrderPool } from '../object-pools/food-order-pool';
 import { Utils } from '../../app-utils';
+import { UIComponent } from '../classes/ui-component';
 
 @Injectable()
 export class AppControllerProvider {
@@ -54,7 +55,8 @@ export class AppControllerProvider {
     order: false,
     area: false,
     staff: false,
-    foodOrder: false
+    foodOrder: false,
+    map: false
   }
 
   user: User;
@@ -80,7 +82,7 @@ export class AppControllerProvider {
 
   maps: Array<UIMap> = [];
   mapPool: MapPool;
-
+  mapCollection: Map<string, UIMap> = new Map<string, UIMap>();
 
   //Product
   products: Array<Product> = [];
@@ -111,6 +113,7 @@ export class AppControllerProvider {
   userChanel: Subject<User> = new Subject<User>();
   orderChanel: Subject<string> = new Subject<string>();
   foodOrderChanel: Subject<string> = new Subject<string>();
+  mapChanel: Subject<string> = new Subject<string>();
 
   scrollController: ScrollController = new ScrollController();
 
@@ -134,7 +137,6 @@ export class AppControllerProvider {
     this.foodOrderPool.initialize(1000);
 
     this.mapPool = new MapPool();
-    this.loadMaps();
 
     this.productPool = new ProductPool();
     this.productPool.initialize(this.totalProduct);
@@ -183,7 +185,7 @@ export class AppControllerProvider {
       }
 
       //Mapping foodOrder to order and chefFoodOrder
-      if ((data == "foodOrder") && this.loadedData.order && this.loadedData.foodOrder) { 
+      if ((data == "foodOrder") && this.loadedData.order && this.loadedData.foodOrder) {
         // this.chefFoodOrders = [];
         this.foodOrders.forEach(foodOrder => {
           if (foodOrder.orderId && this.orderCollection.get(foodOrder.orderId)) {
@@ -203,7 +205,7 @@ export class AppControllerProvider {
           //add food to foodorder
           if (foodOrder.foodId) {
             foodOrder.food = this.productCollection.get(foodOrder.foodId);
-          } 
+          }
           // if (foodOrder.foodId) {
           //   let index = this.chefFoodOrders.findIndex(elm => {
           //     return elm.foodId == foodOrder.foodId && elm.state == foodOrder.state;
@@ -373,6 +375,10 @@ export class AppControllerProvider {
 
           //Get all area in restaurant
           this.fetchArea();
+
+          //Get all map in restaurant
+          this.fetchMap();
+
         }
       }, error => {
         console.log("get user error", error);
@@ -410,7 +416,7 @@ export class AppControllerProvider {
       });
       this.staffes.forEach(staff => {
         this.staffCollection.set(staff.id, staff);
-      }) 
+      })
       this.loadedData.staff = true;
       this.loadedDataChanel.next("staff");
     })
@@ -450,7 +456,7 @@ export class AppControllerProvider {
 
       this.loadedData.product = true;
       this.productChanel.next("Treeboo vừa ra video mới!");
-      this.loadedDataChanel.next("Hàng mới về"); 
+      this.loadedDataChanel.next("Hàng mới về");
     })
   }
 
@@ -504,7 +510,7 @@ export class AppControllerProvider {
         }
       });
       this.loadedData.productCategory = true;
-      this.loadedDataChanel.next("Hàng mới về"); 
+      this.loadedDataChanel.next("Hàng mới về");
     })
   }
 
@@ -542,7 +548,7 @@ export class AppControllerProvider {
         }
       });
       this.loadedData.productSize = true;
-      this.loadedDataChanel.next("Hàng mới về"); 
+      this.loadedDataChanel.next("Hàng mới về");
     })
   }
 
@@ -579,7 +585,7 @@ export class AppControllerProvider {
         }
       });
       this.loadedData.productType = true;
-      this.loadedDataChanel.next("Hàng mới về"); 
+      this.loadedDataChanel.next("Hàng mới về");
     })
   }
 
@@ -617,7 +623,7 @@ export class AppControllerProvider {
         }
       });
       this.loadedData.productUnit = true;
-      this.loadedDataChanel.next("Hàng mới về"); 
+      this.loadedDataChanel.next("Hàng mới về");
     })
   }
 
@@ -655,7 +661,7 @@ export class AppControllerProvider {
 
       this.loadedData.table = true;
       this.tableChanel.next("Lệ rơi vừa ra video mới!");
-      this.loadedDataChanel.next("table"); 
+      this.loadedDataChanel.next("table");
     })
   }
 
@@ -689,10 +695,10 @@ export class AppControllerProvider {
       });
       this.orders.forEach(order => {
         this.orderCollection.set(order.id, order);
-      }) 
+      })
       this.loadedData.order = true;
       // this.orderChanel.next("Tùng Sơn vừa ra video mới!");
-      this.loadedDataChanel.next("order"); 
+      this.loadedDataChanel.next("order");
     })
   }
 
@@ -700,7 +706,7 @@ export class AppControllerProvider {
     //Fetch order
     this.firebaseService.fetchAllFoodOrderInRestaurant(this.restid).subscribe(data => {
       data.docChanges.forEach(change => {
-        let foodOrderData = change.doc.data(); 
+        let foodOrderData = change.doc.data();
         if (change.type == FIREBASE_CONST.DOCUMENT_CHANGE_TYPE.ADD) {
           let foodOrder = this.foodOrderPool.getItem();
           foodOrder.mappingFirebaseData(foodOrderData);
@@ -714,7 +720,7 @@ export class AppControllerProvider {
           if (index > -1) {
             this.foodOrders[index].reset();
             this.foodOrders[index].mappingFirebaseData(foodOrderData);
-          } 
+          }
         }
         if (change.type == FIREBASE_CONST.DOCUMENT_CHANGE_TYPE.REMOVE) {
           let index = this.orders.findIndex(elm => {
@@ -725,12 +731,12 @@ export class AppControllerProvider {
           }
         }
       });
-      this.foodOrders.forEach(foodOrder => { 
+      this.foodOrders.forEach(foodOrder => {
         this.foodOrderCollection.set(foodOrder.id, foodOrder);
       })
 
       this.loadedData.foodOrder = true;
-      this.loadedDataChanel.next("foodOrder"); 
+      this.loadedDataChanel.next("foodOrder");
     })
   }
 
@@ -767,14 +773,81 @@ export class AppControllerProvider {
       })
 
       this.loadedData.area = true;
-      this.loadedDataChanel.next("area"); 
+      this.loadedDataChanel.next("area");
+    })
+  }
+
+  fetchMap() {
+    this.firebaseService.fetchMaps(this.restid).subscribe(data => {
+      data.docChanges.forEach(change => {
+        let mapData = change.doc.data();
+        if (change.type == FIREBASE_CONST.DOCUMENT_CHANGE_TYPE.ADD) {
+          let map: UIMap = new UIMap(mapData.id, mapData.floor_id, mapData.title, [], 0,
+            mapData.width, mapData.height, mapData.current_width, mapData.current_height);
+          this.maps.push(map);
+
+          this.firebaseService.fetchComponents(this.restid, map.id).subscribe(data2 => {
+            data2.docChanges.forEach(change2 => {
+              let componentData = change2.doc.data();
+              if (change2.type == FIREBASE_CONST.DOCUMENT_CHANGE_TYPE.ADD) {
+
+                let component = map.componentFactory.getComponent(componentData.id, componentData.type.type, componentData.title,
+                  componentData.x, componentData.y, componentData.width, componentData.height,
+                  componentData.z_index, componentData.rotate);
+                component["table"] = componentData.table;
+
+                map.components.push(component);
+              }
+              // if (change2.type == FIREBASE_CONST.DOCUMENT_CHANGE_TYPE.MODIFY) {
+              //   let index = map.components.findIndex(elm => {
+              //     return elm.id == componentData.id;
+              //   })
+              //   if (index > -1) {
+              //     map.components[index].mappingFirebaseData(componentData);
+              //   }
+              // }
+              if (change2.type == FIREBASE_CONST.DOCUMENT_CHANGE_TYPE.REMOVE) {
+                let index = map.components.findIndex(elm => {
+                  return elm.id == componentData.id;
+                })
+                if (index > -1) {
+                  map.components.splice(index, 1);
+                }
+              }
+            });
+          })
+        }
+        if (change.type == FIREBASE_CONST.DOCUMENT_CHANGE_TYPE.MODIFY) {
+          let index = this.maps.findIndex(elm => {
+            return elm.id == mapData.id;
+          })
+          if (index > -1) {
+            this.maps[index].mappingFirebaseData(mapData);
+          }
+        }
+        if (change.type == FIREBASE_CONST.DOCUMENT_CHANGE_TYPE.REMOVE) {
+          let index = this.maps.findIndex(elm => {
+            return elm.id == mapData.id;
+          })
+          if (index > -1) {
+            this.maps.splice(index, 1);
+          }
+        }
+      });
+
+      this.maps.forEach(map => {
+        this.mapCollection.set(map.id, map);
+      })
+
+      this.loadedData.map = true;
+      this.loadedDataChanel.next("map");
     })
   }
 
   getMenu() {
     if (this.user) {
       this.httpService.getMenu(this.user.staffRole).then(data => {
-        if (data && data.menu) { 
+        if (data && data.menu) {
           this.menuItems = [];
           data.menu.forEach(element => {
             let menu = new Menu(element.id, element.name, element.icon, false, element.page, element.link);
@@ -849,7 +922,7 @@ export class AppControllerProvider {
         data.content.forEach(element => {
           let table = this.tableInOrderPool.getItemWithData(element);
           this.tableInOrders.push(table);
-        }); 
+        });
       }
     });
   }
@@ -863,7 +936,7 @@ export class AppControllerProvider {
       return elm.id == id;
     })
 
-    if (index > -1) { 
+    if (index > -1) {
       return this.tableInOrders[index];
     }
     return undefined;
@@ -895,16 +968,5 @@ export class AppControllerProvider {
     return null;
   }
 
-  loadMaps() {
-    this.httpService.getAllMap("0").then(data => {
-      if (data && data.result == 1 && data.content) {
-        this.maps = [];
-        data.content.forEach(element => {
-          let map = this.mapPool.getItemWithData(element);
-          this.maps.push(map);
-        });
-      }
-    })
-  }
 
 }
