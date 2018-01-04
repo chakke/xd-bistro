@@ -11,7 +11,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { AppControllerProvider } from '../../../providers/food-staff/app-controller/app-controller';
 import { Platform } from 'ionic-angular/platform/platform';
 import { Order } from '../../../providers/food-staff/classes/order';
-import { ORDER_STATE } from '../../../providers/food-staff/app-constant';
+import { ORDER_STATE, TABLE_STATE } from '../../../providers/food-staff/app-constant';
 
 @IonicPage()
 @Component({
@@ -192,6 +192,12 @@ export class CreateOrderPage {
       console.log("create order", this.order);
       this.appController.addOrder(this.order).then(data => {
         console.log("add order success");
+        //Update table state
+        this.order.tableIds.forEach(id=>{
+          this.appController.updateTable(id, {
+            state: TABLE_STATE.HAS_ORDER
+          })
+        })
         this.appController.hideLoading();
         this.viewCtrl.dismiss();
       }, error => {

@@ -4,25 +4,19 @@
         <span class="custom-toggle-left-button custom-toggle-button" [class.active]="viewMode == 0"> <i class="fa fa-list-ul" aria-hidden="true"></i></span>
         <span class="custom-toggle-right-button custom-toggle-button" [class.active]="viewMode == 1"> <i class="fa fa-map-o" aria-hidden="true"></i></span>
     </div>
+    <div class="search-bar" *ngIf="viewMode == 0">
+        <ion-searchbar class="searchbar-ios" [class.searchbar-md]="false" placeholder="{{placholder}}" [(ngModel)]="searchKeyword" (ionInput)="search()"></ion-searchbar>
+    </div>
+
 </ion-header>
 
 <ion-content>
     <scroll-to-top></scroll-to-top>
+
     <div class="fs-content list-zone" *ngIf="viewMode == 0">
-        <div class="search-bar">
-            <ion-searchbar class="searchbar-ios" [class.searchbar-md]="false" placeholder="{{placholder}}" [(ngModel)]="searchKeyword" (ionInput)="search()"></ion-searchbar>
-        </div>
-        <div class="fs-segment">
-            <ion-segment class="segment-md" [class.segment-ios]="false" [(ngModel)]="tableStatus" (ionChange)="filterTable()">
-                <ion-segment-button value="{{status.id}}" *ngFor="let status of tableStatusData">
-                    <span class="number status-{{status.id}}">{{tableCollection.get(status.id)?.length}}</span>
-                    <span class="text"> {{status.shortName || status.name}} </span>
-                </ion-segment-button>
-            </ion-segment>
-        </div>
         <div class="segment-content">
             <div class="owner-zone">
-                <ion-row class="item" *ngFor="let table of userTables">
+                <ion-row class="item" *ngFor="let table of showUserTable">
                     <ion-col class="col-table">
                         <div class="content-block status-{{table.status}}">
                             <span class="order-number" *ngIf="table?.missingFoods">{{table?.missingFoods}}</span>
@@ -33,7 +27,7 @@
                     <ion-col class="col-detail">
                         <div class="identify">
                             <ion-icon name="fs-order-number-o"></ion-icon>
-                            <span>{{getOrderIds(table.orders)}}</span>
+                            <span>{{table.orderId}}</span>
                         </div>
                         <div class="guests">
                             <ion-icon name="fs-group-o"></ion-icon>
@@ -42,7 +36,7 @@
                     </ion-col>
                     <ion-col class="col-action">
                         <div>
-                            <button class="fs-button fs-button-outline">Xem hóa đơn</button>
+                            <button class="fs-button fs-button-outline" (click)="gotoOrderDetail(table.orderId)" tappable>Xem hóa đơn</button>
                         </div>
                         <div class="status" [ngClass]="{'fs-green': !table?.missingFoods, 'fs-blue': table?.missingFoods}">
                             <span *ngIf="!table?.missingFoods && table.status == 1"> Đã đủ món</span>
@@ -53,8 +47,18 @@
 
                 <div class="fs-divider"></div>
             </div>
+        </div>
+        <div class="fs-segment">
+            <ion-segment class="segment-md" [class.segment-ios]="false" [(ngModel)]="tableStatus" (ionChange)="filterTable()">
+                <ion-segment-button value="{{status.id}}" *ngFor="let status of tableStatusData">
+                    <span class="number status-{{status.id}}">{{tableCollection.get(status.id)?.length}}</span>
+                    <span class="text"> {{status.shortName || status.name}} </span>
+                </ion-segment-button>
+            </ion-segment>
+        </div>
+        <div class="segment-content">
             <div class="all-zone">
-                <div class="item status-{{table.status}}" *ngFor="let table of showTables">
+                <div class="item status-{{table.status}}" *ngFor="let table of showTables" (click)="selectTable(table)">
                     <div class="content-block">
                         <ion-icon name="fs-table"></ion-icon>
                         <span class="table-number">{{table.name}}</span>
@@ -69,9 +73,10 @@
     </div>
     <div class="map-zone" [hidden]="viewMode != 1">
         <div class="floor-menu">
-            <div class="floor" [class.active]="floor.id == selectedFloor" (click)="selectFloor(floor.id)" tappable *ngFor="let floor of floors">
-                <ion-icon name="fs-stairs-o"></ion-icon>
-                <span>{{floor.name}}</span>
+            <div class="floor" [class.active]="map.id == selectedMap.id" (click)="selectMap(map)" tappable *ngFor="let map of maps">
+                <!-- <ion-icon name="fs-stairs-o"></ion-icon> -->
+                <ion-icon name="ios-map-outline"></ion-icon>
+                <span>{{map.title}}</span>
             </div>
         </div>
         <div class="map-container" [style.width]="width+'px'" [style.height]="height+'px'" id="map-container">
@@ -81,8 +86,11 @@
                     [style.height]="component.height + 'px'" [style.zIndex]="component.zIndex" (click)="selectComponent(component)" [class.selected]="selectedComponent && selectedComponent.id == component.id">
                     <div class="title">
                         <span> 
-                            {{component.title}}
+                            {{component.table ? component.table.name: component.title}}
                         </span>
+                    </div>
+                    <div class="icon">
+                        <ion-icon name="{{component.icon}}" [style.font-size]="component.iconSize + 'px'"></ion-icon>
                     </div>
                     <div class="content" [innerHTML]="component.innerHtml"></div>
                     <div class="top-rule rule"></div>

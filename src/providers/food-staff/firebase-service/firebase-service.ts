@@ -349,4 +349,8 @@ export class FirebaseServiceProvider {
     return this.updateDocument(FIREBASE_PATH.PRODUCT + "/" + restId + "/" + FIREBASE_PATH.FOOD + "/" + firebaseId, value);
   }
 
+  updateTable(restId: string, firebaseId: string, value: any): Promise<any> {
+    return this.updateDocument(FIREBASE_PATH.RESTAURANT + "/" + restId + "/" + FIREBASE_PATH.TABLE + "/" + firebaseId, value);
+  }
+
 }

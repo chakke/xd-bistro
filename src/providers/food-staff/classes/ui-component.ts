@@ -1,7 +1,8 @@
 import { Utils } from "../../app-utils";
 import { AlertController } from 'ionic-angular';
 import { IComponentType } from '../interfaces/i-component-type';
-import { ComponentType } from '../app-constant'; 
+import { ComponentType } from '../app-constant';
+import { Table as RealTable } from './table';
 
 export class UIComponent {
     id: string;
@@ -15,6 +16,8 @@ export class UIComponent {
     y: number;
     zIndex = 10;
     rotate: number = 0;
+    tableId: string;
+    table: RealTable;
     constructor(id?: string, title?: string, x?: number, y?: number, width?: number, height?: number, zIndex?: number, rotate?: number) {
         this.id = id;
         this.type = ComponentType.UI_COMPONENT;
@@ -58,7 +61,7 @@ export class Area extends UIComponent {
         }
     }
 }
-export class Table extends UIComponent { 
+export class Table extends UIComponent {
     constructor(id?: string, title?: string, x?: number, y?: number, width?: number, height?: number, zIndex?: number, rotate?: number, table?: any) {
         super(id, title, x, y, width, height, zIndex, rotate);
         this.classList.push("ui-table");
