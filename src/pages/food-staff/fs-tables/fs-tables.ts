@@ -69,8 +69,7 @@ export class FsTablesPage {
     })
     this.sizeHolder = this.sizeHolderRef.nativeElement;
   }
-  ionViewDidEnter() { 
-    this.appController.showLoading("xx", "ss");
+  ionViewDidEnter() {  
     this.maps = this.appController.maps;
     this.selectedMap = this.appController.maps[0];
     this.onResize();
