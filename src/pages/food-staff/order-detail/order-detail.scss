@@ -1,4 +1,27 @@
 page-order-detail {
+    $headerRowHeight: 45px;
+    .a-back-button {
+        color: white;
+        width: auto;
+        height: $headerRowHeight;
+        line-height: $headerRowHeight;
+        font-size: 1.8em;
+        padding: 0 map-get($FSSizes, defaultPadding);
+        position: absolute;
+        top: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        ion-icon {
+            vertical-align: text-bottom;
+        }
+        .icon {
+            font-size: 1em;
+        }
+        &.button-left {
+            left: 0;
+        }
+    }
     .fs-segment {
         background-color: map-get($map: $FSColors, $key: white);
         .segment-button {

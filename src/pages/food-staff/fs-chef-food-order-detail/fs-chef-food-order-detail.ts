@@ -47,6 +47,8 @@ export class FsChefFoodOrderDetailPage {
     this.wattingFoodOrders.forEach(food => {
       this.totalAmount += food.amountOrder - food.amountDone - food.amountReturn - food.amountProcessing;
     })
+    console.log("processing",this.processingFoodOrders);
+    
   }
 
   getDiffTime(time: Date) {

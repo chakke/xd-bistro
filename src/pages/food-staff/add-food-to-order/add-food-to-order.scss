@@ -148,4 +148,20 @@ page-add-food-to-order {
             }
         }
     }
+    .sold-out {
+        position: absolute;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        width: auto;
+        span {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+        }
+        img {
+            display: block;
+            height: 100%;
+        }
+    }
 }

@@ -1,6 +1,9 @@
 <ion-header>
-    <fs-header *ngIf="orderId.length > 10" [showBackButton]="1" title="Order #{{orderId.substring(0,10)}}"></fs-header>
-    <fs-header *ngIf="orderId.length <= 10" [showBackButton]="1" title="Order #{{orderId}}"></fs-header>
+    <span class="a-back-button button-left" (click)="goBack()" tappable>
+        <ion-icon name="arrow-back"></ion-icon>
+    </span>
+    <fs-header *ngIf="orderId.length > 10" title="Order #{{orderId.substring(0,10)}}"></fs-header>
+    <fs-header *ngIf="orderId.length <= 10" title="Order #{{orderId}}"></fs-header>
 </ion-header>
 
 <ion-content *ngIf="order">
@@ -58,15 +61,18 @@
                                 <button class="fs-button-outline" tappable (click)="deleteFood(food,i)">
                                     Hủy món
                                 </button>
-                                <button class="fs-button-outline" tappable (click)="updateFood(food,i)">
+                                <button class="fs-button-outline" tappable (click)="updateFood(food,i)" *ngIf="food.food.state=='1'">
                                     Số lượng
                                 </button>
-                                <button class="fs-button">
+                                <button class="fs-button" *ngIf="food.food.state=='1'">
                                     Thêm yêu cầu
                                 </button>
                             </div>
                         </ion-col>
                     </ion-row>
+                    <div class="sold-out " *ngIf="food.food.state=='2' ">
+                        <img src="assets/food-staff/images/icon/out_stock.png " alt=" ">
+                    </div>
                 </div>
             </div>
         </div>
