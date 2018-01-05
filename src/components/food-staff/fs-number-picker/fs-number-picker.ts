@@ -8,8 +8,7 @@ import { AppControllerProvider } from '../../../providers/food-staff/app-control
 })
 export class FsNumberPickerComponent {
   @Input() number: number;
-  @Input() neworder : number;
-  @Input() amountOrder : number;
+  @Input() amountOrder: number;
   @Output() numberChange: EventEmitter<number> = new EventEmitter<number>();
 
   numpads = [1, 2, 3, 4, 5, 6, 7, 8, 9];
@@ -18,37 +17,29 @@ export class FsNumberPickerComponent {
   constructor(
     private appController: AppControllerProvider,
     private modalCtrl: ModalController) {
-    console.log('Hello FsNumberPickerComponent Component');
-    this.number = 1;
-    this.neworder = -1;
+    this.number = 9;
   }
 
   selectNumber() {
+    console.log("select number", this.number);
     let modal = this.modalCtrl.create("KeypadModalPage", { number: this.number });
     modal.present();
     this.isPicking = true;
     modal.onDidDismiss(data => {
       this.isPicking = false;
-      if(this.amountOrder && data > this.amountOrder){
-        this.appController.showToast("Số lượng trả lớn hơn đã order",3000);
-      }
-      if (data != null && data != undefined || (this.amountOrder && data <= this.amountOrder)) {
-        if(this.neworder > 0 && data == 0){
-          this.appController.showToast("Số người ít nhất là 1!");
-          this.number = 1;
-        }else{
-          this.number = data;
-        }
-        this.numberChange.next(this.number);
-        
-      }
-      
+      console.log("dismiss keyboard", data);
+      // if (this.amountOrder && data > this.amountOrder) {
+      //   this.appController.showToast("Số lượng trả lớn hơn đã order", 3000);
+      // }
+      // || (this.amountOrder && data <= this.amountOrder)
+      this.number = data;
+      this.numberChange.next(this.number);
     })
   }
 
   keypadCloseCallBack(number) {
     this.number = number;
     console.log("Close keyboard");
-    
+
   }
 }
