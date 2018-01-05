@@ -150,22 +150,25 @@ export class CreateOrderPage {
   }
 
   selectTable(table: Table) {
-    let index = this.order.tableIds.indexOf(table.id);
-    if (index > -1) {
-      this.order.tableIds.splice(index, 1);
-      this.order.tables.splice(index, 1);
-      table["selected"] = false;
-    } else {
-      this.order.tableIds.push(table.id);
-      this.order.tables.push(table);
-      table["selected"] = true;
-      this.order.areaId = this.selectedFloor.id;
-      this.order.areaName = this.selectedFloor.name;
+    if (table.status == TABLE_STATE.NO_ORDER + "") {
+      let index = this.order.tableIds.indexOf(table.id);
+      if (index > -1) {
+        this.order.tableIds.splice(index, 1);
+        this.order.tables.splice(index, 1);
+        table["selected"] = false;
+      } else {
+        this.order.tableIds.push(table.id);
+        this.order.tables.push(table);
+        table["selected"] = true;
+        this.order.areaId = this.selectedFloor.id;
+        this.order.areaName = this.selectedFloor.name;
+      }
     }
+
   }
 
   updateNumberOfPerson(number) {
-    if(number==0 || number==undefined || number == "")number =  1;
+    if (number == 0 || number == undefined || number == "") number = 1;
     this.numberOfPerson = number;
     this.order.numberCustormer = number;
     console.log("fucker update", number);
@@ -180,7 +183,7 @@ export class CreateOrderPage {
       this.appController.addOrder(this.order).then(data => {
         console.log("add order success");
         //Update table state
-        this.order.tableIds.forEach(id=>{
+        this.order.tableIds.forEach(id => {
           this.appController.updateTable(id, {
             state: TABLE_STATE.HAS_ORDER
           })

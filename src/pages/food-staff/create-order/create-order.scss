@@ -220,7 +220,7 @@ page-create-order {
                         position: relative;
                         &.selected {
                             .table-icon {
-                                color: map-get($map: $FSColors, $key: primary);
+                                color: map-get($map: $FSColors, $key: blue);
                             }
                             .table-name {
                                 color: map-get($map: $FSColors, $key: white);
@@ -244,6 +244,32 @@ page-create-order {
                             .table-name {
                                 color: map-get($map: $FSColors, $key: orange);
                             }
+                        }
+                    }
+                    .status-2 {
+                        opacity: .5;
+                        .table-name {
+                            color: map-get($map: $FSColors, $key: white);
+                        }
+                        .icon {
+                            color: map-get($map: $FSColors, $key: primary);
+                        }
+                    }
+                    .status-1 {
+                        opacity: .5;
+                        .table-name {
+                            color: map-get($map: $FSColors, $key: orange);
+                        }
+                        .icon {
+                            color: map-get($map: $FSColors, $key: yellow);
+                        }
+                    }
+                    .status-0 {
+                        .table-name {
+                            color: map-get($map: $FSColors, $key: black);
+                        }
+                        .icon {
+                            color: map-get($map: $FSColors, $key: gray);
                         }
                     }
                 }
