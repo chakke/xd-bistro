@@ -23,7 +23,7 @@ export class CreateOrderPage {
   @ViewChild("sizeHolder") sizeHolderRef: ElementRef;
   sizeHolder: HTMLElement;
   createOrderForm: FormGroup;
-  numberOfPerson = 2;
+  numberOfPerson = 1;
   custormerName = "";
   custormerPhone = "";
   floors: Array<Floor> = [];
@@ -168,10 +168,12 @@ export class CreateOrderPage {
     }
 
   }
-
+  isClickSelectNumberPerson: boolean = false;
+  selectNumberPerson(){
+    if(!this.isClickSelectNumberPerson)this.isClickSelectNumberPerson = true;
+  }
   updateNumberOfPerson(number) {
     console.log("updateNumberOfPerson", number);
-
     // if(parseInt(number)==0 || number==undefined || number == "" || number == null)number =  1;
     if (!number || number == 0) {
       this.numberOfPerson = 0;
@@ -216,10 +218,15 @@ export class CreateOrderPage {
       this.errorMessage = "Bạn phải chọn ít nhất 1 bàn";
       return false;
     }
+    if(!this.isClickSelectNumberPerson){
+      this.errorMessage = "Bạn chưa chọn số lượng người";
+      return false;
+    }
     if (!(this.order.numberCustormer > 0)) {
       this.errorMessage = "Số lượng người phải lớn hơn 0";
       return false;
     }
+
     this.errorMessage = "";
     return true;
   }
