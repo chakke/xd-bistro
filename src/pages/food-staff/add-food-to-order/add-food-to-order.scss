@@ -14,6 +14,7 @@ page-add-food-to-order {
             display: flex;
             justify-content: center;
             align-items: center;
+            color: map-get($map: $FSColors, $key: gray);
         }
         .button-right {
             padding: 0 16px 0 0;
@@ -22,6 +23,7 @@ page-add-food-to-order {
             justify-content: center;
             align-items: center;
             color: map-get($map: $FSColors, $key: primary);
+            font-weight: bold;
         }
     }
     .menu {

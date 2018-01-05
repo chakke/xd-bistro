@@ -48,6 +48,7 @@ export class OrderDetailPage {
         console.log("order foods",this.order.foods);
       }
     })
+ 
   }
 
   loadOrder() {

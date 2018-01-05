@@ -1,5 +1,6 @@
 <ion-header>
-    <fs-header [showBackButton]="1" title="Order# {{orderId}}"></fs-header>
+    <fs-header *ngIf="orderId.length > 10" [showBackButton]="1" title="Order #{{orderId.substring(0,10)}}"></fs-header>
+    <fs-header *ngIf="orderId.length <= 10" [showBackButton]="1" title="Order #{{orderId}}"></fs-header>
 </ion-header>
 
 <ion-content *ngIf="order">

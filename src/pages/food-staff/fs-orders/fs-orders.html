@@ -47,7 +47,7 @@
                     </ion-row>
                     <ion-row class="item-action">
                         <ion-col class="col-id">
-                            <span>#{{order.id}}</span>
+                            <span>#{{order.id.substring(0,3).toUpperCase()}}</span>
                         </ion-col>
                         <ion-col class="col-button">
                             <button class="fs-button fs-button-outline" (click)="gotoDetail(order)">Đặt món</button>
