@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { AppControllerProvider } from '../../../providers/food-staff/app-controller/app-controller';
-import { LoadingController } from 'ionic-angular/components/loading/loading-controller';
 
 
 @IonicPage()
@@ -40,7 +39,6 @@ export class FsLoginPage {
       account: ["", Validators.compose([Validators.maxLength(100), Validators.minLength(6), Validators.required])],
       password: ["", Validators.compose([Validators.minLength(6), Validators.required])]
     });
-
   }
 
   loginWithFacebook() {
