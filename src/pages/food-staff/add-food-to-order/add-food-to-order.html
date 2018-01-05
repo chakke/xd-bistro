@@ -32,12 +32,15 @@
                                 <span class="fs-green">(x{{food.amountOrder}})</span>
                             </div>
                         </ion-col>
-                        <ion-col class="col-button" col-2>
+                        <ion-col class="col-button" col-2 *ngIf="food.food.state=='1'">
                             <button class="button-add" (click)="changeAmount(food,i)" tappable>
                                 <ion-icon name="md-add"></ion-icon>
                             </button>
                         </ion-col>
                     </ion-row>
+                    <div class="sold-out " *ngIf="food.food.state=='2' ">
+                        <img src="assets/food-staff/images/icon/out_stock.png " alt=" ">
+                    </div>
                 </div>
                 <div class="fs-divider" *ngIf="orderedFood.length > 0"></div>
             </div>
@@ -62,7 +65,7 @@
                             </button> -->
                         </ion-col>
                     </ion-row>
-                    <div class="sold-out " *ngIf="product.state=='2' ">
+                    <div class="sold-out " *ngIf="product.state!='1'">
                         <img src="assets/food-staff/images/icon/out_stock.png " alt=" ">
                     </div>
                 </div>

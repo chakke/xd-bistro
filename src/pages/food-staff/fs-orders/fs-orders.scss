@@ -117,9 +117,13 @@ page-fs-orders {
                     .col-id {
                         flex: 0;
                         min-width: $iconSize;
-                        text-align: center;
+                        max-height: $iconSize;
+                        text-overflow: ellipsis;
+                        overflow: hidden;
+                        white-space: nowrap;
+                        text-align: left;
                         display: flex;
-                        justify-content: center;
+                        justify-content: left;
                         align-items: center;
                         span {
                             background-color: map-get($map: $FSColors, $key: lightgray);

@@ -46,7 +46,6 @@ export class OrderDetailPage {
         console.log(data);
         this.orderedFood = data;
         console.log("order foods",this.order.foods);
-        
       }
     })
   }
@@ -120,7 +119,7 @@ export class OrderDetailPage {
             "Done:" + food.amountDone +
             "Số lượng mới phải lớn hơn" + sum,
             3000
-          )
+          );
         }
       }
     })
@@ -178,7 +177,8 @@ export class OrderDetailPage {
       }
     }
     this.foodRemoves = [];
-    
+    // this.order.totalPrice = this.caculateTotalPrice();
     this.appController.hideLoading();
+    this.order.totalPrice = this.caculateTotalPrice();
   }
 }
