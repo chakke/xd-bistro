@@ -1,3 +1,106 @@
 page-fs-serve {
-
+    .food-list {
+        padding-top: 5px;
+        &:last-child {
+            .fs-divider {
+                display: none;
+            }
+        }
+        .food-item {
+            border-bottom: solid 1px map-get($map: $FSColors, $key: lightgray);
+            &:last-child {
+                border-bottom: none;
+            }
+        }
+    }
+    .food-item {
+        padding: 10px map-get($map: $FSSizes, $key: defaultPadding);
+        // border-bottom: solid 1px map-get($map: $FSColors, $key: lightgray);
+        background-color: map-get($map: $FSColors, $key: white);
+        margin-bottom: 5px;
+        .col-img {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0 5px;
+            img {
+                object-fit: cover;
+                border-radius: 50%;
+            }
+        }
+        .col-detail {
+            padding-left: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            .name {
+                font-weight: bold;
+                .code {
+                    font-style: italic;
+                }
+            }
+            .icon {
+                color: map-get($map: $FSColors, $key: primary);
+                margin-right: 5px;
+            }
+        }
+        .col-number {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: map-get($map: $FSSizes, $key: big);
+            font-weight: bold;
+        }
+        .row-action {
+            // padding-top: 10px;
+            .col-time {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                .time {
+                    width: 100%;
+                    text-align: center;
+                    font-weight: 500;
+                    border-radius: 20px;
+                }
+            }
+            .col-button {
+                display: flex;
+                justify-content: flex-end;
+                align-items: center;
+            }
+        }
+        &.warning-0 {
+            .time {
+                background-color: #b5e287;
+                color: #5d991f;
+            }
+        }
+        // &.warning-1 {
+        //     .time {
+        //         background-color: map-get($map: $FSColors, $key: gray);
+        //         color: map-get($map: $FSColors, $key: black);
+        //     }
+        // }
+        &.warning-1 {
+            background-color: #ffedb3;
+            .time {
+                background-color: #ffc300;
+                color: #ab6200;
+            }
+        }
+        &.warning-2 {
+            background-color: #fce0dc;
+            .time {
+                background-color: #fe9aa0;
+                color: #ce452b;
+            }
+        }
+    }
+    .fs-button {
+        padding: 4px 12px;
+        margin-left: 10px;
+        font-size: 1em;
+        border: solid 1px map-get($map: $FSColors, $key: primary);
+    }
 }

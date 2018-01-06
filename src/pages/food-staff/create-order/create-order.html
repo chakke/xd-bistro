@@ -75,25 +75,31 @@
                 </div>
             </div>
             <div class="sheet-body">
-                <div class="floors">
+                <div class="floors" *ngIf="viewMode == 0">
                     <div class="floor" [class.active]="floor.id == selectedFloor.id" (click)="selectFloor(floor)" *ngFor="let floor of floors">{{floor.name}}</div>
                 </div>
-                <div class="table-list" *ngIf="viewMode == 0">
-                    <div [class.selected]="table.selected" class="table status-{{table.status}}" (click)="selectTable(table)" *ngFor="let table of showTables">
+                <div class="floors" [hidden]="viewMode != 1">
+                    <div class="floor" [class.active]="map.id == selectedMap.id" (click)="selectMap(map)" *ngFor="let map of maps">{{map.title}}</div>
+                </div>
+                <div class="table-list" [hidden]="viewMode != 0">
+                    <div class="table status-{{table.status}}" (click)="selectTable(table)" [class.selected]="table.selected || table.selected == 'true'" *ngFor="let table of showTables">
                         <span class="table-name">{{table.name}}</span>
                         <ion-icon name="fs-table" class="table-icon"></ion-icon>
                     </div>
                 </div>
-                <div class="table-map" [hidden]="viewMode != 1">
+                <div class="map-zone table-map" [hidden]="viewMode != 1">
                     <div class="map-container" [style.width]="width+'px'" [style.height]="height+'px'" id="map-container">
                         <div class="map" [style.width]="width+'px'" [style.height]="height+'px'" id="map">
-                            <div [ngClass]="component.classList" (click)="selectTable()" *ngFor="let component of selectedMap.components; let i = index" [attr.index]="i" [style.transform]="domSanitizer.bypassSecurityTrustStyle('translate(' + component.x + 'px,' + component.y + 'px) ' + 'rotateZ('+ component.rotate +'deg)')"
+                            <div [ngClass]="component.classList" [class.selected]="component.table && component.table.selected" *ngFor="let component of selectedMap.components; let i = index" [attr.index]="i" [style.transform]="domSanitizer.bypassSecurityTrustStyle('translate(' + component.x + 'px,' + component.y + 'px) ' + 'rotateZ('+ component.rotate +'deg)')"
                                 [style.webkitTransform]="domSanitizer.bypassSecurityTrustStyle('translate(' + component.x + 'px,' + component.y + 'px) ' + 'rotateZ('+ component.rotate +'deg)')" [attr.data-x]="component.x" [attr.data-y]="component.y" [style.width]="component.width + 'px'"
-                                [style.height]="component.height + 'px'" [style.zIndex]="component.zIndex" [class.selected]="selectedComponent && selectedComponent.id == component.id">
+                                [style.height]="component.height + 'px'" [style.zIndex]="component.zIndex" (click)="selectComponent(component)">
                                 <div class="title">
                                     <span> 
-                                        {{component.title}}
+                                        {{component.table ? component.table.name: component.title}}
                                     </span>
+                                </div>
+                                <div class="icon">
+                                    <ion-icon name="{{component.icon}}" [style.font-size]="component.iconSize + 'px'"></ion-icon>
                                 </div>
                                 <div class="content" [innerHTML]="component.innerHtml"></div>
                                 <div class="top-rule rule"></div>
@@ -103,6 +109,7 @@
                             </div>
                         </div>
                     </div>
+
                 </div>
             </div>
             <div class="sheet-footer"></div>

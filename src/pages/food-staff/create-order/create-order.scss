@@ -294,18 +294,84 @@ page-create-order {
         z-index: -1;
         opacity: 0;
     }
-    .map-container {
-        position: relative;
-        margin-top: 16px;
-        margin-left: 16px;
-        display: flex;
-        overflow: visible;
-        .map {
-            border: solid 1px green;
-        }
-    }
     .number-input {
         white-space: nowrap;
         overflow: hidden;
+    }
+    $floorHeight: 4rem;
+    .map-zone {
+        overflow-x: hidden;
+        overflow-y: auto;
+        min-height: 100%;
+        .floor-menu {
+            height: $floorHeight;
+            width: 100%;
+            display: flex;
+            overflow: auto;
+            .floor {
+                background-color: map-get($map: $FSColors, $key: background);
+                color: map-get($map: $FSColors, $key: black);
+                padding: 0 10px;
+                height: $floorHeight;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                white-space: nowrap;
+                font-size: .8em;
+                flex: 1;
+                .icon {
+                    margin-right: 5px;
+                }
+                &.active {
+                    font-weight: bold;
+                    background-color: map-get($map: $FSColors, $key: white);
+                    .icon {
+                        color: map-get($map: $FSColors, $key: primary);
+                    }
+                }
+            }
+        }
+        .map-container {
+            position: relative;
+            margin-top: 16px;
+            margin-left: 16px;
+            display: flex;
+            overflow: visible;
+            .map {
+                border: solid 1px green;
+                .ui-table {
+                    &.selected {
+                        .icon {
+                            color: map-get($map: $FSColors, $key: blue);
+                        }
+                        .title {
+                            color: map-get($map: $FSColors, $key: white);
+                        }
+                    }
+                    &.status-1 {
+                        opacity: .5;
+                        .icon {
+                            color: map-get($map: $FSColors, $key: yellow);
+                        }
+                        .title {
+                            span {
+                                color: map-get($map: $FSColors, $key: black);
+                            }
+                        }
+                    }
+                    &.status-2 {
+                        opacity: .5;
+                        .icon {
+                            color: map-get($map: $FSColors, $key: primary);
+                        }
+                        .title {
+                            span {
+                                color: map-get($map: $FSColors, $key: white);
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }

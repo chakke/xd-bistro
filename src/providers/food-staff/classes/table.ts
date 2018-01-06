@@ -12,7 +12,7 @@ export class Table {
     private _status: string;
     private _areaId: string;
     private _areaName: string;
-    private _firebaseId: string;
+    private _firebaseId: string; 
 
     constructor() {
         this.reset();
