@@ -4,7 +4,7 @@ import { Order } from '../../../providers/food-staff/classes/order';
 import { AppControllerProvider } from '../../../providers/food-staff/app-controller/app-controller';
 import { Utils } from '../../../providers/app-utils';
 import { ModalController } from 'ionic-angular/components/modal/modal-controller';
-import { ORDER_STATE } from '../../../providers/food-staff/app-constant';
+import { ORDER_STATE, TABLE_STATE } from '../../../providers/food-staff/app-constant';
 
 declare var $: any;
 
@@ -124,21 +124,23 @@ export class FsOrdersPage {
 
   removeOrder(order) {
     this.appController.showLoading();
-    if (order.foods && order.foods.length > 0) {
-      for (let i = 0; i < order.foods.length; i++) {
-        this.appController.removeFoodOrder(order.foods[i].firebaseId).then(() => {
-          console.log("remove foodorder sucess!");
+    // if (order.foods && order.foods.length > 0) {
+    //   for (let i = 0; i < order.foods.length; i++) {
+    //     this.appController.removeFoodOrder(order.foods[i].firebaseId).then(() => {
+    //       console.log("remove foodorder sucess!");
 
-        }).catch((err) => {
-          console.log("remove foodorder fail!", err);
-          this.appController.hideLoading();
+    //     }).catch((err) => {
+    //       console.log("remove foodorder fail!", err);
+    //       this.appController.hideLoading();
 
-        })
-      }
-    }
+    //     })
+    //   }
+    // }
     if (order.tableIds && order.tableIds.length > 0) {
       for (let j = 0; j < order.tableIds.length; j++) {
-        this.appController.updateTable(order.tableIds[j], {state: 0}).then(() => {
+        this.appController.updateTable(order.tableIds[j], {
+          state: TABLE_STATE.NO_ORDER
+        }).then(() => {
           console.log("Update table to free sucess!");
 
         }).catch((err) => {
@@ -148,7 +150,9 @@ export class FsOrdersPage {
         })
       }
     }
-    this.appController.updateOrder(order.firebaseId,{state: 3}).then(() => {
+    this.appController.updateOrder(order.firebaseId,{
+      state: ORDER_STATE.CANCELLED
+    }).then(() => {
       console.log("Remove order sucess!");
 
     }).catch((err) => {
@@ -157,6 +161,37 @@ export class FsOrdersPage {
 
     })
     this.appController.hideLoading();
+  }
+
+  respone(order : Order){
+    if(order.tables && order.tables.length > 0){
+      for(let i = 0;i<order.tables.length;i++){
+        if(order.tables[i].status != "0"){
+          this.appController.showToast("Bàn đang được phục vụ không thể khôi phục order!",3000);
+          return;
+        }
+      }
+    }
+    for(let j = 0; j < order.tableIds.length;j++){
+      this.appController.updateTable(order.tableIds[j],{
+        state: TABLE_STATE.HAS_ORDER
+      }).then(()=>{
+        console.log("Khôi phục bàn thành công !");
+        
+      }).catch((err)=>{
+        console.log("Khôi phục thất bại");
+        
+      })
+    }
+    this.appController.updateOrder(order.firebaseId,{
+      state: ORDER_STATE.CREATED
+    }).then(()=>{
+      console.log("Khôi phục thành công");
+      
+    }).catch((err)=>{
+      console.log("Khôi phục thất bại",err);
+      
+    })
   }
 
 }

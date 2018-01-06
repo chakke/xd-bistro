@@ -21,7 +21,7 @@
             <div class="order-list">
                 <div class="order-item" *ngFor="let order of showOrders">
                     <ion-row class="item-detail">
-                        <ion-col class="col-table status-{{order.state}}">
+                        <ion-col class="col-table status-0">
                             <ion-icon name="fs-table"></ion-icon>
                             <span class="table-number">{{order.tables ? order.tables.join(" ") :  ""}}</span>
                         </ion-col>
@@ -50,9 +50,10 @@
                             <span>#{{order.id.substring(0,3).toUpperCase()}}</span>
                         </ion-col>
                         <ion-col class="col-button">
-                            <button class="fs-button" (click)="gotoDetail(order)">Đặt món</button>
-                            <button class="fs-button fs-button-outline" (click)="checkItem(order)">Kiểm đồ</button>
-                            <button class="fs-button fs-button-outline-black" (click)="cancelOrder(order)">Hủy Order</button>
+                            <button *ngIf="selectedOrderStatus == '0'" class="fs-button fs-button-outline-black" (click)="cancelOrder(order)">Hủy Order</button>
+                            <button *ngIf="selectedOrderStatus == '0'" class="fs-button fs-button-outline" (click)="checkItem(order)">Kiểm đồ</button>
+                            <button *ngIf="selectedOrderStatus == '0'" class="fs-button" (click)="gotoDetail(order)">Đặt món</button>
+                            <button *ngIf="selectedOrderStatus == '3'" class="fs-button" (click)="respone(order)">Khôi phục</button>
                         </ion-col>
                     </ion-row>
                 </div>
