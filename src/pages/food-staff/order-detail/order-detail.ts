@@ -225,7 +225,9 @@ export class OrderDetailPage {
     this.foodRemoves = [];
     // this.order.totalPrice = this.caculateTotalPrice();
     this.appController.hideLoading();
-    this.order.totalPrice = this.caculateTotalPrice();
+    // this.order.totalPrice = this.caculateTotalPrice();
+    console.log("Tổng tiền",this.order.totalPrice);
+    
     this.isChange = false;
   }
 }

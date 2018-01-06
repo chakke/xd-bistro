@@ -54,7 +54,7 @@ export class FsOrdersPage {
     console.log('ionViewDidLoad FsOrdersPage');
     this.loadOrders();
     this.appController.orderChanel.asObservable().subscribe(data => {
-      console.log("Order in app controller change", data);
+      console.log("Page Order - Order in app controller change", data);
       this.loadOrders();
     })
   }
@@ -88,6 +88,9 @@ export class FsOrdersPage {
   gotoDetail(order) {
     let modal = this.modalCtrl.create("OrderDetailPage", { orderId: order.id });
     modal.present();
+    modal.onDidDismiss(data=>{
+
+    })
   }
 
   checkItem(order) {
@@ -145,7 +148,7 @@ export class FsOrdersPage {
         })
       }
     }
-    this.appController.removeOrder(order).then(() => {
+    this.appController.updateOrder(order.firebaseId,{state: 3}).then(() => {
       console.log("Remove order sucess!");
 
     }).catch((err) => {

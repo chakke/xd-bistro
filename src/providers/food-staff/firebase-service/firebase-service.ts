@@ -321,6 +321,10 @@ export class FirebaseServiceProvider {
     return this.deleteDocument(FIREBASE_PATH.ORDER + "/" + resId + "/" + this.todayString + "/" + order.firebaseId);
   }
 
+  updateOrder(resId: string,firebaseId: string, value: any){
+    return this.updateDocument(FIREBASE_PATH.ORDER  + "/" + resId + "/" + this.todayString + "/" + firebaseId, value);
+  }
+
   addFoodOrder(restId: string, orderId: string, staffId: string, product: FoodOrder): Promise<any> {
     var newId = this.getNewFirebaseDocumentId();
     return this.addDocument(FIREBASE_PATH.FOOD_ORDER + "/" + restId + "/" + this.todayString, {

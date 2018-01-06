@@ -34,17 +34,19 @@ export class FsChefOrdersPage {
   loadOrder() {
     this.chefOrder = [];
     this.appController.orders.forEach(order => {
-      let doneFood = 0;
-      let totalFood = 0;
-      order.foods.forEach(foodOrder => {
-        totalFood++;
-        if (foodOrder.amountOrder == (foodOrder.amountDone + foodOrder.amountReturn)) {
-          doneFood++;
-        }
-      })
-      order["doneFood"] = doneFood;
-      order["totalFood"] = totalFood;
-      this.chefOrder.push(order);
+      if(order.state == 0 || order.state == 1){
+        let doneFood = 0;
+        let totalFood = 0;
+        order.foods.forEach(foodOrder => {
+          totalFood++;
+          if (foodOrder.amountOrder == (foodOrder.amountDone + foodOrder.amountReturn)) {
+            doneFood++;
+          }
+        })
+        order["doneFood"] = doneFood;
+        order["totalFood"] = totalFood;
+        this.chefOrder.push(order);
+      }
     });
     this.chefOrder.sort((a, b) => {
       if (a.doneFood < a.totalFood && b.doneFood < b.totalFood) {
