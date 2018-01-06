@@ -317,6 +317,10 @@ export class FirebaseServiceProvider {
     });
   }
 
+  removeOrder(resId: string,order: Order) : Promise<any>{
+    return this.deleteDocument(FIREBASE_PATH.ORDER + "/" + resId + "/" + this.todayString + "/" + order.firebaseId);
+  }
+
   addFoodOrder(restId: string, orderId: string, staffId: string, product: FoodOrder): Promise<any> {
     var newId = this.getNewFirebaseDocumentId();
     return this.addDocument(FIREBASE_PATH.FOOD_ORDER + "/" + restId + "/" + this.todayString, {

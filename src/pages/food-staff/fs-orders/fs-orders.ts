@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { Order } from '../../../providers/food-staff/classes/order';
 import { AppControllerProvider } from '../../../providers/food-staff/app-controller/app-controller';
 import { Utils } from '../../../providers/app-utils';
@@ -43,6 +43,7 @@ export class FsOrdersPage {
   showOrders: Array<Order> = [];
 
   constructor(
+    private mAlertController: AlertController,
     public navCtrl: NavController,
     public navParams: NavParams,
     private appController: AppControllerProvider,
@@ -72,7 +73,7 @@ export class FsOrdersPage {
     });
 
     this.showOrders = this.orderCollection.get(+this.selectedOrderStatus);
-    console.log("showOrders",this.showOrders);
+    console.log("showOrders", this.showOrders);
   }
 
   addNewOrders() {
@@ -94,8 +95,65 @@ export class FsOrdersPage {
     modal.present();
   }
 
-  pay() {
+  cancelOrder(order: Order) {
+    let alert = this.mAlertController.create({
+      message: "Bạn có chắc muốn hủy order ?",
+      title: "Hủy Order",
+      buttons: [
+        {
+          text: "Cancel",
+          handler: () => {
+            console.log("Click Cancel!");
 
+          }
+        },
+        {
+          text: "Ok",
+          handler: () => {
+            console.log("Click Ok");
+            this.removeOrder(order);
+          }
+        }
+      ]
+    })
+    alert.present();
+  }
+
+  removeOrder(order) {
+    this.appController.showLoading();
+    if (order.foods && order.foods.length > 0) {
+      for (let i = 0; i < order.foods.length; i++) {
+        this.appController.removeFoodOrder(order.foods[i].firebaseId).then(() => {
+          console.log("remove foodorder sucess!");
+
+        }).catch((err) => {
+          console.log("remove foodorder fail!", err);
+          this.appController.hideLoading();
+
+        })
+      }
+    }
+    if (order.tableIds && order.tableIds.length > 0) {
+      for (let j = 0; j < order.tableIds.length; j++) {
+        this.appController.updateTable(order.tableIds[j], {state: 0}).then(() => {
+          console.log("Update table to free sucess!");
+
+        }).catch((err) => {
+          console.log("Update table to free fail!", err);
+          this.appController.hideLoading();
+
+        })
+      }
+    }
+    this.appController.removeOrder(order).then(() => {
+      console.log("Remove order sucess!");
+
+    }).catch((err) => {
+      console.log("Remove order fail!", err);
+      this.appController.hideLoading();
+
+    })
+    this.appController.hideLoading();
   }
 
 }

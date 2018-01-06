@@ -903,6 +903,10 @@ export class AppControllerProvider {
     return this.firebaseService.addOrder(this.restid, order);
   }
 
+  removeOrder(order: Order): Promise<any>{
+    return this.firebaseService.removeOrder(this.restid,order);
+  }
+
   addFoodOrder(orderId: string, product: FoodOrder): Promise<any> {
     product.timeCreate = new Date();
     return this.firebaseService.addFoodOrder(this.restid, orderId, this.user.id, product);

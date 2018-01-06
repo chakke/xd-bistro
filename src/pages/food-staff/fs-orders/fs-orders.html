@@ -50,9 +50,9 @@
                             <span>#{{order.id.substring(0,3).toUpperCase()}}</span>
                         </ion-col>
                         <ion-col class="col-button">
-                            <button class="fs-button fs-button-outline" (click)="gotoDetail(order)">Đặt món</button>
+                            <button class="fs-button" (click)="gotoDetail(order)">Đặt món</button>
                             <button class="fs-button fs-button-outline" (click)="checkItem(order)">Kiểm đồ</button>
-                            <button class="fs-button" (click)="pay()">Thanh toán</button>
+                            <button class="fs-button fs-button-outline-black" (click)="cancelOrder(order)">Hủy Order</button>
                         </ion-col>
                     </ion-row>
                 </div>

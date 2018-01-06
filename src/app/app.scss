@@ -283,6 +283,15 @@
         border: solid 1px;
     }
     
+    .fs-button-outline-black {
+        padding: 8px 16px;
+        border-radius: 20px;
+        color: map-get($FSColors, black);
+        background-color: map-get($FSColors, white);
+        border: solid 1px;
+        border-color: map-get($FSColors, black) !important;
+    }
+    
     .fs-shadow {
         box-shadow: 0px 1px 20px 0px rgba(17, 34, 51, 0.5);
     }
