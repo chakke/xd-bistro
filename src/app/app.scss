@@ -283,6 +283,15 @@
         border: solid 1px;
     }
     
+    .fs-button-outline-black {
+        padding: 8px 16px;
+        border-radius: 20px;
+        color: map-get($FSColors, black);
+        background-color: map-get($FSColors, white);
+        border: solid 1px;
+        border-color: map-get($FSColors, black) !important;
+    }
+    
     .fs-shadow {
         box-shadow: 0px 1px 20px 0px rgba(17, 34, 51, 0.5);
     }
@@ -699,4 +708,21 @@
         display: flex;
         justify-content: center;
         align-items: center;
+    }
+    
+    .sold-out {
+        position: absolute;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        width: auto;
+        span {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+        }
+        img {
+            display: block;
+            height: 100%;
+        }
     }

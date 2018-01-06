@@ -94,6 +94,9 @@ page-create-order {
             .fs-divider-full {
                 background-position: top;
             }
+            .error-message {
+                color: map-get($map: $FSColors, $key: red);
+            }
         }
     }
     .fs-divider {

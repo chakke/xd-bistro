@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController,Platform} from 'ionic-angular';
 import { Order } from '../../../providers/food-staff/classes/order';
 import { AppControllerProvider } from '../../../providers/food-staff/app-controller/app-controller';
 import { ModalController } from 'ionic-angular/components/modal/modal-controller';
@@ -18,14 +18,17 @@ export class OrderDetailPage {
 
   orderedFood: Array<FoodOrder> = [];
   foodRemoves: Array<FoodOrder> = [];
+
+  isChange: boolean = false;
   constructor(
+    private mPlatform: Platform,
     private alertCtrl: AlertController,
     public navCtrl: NavController,
     public navParams: NavParams,
     private appController: AppControllerProvider,
     private modalCtrl: ModalController) {
     this.orderId = this.navParams.get("orderId");
-
+    mPlatform.registerBackButtonAction(()=>this.goBack());
     // console.log("Order: ", this.order);
 
   }
@@ -33,9 +36,44 @@ export class OrderDetailPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad OrderDetailPage');
     this.loadOrder();
-    this.appController.orderChanel.asObservable().subscribe(()=>{
+    this.appController.orderChanel.asObservable().subscribe(() => {
       this.loadOrder();
     })
+  }
+  
+
+  goBack(){
+    if(this.isChange){
+      this.showQuestion();
+    }else{
+      this.navCtrl.pop();
+    }
+  }
+
+  showQuestion() {
+    let alert = this.alertCtrl.create({
+      title: "UPDATE",
+      message: "Bạn có cập nhật lại hóa đơn không ?",
+      buttons: [
+        {
+          text: "Không",
+          handler: () => {
+            console.log("Click không");
+            this.navCtrl.pop();
+          }
+        },
+        {
+          text: "Có",
+          handler: () => {
+            console.log("Click Có");
+            this.updateItem();
+            this.navCtrl.pop();
+          }
+        }
+      ]
+    });
+    alert.present();
+    
   }
 
   addNewFood() {
@@ -44,10 +82,13 @@ export class OrderDetailPage {
     modal.onDidDismiss(data => {
       if (data) {
         console.log(data);
-        this.orderedFood = data;
-        console.log("order foods",this.order.foods);
+        if (data.length > this.orderedFood.length)this.isChange = true;
+        
+          this.orderedFood = data;
+        console.log("order foods", this.order.foods);
       }
     })
+
   }
 
   loadOrder() {
@@ -57,7 +98,7 @@ export class OrderDetailPage {
   }
 
   loadOrderedFood() {
-    this.orderedFood = this.order.foods.filter(product =>{
+    this.orderedFood = this.order.foods.filter(product => {
       return product.food;
     })
   }
@@ -83,6 +124,7 @@ export class OrderDetailPage {
           text: "Có",
           handler: () => {
             console.log("Click Có");
+
             this.removeDocument(food, i);
           }
         }
@@ -97,6 +139,7 @@ export class OrderDetailPage {
       return;
     }
     this.orderedFood.splice(i, 1);
+    this.isChange = true;
     this.foodRemoves.push(food);
   }
 
@@ -109,9 +152,10 @@ export class OrderDetailPage {
         console.log("number back", data);
         var sum = food.amountDone + food.amountProcessing + food.amountReturn;
         if (data != food.amountOrder && data > sum) {
-          this.orderedFood[i].amountOrder =  data;
-          console.log("order foods",this.order.foods);
-          
+          this.orderedFood[i].amountOrder = data;
+          console.log("order foods", this.order.foods);
+          this.isChange = true;
+
         } else {
           this.appController.showToast(
             "Return: " + food.amountReturn +
@@ -121,15 +165,17 @@ export class OrderDetailPage {
             3000
           );
         }
+      }else{
+        this.appController.showToast("Số lượng phải lớn hơn số lượng món đã chế biến",3000);
       }
     })
   }
 
-  caculateTotalPrice(): number{
+  caculateTotalPrice(): number {
     var sum: number = 0;
-    if(this.orderedFood && this.orderedFood.length > 0){
+    if (this.orderedFood && this.orderedFood.length > 0) {
       this.orderedFood.forEach(element => {
-        sum+= element.amountOrder * element.price;
+        sum += element.amountOrder * element.price;
       });
     }
     return sum;
@@ -137,8 +183,8 @@ export class OrderDetailPage {
 
   updateItem() {
     console.log("orderedfood", this.orderedFood);
-    console.log("orders",this.order.foods);
-    
+    console.log("orders", this.order.foods);
+
     this.appController.showLoading();
     if (this.orderedFood.length > 0) {
       for (let index = 0; index < this.orderedFood.length; index++) {
@@ -149,29 +195,29 @@ export class OrderDetailPage {
           }).catch((err) => {
             console.log("Error add new foodorder", err);
           })
-        }else{
-          this.appController.updateFoodOrder(food.firebaseId,{
+        } else {
+          this.appController.updateFoodOrder(food.firebaseId, {
             amount_order: food.amountOrder
-          }).then(()=>{
+          }).then(() => {
             console.log("Update sucess");
-            
-          }).catch((err)=>{
-            console.log("Update error",err);
-            
+
+          }).catch((err) => {
+            console.log("Update error", err);
+
           })
         }
       }
     }
-    if(this.foodRemoves && this.foodRemoves.length > 0){
+    if (this.foodRemoves && this.foodRemoves.length > 0) {
       for (let index = 0; index < this.foodRemoves.length; index++) {
         let element = this.foodRemoves[index];
-        if(element.firebaseId){
-          this.appController.removeFoodOrder(element.firebaseId).then(()=>{
+        if (element.firebaseId) {
+          this.appController.removeFoodOrder(element.firebaseId).then(() => {
             console.log("Remove sucess!");
-            
-          }).catch((err)=>{
-            console.log("error when remove foodorder",err);
-            
+
+          }).catch((err) => {
+            console.log("error when remove foodorder", err);
+
           })
         }
       }
@@ -180,5 +226,6 @@ export class OrderDetailPage {
     // this.order.totalPrice = this.caculateTotalPrice();
     this.appController.hideLoading();
     this.order.totalPrice = this.caculateTotalPrice();
+    this.isChange = false;
   }
 }
