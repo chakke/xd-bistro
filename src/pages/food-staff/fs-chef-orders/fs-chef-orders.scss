@@ -241,6 +241,8 @@ page-fs-chef-orders {
                             z-index: 2;
                             color: map-get($map: $FSColors, $key: white);
                             font-weight: bold;
+                            width: 100%;
+                            text-align: center;
                         }
                     }
                     .col-detail {

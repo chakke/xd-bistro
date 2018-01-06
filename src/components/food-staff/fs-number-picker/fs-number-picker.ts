@@ -27,19 +27,14 @@ export class FsNumberPickerComponent {
     this.isPicking = true;
     modal.onDidDismiss(data => {
       this.isPicking = false;
-      console.log("dismiss keyboard", data);
-      // if (this.amountOrder && data > this.amountOrder) {
-      //   this.appController.showToast("Số lượng trả lớn hơn đã order", 3000);
-      // }
-      // || (this.amountOrder && data <= this.amountOrder)
-      this.number = data;
-      this.numberChange.next(this.number);
+      if (data != null && data != undefined) {
+        this.number = data;
+        this.numberChange.next(this.number);
+      }
     })
   }
 
   keypadCloseCallBack(number) {
     this.number = number;
-    console.log("Close keyboard");
-
   }
 }

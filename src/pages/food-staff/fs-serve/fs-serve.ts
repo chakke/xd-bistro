@@ -21,7 +21,20 @@ export class FsServePage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad FsServePage');
-    this.showFoodOrders = this.appController.foodOrders;
+    this.loadFoodOrder();
+    this.appController.foodOrderChanel.asObservable().subscribe(() => {
+      this.loadFoodOrder();
+    })
+  }
+
+  loadFoodOrder() {
+    this.showFoodOrders = this.appController.foodOrders.filter((foodOrder) => {
+      let order = this.appController.orderCollection.get(foodOrder.orderId)
+      if (order && order.tables) {
+        foodOrder["tables"] = order.tables.join(", ");
+      }
+      return foodOrder.amountDone > 0;
+    });
   }
 
   getClass(collectionId: number, timeCreate: Date) {
@@ -86,8 +99,14 @@ export class FsServePage {
     }
   }
 
-  serve(foodOrder) {
-
+  serve(foodOrder: FoodOrder) {
+    this.appController.showLoading();
+    this.appController.updateFoodOrder(foodOrder.id, {
+      amount_done: 0,
+      amount_return: foodOrder.amountReturn + foodOrder.amountDone
+    }).then(() => {
+      this.appController.hideLoading();
+    })
   }
 
 

@@ -228,20 +228,16 @@ export class CreateOrderPage {
   selectNumberPerson(){
     if(!this.isClickSelectNumberPerson)this.isClickSelectNumberPerson = true;
   }
-  updateNumberOfPerson(number) {
-    console.log("updateNumberOfPerson", number);
-    // if(parseInt(number)==0 || number==undefined || number == "" || number == null)number =  1;
+  updateNumberOfPerson(number) { 
     if (!number || number == 0) {
       this.numberOfPerson = 0;
       this.mChangeDetectorRef.detectChanges();
-      this.numberOfPerson = 10;
+      this.numberOfPerson = 1;
     } else {
       this.numberOfPerson = number;
     }
     this.mChangeDetectorRef.detectChanges();
-
     this.order.numberCustormer = number; 
-
   }
 
   createOrder() {

@@ -20,62 +20,12 @@
                         </div>
                     </ion-col>
                     <ion-col col-2 class="col-number" tappable>
-                        <span>{{food.amountOrder - food.amountDone - food.amountReturn - food.amountProcessing}} suất</span>
+                        <span>{{food.amountDone}} suất</span>
                     </ion-col>
                 </ion-row>
                 <ion-row class="row-action">
                     <ion-col col-2 class="col-time">
                         <span class="time">{{getDiffTime(food.timeCreate)}}</span>
-                    </ion-col>
-                    <ion-col col-10 class="col-button">
-                        <button class="fs-button" (click)="serve(food)" tappable>Trả món</button>
-                    </ion-col>
-                </ion-row>
-            </div>
-            <div class="food-item warning-0">
-                <ion-row>
-                    <ion-col col-2 class="col-img" tappable>
-                        <img src="http://image-us.24h.com.vn/upload/3-2017/images/2017-07-28/1501242926-143857-cach-lam-bun-bo-hue-thom-ngon-hap-dan2-1.jpg" alt="image">
-                    </ion-col>
-                    <ion-col col-8 class="col-detail">
-                        <div class="name" tappable><span class="code">(#123)</span> Bún bò Huế</div>
-                        <div class="table" (click)="gotoOrderDetail(food.orderId)" tappable>
-                            <ion-icon name="fs-table-3-o"></ion-icon>
-                            <span>Bàn A1, A2</span>
-                        </div>
-                    </ion-col>
-                    <ion-col col-2 class="col-number" tappable>
-                        <span>5 suất</span>
-                    </ion-col>
-                </ion-row>
-                <ion-row class="row-action">
-                    <ion-col col-2 class="col-time">
-                        <span class="time">1m</span>
-                    </ion-col>
-                    <ion-col col-10 class="col-button">
-                        <button class="fs-button" (click)="serve(food)" tappable>Trả món</button>
-                    </ion-col>
-                </ion-row>
-            </div>
-            <div class="food-item warning-0">
-                <ion-row>
-                    <ion-col col-2 class="col-img" tappable>
-                        <img src="http://image-us.24h.com.vn/upload/3-2017/images/2017-07-28/1501242926-143857-cach-lam-bun-bo-hue-thom-ngon-hap-dan2-1.jpg" alt="image">
-                    </ion-col>
-                    <ion-col col-8 class="col-detail">
-                        <div class="name" tappable><span class="code">(#123)</span> Bún bò Huế</div>
-                        <div class="table" (click)="gotoOrderDetail(food.orderId)" tappable>
-                            <ion-icon name="fs-table-3-o"></ion-icon>
-                            <span>Bàn A1, A2</span>
-                        </div>
-                    </ion-col>
-                    <ion-col col-2 class="col-number" tappable>
-                        <span>5 suất</span>
-                    </ion-col>
-                </ion-row>
-                <ion-row class="row-action">
-                    <ion-col col-2 class="col-time">
-                        <span class="time">1m</span>
                     </ion-col>
                     <ion-col col-10 class="col-button">
                         <button class="fs-button" (click)="serve(food)" tappable>Trả món</button>
