@@ -11,7 +11,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { AppControllerProvider } from '../../../providers/food-staff/app-controller/app-controller';
 import { Platform } from 'ionic-angular/platform/platform';
 import { Order } from '../../../providers/food-staff/classes/order';
-import { ORDER_STATE, TABLE_STATE } from '../../../providers/food-staff/app-constant';
+import { ORDER_STATE, TABLE_STATE, TABLE_STATUS, ComponentType } from '../../../providers/food-staff/app-constant';
 
 @IonicPage()
 @Component({
@@ -44,10 +44,12 @@ export class CreateOrderPage {
 
   mapPadding = 16;
 
+  maps: Array<MyMap> = [];
   selectedMap: MyMap;
   selectedComponent: UIComponent;
   defaultWidth = 50;
   defaultHeight = 50;
+  tableStatusData = [];
 
   constructor(
     public mChangeDetectorRef: ChangeDetectorRef,
@@ -65,39 +67,34 @@ export class CreateOrderPage {
       phone: [""]
     });
 
-    this.floors = this.appController.floors;
-    this.selectedFloor = this.floors[0];
-    for (let i = 0; i < this.floors.length; i++) {
-      let tables = [];
-      let floorId = this.floors[i].id;
-      tables = this.appController.tables.filter(table => {
-        return table.areaId == floorId;
-      })
-      this.tableCollection.set(this.floors[i].id, tables);
-      this.showTables = this.tableCollection.get(this.selectedFloor.id);
-    }
-
     this.selectedMap = new MyMap("0", "0", "Map 1", []);
     this.order.timeCreate = new Date();
     this.order.staffId = this.appController.user.id;
     this.order.staffAvatar = this.appController.user.avatar;
     this.order.staffName = this.appController.user.name;
     this.order.state = ORDER_STATE.CREATED;
+    for (const key in TABLE_STATUS) {
+      if (TABLE_STATUS.hasOwnProperty(key)) {
+        const element = TABLE_STATUS[key];
+        this.tableStatusData.push(element);
+      }
+    }
   }
 
   ionViewDidLoad() {
+    this.floors = this.appController.floors;
+    this.selectedFloor = this.floors[0];
+
+    this.maps = this.appController.maps;
+    this.selectedMap = this.maps[0];
     this.backdropRef.nativeElement.addEventListener('click', () => {
       this.viewCtrl.dismiss();
     })
-    this.sizeHolder = this.sizeHolderRef.nativeElement;
-    this.selectedMap = this.appController.maps[0];
-    this.selectedMap.components.map(elm => {
-      console.log(elm);
-      // if(elm.getIcon()){
-      //   elm.innerHtml = `<ion-icon name="${elm.getIcon()}"></ion-icon>`;
-      // }
-      return elm;
+    this.loadTables();
+    this.appController.tableChanel.asObservable().subscribe(() => {
+      this.loadTables();
     })
+    this.sizeHolder = this.sizeHolderRef.nativeElement;
     this.onResize();
     this.platform.resize.subscribe(() => {
       this.onResize();
@@ -108,13 +105,44 @@ export class CreateOrderPage {
 
   }
 
+  loadTables() {
+    for (let i = 0; i < this.floors.length; i++) {
+      let tables = [];
+      let floorId = this.floors[i].id;
+      tables = this.appController.tables.filter(table => {
+        table["selected"] = false;
+        return table.areaId == floorId;
+      })
+      this.tableCollection.set(this.floors[i].id, tables);
+      this.showTables = this.tableCollection.get(this.selectedFloor.id);
+    }
+
+  }
+
   onResize() {
+
+    this.selectedMap.components.map(component => {
+      component["icon"] = this.getComponentIcon(component.type, component["capacity"]);
+      let short = component.width;
+      if (component.width > component.height) {
+        short = component.height;
+      }
+      component["iconSize"] = short;
+      if (component.table) {
+        component.classList.push("status-" + component.table.status);
+      }
+    })
     let maxWidth = this.sizeHolder.offsetWidth - 2 * this.mapPadding;
     let maxHeight = this.sizeHolder.offsetHeight - 2 * this.mapPadding;
     let ratio = maxWidth / maxHeight;
+    if (this.selectedMap.getWidth() > this.selectedMap.getHeight()) {
+      this.width = this.selectedMap.getWidth();
+      this.height = this.selectedMap.getHeight();
+    } else {
+      this.width = this.selectedMap.getHeight();
+      this.height = this.selectedMap.getWidth();
+    }
 
-    this.width = this.selectedMap.getWidth();
-    this.height = this.selectedMap.getHeight();
 
     //Giả sử rằng map.height < map.width
     if (ratio >= 1) {
@@ -134,9 +162,35 @@ export class CreateOrderPage {
     map.style.transformOrigin = `${this.height / 2}px ${this.height / 2}px`;
   }
 
+  getComponentIcon(type, capacity) {
+    switch (type.type) {
+      case ComponentType.TABLE.type: {
+        if (capacity && capacity >= 6) {
+          return "fs-family-table";
+        } else {
+          return "fs-couple-table";
+        }
+      }
+      case ComponentType.WC.type: {
+        return "fs-wc";
+      }
+      case ComponentType.BAR.type: {
+        return "fs-bar";
+      }
+      case ComponentType.STAIR.type: {
+        return "fs-stairs";
+      }
+      case ComponentType.KITCHEN.type: {
+        return "fs-kitchen";
+      }
+    }
+
+  }
+
+
   selectFloor(floor: Floor) {
     this.selectedFloor = floor;
-    this.showTables = this.tableCollection.get(floor.id);
+    this.showTables = this.tableCollection.get(floor.id); 
   }
 
   showTableList() {
@@ -148,7 +202,7 @@ export class CreateOrderPage {
   }
 
   onClickToggleView() {
-    this.viewMode = 1 - this.viewMode;
+    this.viewMode = 1 - this.viewMode; 
   }
 
   selectTable(table: Table) {
@@ -178,14 +232,13 @@ export class CreateOrderPage {
     if (!number || number == 0) {
       this.numberOfPerson = 0;
       this.mChangeDetectorRef.detectChanges();
-      this.numberOfPerson = 10; 
+      this.numberOfPerson = 10;
     } else {
       this.numberOfPerson = number;
     }
     this.mChangeDetectorRef.detectChanges();
 
-    this.order.numberCustormer = number;
-    console.log("thisnumberperson", this.numberOfPerson);
+    this.order.numberCustormer = number; 
 
   }
 
@@ -193,10 +246,8 @@ export class CreateOrderPage {
     if (this.checkForm()) {
       this.appController.showLoading();
       this.order.custormerName = this.custormerName;
-      this.order.custormerPhone = this.custormerPhone;
-      console.log("create order", this.order);
-      this.appController.addOrder(this.order).then(data => {
-        console.log("add order success");
+      this.order.custormerPhone = this.custormerPhone; 
+      this.appController.addOrder(this.order).then(data => { 
         //Update table state
         this.order.tableIds.forEach(id => {
           this.appController.updateTable(id, {
@@ -205,8 +256,7 @@ export class CreateOrderPage {
         })
         this.appController.hideLoading();
         this.viewCtrl.dismiss();
-      }, error => {
-        console.log("add order fail");
+      }, error => { 
         this.appController.hideLoading();
         this.viewCtrl.dismiss();
       })
@@ -231,8 +281,7 @@ export class CreateOrderPage {
     return true;
   }
 
-  cancelOrder() {
-    console.log("cancel order");
+  cancelOrder() { 
     this.viewCtrl.dismiss();
   }
   cancelTable() {
@@ -244,5 +293,30 @@ export class CreateOrderPage {
     this.hideTableList();
   }
 
-  
+  selectMap(map: MyMap) {
+    this.selectedMap = map;
+    this.onResize();
+  }
+
+  selectComponent(component) {
+    if (component.table) {
+      if (component.table.status == TABLE_STATE.NO_ORDER) {
+        let table = component.table;
+        let index = this.order.tableIds.indexOf(table.id);
+        if (index > -1) {
+          this.order.tableIds.splice(index, 1);
+          this.order.tables.splice(index, 1);
+          table["selected"] = false;
+
+        } else {
+          this.order.tableIds.push(table.id);
+          this.order.tables.push(table);
+          table["selected"] = true;
+          this.order.areaId = this.selectedFloor.id;
+          this.order.areaName = this.selectedFloor.name;
+        }
+      }
+    }
+  }
+
 }

@@ -50,17 +50,17 @@
                 },
                 {
                     "id": 2,
-                    "name": "Danh sách bàn",
-                    "icon": "fs-table-3-o",
-                    "page": "FsTablesPage",
-                    "link": "fs-tables"
-                },
-                {
-                    "id": 3,
                     "name": "Trả món",
                     "icon": "fs-order-o",
                     "page": "FsServePage",
                     "link": "fs-serve"
+                },
+                {
+                    "id": 3,
+                    "name": "Danh sách bàn",
+                    "icon": "fs-table-3-o",
+                    "page": "FsTablesPage",
+                    "link": "fs-tables"
                 },
                 {
                     "id": 6,
@@ -95,18 +95,18 @@
                     "link": "fs-orders"
                 },
                 {
-                    "id": 2,
-                    "name": "Danh sách bàn",
-                    "icon": "fs-table-3-o",
-                    "page": "FsTablesPage",
-                    "link": "fs-tables"
-                },
-                {
                     "id": 3,
                     "name": "Trả món",
                     "icon": "fs-order-o",
                     "page": "FsServePage",
                     "link": "fs-serve"
+                },
+                {
+                    "id": 2,
+                    "name": "Danh sách bàn",
+                    "icon": "fs-table-3-o",
+                    "page": "FsTablesPage",
+                    "link": "fs-tables"
                 },
                 {
                     "id": 6,
