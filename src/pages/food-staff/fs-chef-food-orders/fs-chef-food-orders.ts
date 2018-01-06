@@ -41,6 +41,9 @@ export class FsChefFoodOrdersPage {
     this.appController.productChanel.asObservable().subscribe(() => {
       this.loadFoodOrder();
     })
+    this.appController.orderChanel.asObservable().subscribe(() => {
+      this.loadFoodOrder();
+    })
   }
 
   loadFoodOrder() {
@@ -48,15 +51,19 @@ export class FsChefFoodOrdersPage {
       this.chefFoodOrderCollection.set(CHEF_FOOD_STATE[key].id, []);
     });
     this.appController.foodOrders.forEach(foodOrder => {
-      //Check amount waitting
-      if (+foodOrder.food.state != FOOD_STATE.OUT_OF_STOCK.id && (foodOrder.amountOrder - foodOrder.amountDone - foodOrder.amountReturn - foodOrder.amountProcessing > 0)) {
-        this.chefFoodOrderCollection.get(CHEF_FOOD_STATE.WAITING.id).push(foodOrder);
-      }
-      if (+foodOrder.food.state != FOOD_STATE.OUT_OF_STOCK.id && foodOrder.amountProcessing > 0) {
-        this.chefFoodOrderCollection.get(CHEF_FOOD_STATE.COOKING.id).push(foodOrder);
-      }
-      if (+foodOrder.food.state != FOOD_STATE.OUT_OF_STOCK.id && foodOrder.amountDone > 0) {
-        this.chefFoodOrderCollection.get(CHEF_FOOD_STATE.DELIVERABLE.id).push(foodOrder);
+      //Check food in active order
+      let order = this.appController.orderCollection.get(foodOrder.orderId);
+      if (order && (order.state == ORDER_STATE.CREATED || order.state == ORDER_STATE.FOOD_DONE)) {
+        //Check amount waitting
+        if (+foodOrder.food.state != FOOD_STATE.OUT_OF_STOCK.id && (foodOrder.amountOrder - foodOrder.amountDone - foodOrder.amountReturn - foodOrder.amountProcessing > 0)) {
+          this.chefFoodOrderCollection.get(CHEF_FOOD_STATE.WAITING.id).push(foodOrder);
+        }
+        if (+foodOrder.food.state != FOOD_STATE.OUT_OF_STOCK.id && foodOrder.amountProcessing > 0) {
+          this.chefFoodOrderCollection.get(CHEF_FOOD_STATE.COOKING.id).push(foodOrder);
+        }
+        if (+foodOrder.food.state != FOOD_STATE.OUT_OF_STOCK.id && foodOrder.amountDone > 0) {
+          this.chefFoodOrderCollection.get(CHEF_FOOD_STATE.DELIVERABLE.id).push(foodOrder);
+        }
       }
     });
     this.filterFoodOrders();
@@ -68,8 +75,6 @@ export class FsChefFoodOrdersPage {
 
   filterFoodOrders() {
     this.showFoodOrders = this.chefFoodOrderCollection.get(+this.selectedOrderStatus);
-    this.appController.foodOrders.forEach(food => {
-    })
     this.showFoodOrders.sort((a, b) => {
       if (a.timeCreate && b.timeCreate) {
         if (+this.selectedOrderStatus == this.chefFoodStateData.DELIVERABLE.id) {

@@ -34,7 +34,7 @@ export class FsChefOrdersPage {
   loadOrder() {
     this.chefOrder = [];
     this.appController.orders.forEach(order => {
-      if(order.state == 0 || order.state == 1){
+      if(order.state == ORDER_STATE.CREATED || order.state == ORDER_STATE.FOOD_DONE){
         let doneFood = 0;
         let totalFood = 0;
         order.foods.forEach(foodOrder => {
