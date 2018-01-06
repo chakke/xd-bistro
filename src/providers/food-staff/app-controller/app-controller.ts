@@ -144,6 +144,8 @@ export class AppControllerProvider {
     this.tablePool = new TablePool();
     this.tablePool.initialize(this.totalTable);
 
+    this.resetAllData();
+
     //Mapping data    
     this.loadedDataChanel.asObservable().subscribe((data) => {
       let dataChange = [];
@@ -350,6 +352,62 @@ export class AppControllerProvider {
 
   logout() {
     this.user = null;
+    this.resetAllData();
+  }
+  resetAllData() {
+
+    this.menuItems = [];
+    this.loadedData = {
+      product: false,
+      productCategory: false,
+      productUnit: true,
+      productType: true,
+      productSize: true,
+      productSale: true,
+      productOption: true,
+      table: false,
+      order: false,
+      area: false,
+      staff: false,
+      foodOrder: false,
+      map: false
+    }
+
+
+    this.staffes = [];
+    this.staffCollection.clear();
+    this.restid = "bistro";
+
+    this.tableInOrders = [];
+    this.tableCollection.clear();
+
+    this.orders = [];
+    this.orderCollection.clear();
+
+    this.foodOrders = [];
+    this.foodOrderCollection.clear();
+
+    this.maps = [];
+    this.mapCollection.clear();
+
+    //Product
+    this.products = [];
+    this.totalProduct = 1000;
+    this.productCollection.clear();
+
+    this.productCategories = [];
+    this.productSizes = [];
+
+    this.productTypes = [];
+    this.productUnits = [];
+
+    //Table
+    this.tables = [];
+    this.totalTable = 500;
+
+    //Floor
+    this.floors = [];
+    this.floorCollection.clear();
   }
 
   loginSuccess(email: any) {
@@ -903,12 +961,12 @@ export class AppControllerProvider {
     return this.firebaseService.addOrder(this.restid, order);
   }
 
-  removeOrder(order: Order): Promise<any>{
-    return this.firebaseService.removeOrder(this.restid,order);
+  removeOrder(order: Order): Promise<any> {
+    return this.firebaseService.removeOrder(this.restid, order);
   }
 
-  updateOrder(firebaseId: string,value) :Promise<any>{
-    return this.firebaseService.updateOrder(this.restid,firebaseId,value);
+  updateOrder(firebaseId: string, value): Promise<any> {
+    return this.firebaseService.updateOrder(this.restid, firebaseId, value);
   }
 
   addFoodOrder(orderId: string, product: FoodOrder): Promise<any> {
