@@ -106,6 +106,8 @@ export class CreateOrderPage {
   }
 
   loadTables() {
+    let tables = this.appController.tables;
+    
     for (let i = 0; i < this.floors.length; i++) {
       let tables = [];
       let floorId = this.floors[i].id;

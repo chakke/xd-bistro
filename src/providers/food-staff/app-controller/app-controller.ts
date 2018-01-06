@@ -12,7 +12,7 @@ import { Menu } from "../classes/menu";
 import { UserPool } from "../object-pools/user-pool";
 
 import { Subject } from 'rxjs/Subject';
-import { UserContant, FIREBASE_CONST } from '../app-constant';
+import { UserContant, FIREBASE_CONST, TABLE_STATE } from '../app-constant';
 
 import { TableInOrderPool, TablePool } from '../object-pools/table-pool';
 import { TableInOrder, Table } from '../classes/table';
