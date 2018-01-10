@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController, ModalController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { AppControllerProvider } from '../../../providers/food-staff/app-controller/app-controller';
 
@@ -32,7 +32,8 @@ export class FsLoginPage {
     public navParams: NavParams,
     public formBuilder: FormBuilder,
     private appController: AppControllerProvider,
-    private loadingCtrl: LoadingController
+    private loadingCtrl: LoadingController,
+    private modalCtrl: ModalController
   ) {
     console.log("login page constructor");
     this.loginForm = this.formBuilder.group({

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController} from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { Order } from '../../../providers/food-staff/classes/order';
 import { AppControllerProvider } from '../../../providers/food-staff/app-controller/app-controller';
 import { Utils } from '../../../providers/app-utils';
@@ -21,19 +21,18 @@ export class FsOrdersPage {
   selectedOrderStatus = "0";
   orderStatusData = [
     {
-      id: ORDER_STATE.CREATED,
-      name: "Đang đợi món"
+      id:0,
+      state: [ORDER_STATE.CREATED, ORDER_STATE.FOOD_DONE],
+      name: "Đang phục vụ" //Nhóm này gồm những order có state = CREATED || FOOD_DONE
     },
     {
-      id: ORDER_STATE.FOOD_DONE,
-      name: "Đã đủ món"
-    },
-    {
-      id: ORDER_STATE.PAID,
+      id: 1,
+      state: [ORDER_STATE.PAID, ORDER_STATE.WAITING],
       name: "Đã thanh toán"
     },
     {
-      id: ORDER_STATE.CANCELLED,
+      id: 2,
+      state: [ORDER_STATE.CANCELLED],
       name: "Đã hủy"
     }
   ]
@@ -57,7 +56,7 @@ export class FsOrdersPage {
       console.log("Page Order - Order in app controller change", data);
       this.loadOrders();
     })
-   
+
   }
 
   loadOrders() {
@@ -67,9 +66,9 @@ export class FsOrdersPage {
 
   filterOrders() {
     this.orderCollection.clear();
-    this.orderStatusData.forEach(element => {
+    this.orderStatusData.forEach(element => {      
       this.orderCollection.set(element.id, this.allOrders.filter(order => {
-        return order.state == element.id;
+        return element.state.indexOf(order.state) > -1;
       }));
     });
 
@@ -89,7 +88,7 @@ export class FsOrdersPage {
   gotoDetail(order) {
     let modal = this.modalCtrl.create("OrderDetailPage", { orderId: order.id });
     modal.present();
-    modal.onDidDismiss(data=>{
+    modal.onDidDismiss(data => {
 
     })
   }
@@ -151,7 +150,7 @@ export class FsOrdersPage {
         })
       }
     }
-    this.appController.updateOrder(order.firebaseId,{
+    this.appController.updateOrder(order.firebaseId, {
       state: ORDER_STATE.CANCELLED
     }).then(() => {
       console.log("Remove order sucess!");
@@ -164,21 +163,21 @@ export class FsOrdersPage {
     this.appController.hideLoading();
   }
 
-  respone(order : Order){
+  respone(order: Order) {
     let alert = this.mAlertController.create({
-      message:"Bạn có chắc muốn khôi phục hóa đơn này ?",
-      title:"Khôi phục hóa đơn",
-      buttons:[
+      message: "Bạn có chắc muốn khôi phục hóa đơn này ?",
+      title: "Khôi phục hóa đơn",
+      buttons: [
         {
           text: "Hủy",
-          handler:()=>{
+          handler: () => {
             console.log("Click cancel");
-            
+
           }
         },
         {
-          text:"Khôi phục",
-          handler:()=>{
+          text: "Khôi phục",
+          handler: () => {
             console.log("Click khôi phục");
             this.restore(order);
           }
@@ -188,34 +187,34 @@ export class FsOrdersPage {
     alert.present();
   }
 
-  restore(order: Order){
-    if(order.tables && order.tables.length > 0){
-      for(let i = 0;i<order.tables.length;i++){
-        if(order.tables[i].status != "0"){
-          this.appController.showToast("Bàn đang được phục vụ không thể khôi phục order!",3000);
+  restore(order: Order) {
+    if (order.tables && order.tables.length > 0) {
+      for (let i = 0; i < order.tables.length; i++) {
+        if (order.tables[i].status != "0") {
+          this.appController.showToast("Bàn đang được phục vụ không thể khôi phục order!", 3000);
           return;
         }
       }
     }
-    for(let j = 0; j < order.tableIds.length;j++){
-      this.appController.updateTable(order.tableIds[j],{
+    for (let j = 0; j < order.tableIds.length; j++) {
+      this.appController.updateTable(order.tableIds[j], {
         state: TABLE_STATE.HAS_ORDER
-      }).then(()=>{
+      }).then(() => {
         console.log("Khôi phục bàn thành công !");
-        
-      }).catch((err)=>{
+
+      }).catch((err) => {
         console.log("Khôi phục thất bại");
-        
+
       })
     }
-    this.appController.updateOrder(order.firebaseId,{
+    this.appController.updateOrder(order.firebaseId, {
       state: ORDER_STATE.CREATED
-    }).then(()=>{
+    }).then(() => {
       console.log("Khôi phục thành công");
-      
-    }).catch((err)=>{
-      console.log("Khôi phục thất bại",err);
-      
+
+    }).catch((err) => {
+      console.log("Khôi phục thất bại", err);
+
     })
   }
 
