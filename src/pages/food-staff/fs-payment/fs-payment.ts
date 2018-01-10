@@ -21,7 +21,7 @@ export class FsPaymentPage {
   allOrders: Array<Order> = [];
   showOrders: Array<Order> = [];
   searchKeyword = "";
-  placholder = "Tìm order";
+  placholder = "Tìm order theo tên bàn";
   selectedOrderStatus = "0"; 
   priceSale: number = 132800;
   pricePercent: number = 10;

@@ -9,7 +9,7 @@
                 <ion-icon name="ios-power"></ion-icon>
             </span>
         </div>
-        <div class="menu-item" [class.active]="item.active" *ngFor="let item of menuItems" (click)="gotoMenu(item)" tappable>
+        <div class="menu-item a3-container-center" [class.active]="item.active" *ngFor="let item of menuItems" (click)="gotoMenu(item)" tappable>
             <ion-icon name="{{item.icon}}"></ion-icon>
             <span class="text">
                 {{item.name}}

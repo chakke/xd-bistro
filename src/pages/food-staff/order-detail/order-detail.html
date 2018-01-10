@@ -128,7 +128,7 @@
     <button class="fs-button-outline" (click)="checkItem()" *ngIf="viewMode == '1'">
                 Kiểm đồ
             </button>
-    <button class="fs-button" *ngIf="viewMode == '1'">
+    <button class="fs-button" *ngIf="viewMode == '1'" (click)="pay()">
                 Thanh toán
             </button>
     <button class="fs-button" *ngIf="viewMode == '0'" (click)="updateItem()">

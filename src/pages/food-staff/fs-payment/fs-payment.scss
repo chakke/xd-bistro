@@ -98,7 +98,6 @@ page-fs-payment {
                         flex-direction: column;
                         flex-flow: column;
                         text-align: right;
-                        line-height: 1.6em !important;
                         .price {
                             white-space: nowrap;
                             color: map-get($map: $FSColors, $key: orange);

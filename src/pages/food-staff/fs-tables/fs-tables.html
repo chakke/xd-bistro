@@ -57,7 +57,18 @@
             </ion-segment>
         </div>
         <div class="segment-content">
-            <div class="all-zone">
+            <ion-row class="all-zone">
+                <ion-col col-3 class="item status-{{table.status}}" *ngFor="let table of showTables" (click)="selectTable(table)">
+                    <div class="content-block">
+                        <ion-icon name="fs-table"></ion-icon>
+                        <span class="table-number">{{table.name}}</span>
+                    </div>
+                </ion-col>
+                <div *ngIf="showTables.length == 0" padding text-center>
+                    Không có dữ liệu
+                </div>
+            </ion-row>
+            <!-- <div class="all-zone">
                 <div class="item status-{{table.status}}" *ngFor="let table of showTables" (click)="selectTable(table)">
                     <div class="content-block">
                         <ion-icon name="fs-table"></ion-icon>
@@ -67,7 +78,7 @@
                 <div *ngIf="showTables.length == 0" padding text-center>
                     Không có dữ liệu
                 </div>
-            </div>
+            </div> -->
         </div>
 
     </div>

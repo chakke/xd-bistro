@@ -21,11 +21,11 @@
             <div class="order-list">
                 <div class="order-item" *ngFor="let order of showOrders">
                     <ion-row class="item-detail">
-                        <ion-col class="col-table status-0">
+                        <ion-col col-2 class="col-table status-0">
                             <ion-icon name="fs-table"></ion-icon>
                             <span class="table-number">{{order.tables ? order.tables.join(" ") :  ""}}</span>
                         </ion-col>
-                        <ion-col class="col-detail">
+                        <ion-col col-6 class="col-detail">
                             <div class="staff">
                                 <ion-icon name="fs-service-o"></ion-icon>
                                 <span class="staff-name">({{order.staffId}}) {{order.staffName}}</span>
@@ -41,7 +41,7 @@
                                 </div>
                             </div>
                         </ion-col>
-                        <ion-col class="col-price">
+                        <ion-col col-4 class="col-price">
                             <span class="price">{{order.totalPrice | number}} đ</span>
                         </ion-col>
                     </ion-row>
@@ -49,11 +49,13 @@
                         <ion-col class="col-id">
                             <span>#{{order.id.substring(0,3).toUpperCase()}}</span>
                         </ion-col>
-                        <ion-col class="col-button">
-                            <button *ngIf="selectedOrderStatus == '0'" class="fs-button fs-button-outline-black" (click)="cancelOrder(order)">Hủy Order</button>
+                        <ion-col col-10 class="col-button" *ngIf="selectedOrderStatus == '0'">
+                            <button class="fs-button fs-button-outline-black" (click)="cancelOrder(order)">Hủy Order</button>
                             <button *ngIf="selectedOrderStatus == '0'" class="fs-button fs-button-outline" (click)="checkItem(order)">Kiểm đồ</button>
                             <button *ngIf="selectedOrderStatus == '0'" class="fs-button" (click)="gotoDetail(order)">Đặt món</button>
-                            <button *ngIf="selectedOrderStatus == '3'" class="fs-button" (click)="respone(order)">Khôi phục</button>
+                        </ion-col>
+                        <ion-col col-3 offset-7 *ngIf="selectedOrderStatus == '3'">
+                            <button class="fs-button" (click)="respone(order)">Khôi phục</button>
                         </ion-col>
                     </ion-row>
                 </div>

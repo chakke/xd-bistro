@@ -118,11 +118,11 @@ page-fs-chef-order-detail {
         }
         .food-list {
             padding-top: 5px;
-            &:last-child {
-                .fs-divider {
-                    display: none;
-                }
-            }
+            // &:last-child {
+            //     .fs-divider {
+            //         display: none;
+            //     }
+            // }
             .food-item {
                 border-bottom: solid 1px map-get($map: $FSColors, $key: lightgray);
                 &:last-child {

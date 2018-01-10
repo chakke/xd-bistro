@@ -105,8 +105,10 @@ page-fs-orders {
                         }
                     }
                     .col-price {
-                        flex: 0;
                         display: flex;
+                        flex-direction: column;
+                        flex-flow: column;
+                        text-align: right;
                         .price {
                             white-space: nowrap;
                             color: map-get($map: $FSColors, $key: orange);
@@ -135,15 +137,23 @@ page-fs-orders {
                     }
                     .col-button {
                         text-align: center;
-                        justify-content: space-evenly;
+                        justify-content: space-between;
                         display: flex;
                         align-items: center;
                         .fs-button {
                             padding: 3px 8px;
+                            width: 33.333333%;
                             font-size: .9em;
                             border: solid 1px map-get($map: $FSColors, $key: primary);
                             margin: 0 5px;
                         }
+                    }
+                    .fs-button {
+                        padding: 3px 8px;
+                        width: 100%;
+                        font-size: .9em;
+                        border: solid 1px map-get($map: $FSColors, $key: primary);
+                        margin: 0 5px;
                     }
                 }
             }
