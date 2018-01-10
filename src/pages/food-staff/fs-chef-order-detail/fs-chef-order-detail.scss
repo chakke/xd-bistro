@@ -181,6 +181,9 @@ page-fs-chef-order-detail {
                         border-radius: 20px;
                     }
                 }
+                .col-textType {
+                    color: map-get($map: $FSColors, $key: orange);
+                }
                 .col-button {
                     display: flex;
                     justify-content: flex-end;

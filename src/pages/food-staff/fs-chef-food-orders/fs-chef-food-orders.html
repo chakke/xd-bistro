@@ -74,7 +74,7 @@
                 </div>
             </div>
             <div class="food-list" *ngIf="selectedOrderStatus == chefFoodStateData.DELIVERABLE.id">
-                <div class="food-item {{getClass(selectedOrderStatus, food.timeCreate)}}" *ngFor="let food of showFoodOrders">
+                <div class="food-item {{getClass(selectedOrderStatus, food.timeCreate)}}" *ngFor="let food of showDoneFoodOrder">
                     <ion-row>
                         <ion-col col-2 class="col-img">
                             <img src="{{food.food.image}}" alt="image">
@@ -93,6 +93,32 @@
                     <ion-row class="row-action">
                         <ion-col col-2 class="col-time">
                             <span class="time">{{getDiffTime(food.timeCreate)}}</span>
+                        </ion-col>
+                    </ion-row>
+                </div>
+                <div class="fs-divider"></div>
+                <div class="food-item {{getClass(selectedOrderStatus, food.timeCreate)}}" *ngFor="let food of showReturnFoodOrder">
+                    <ion-row>
+                        <ion-col col-2 class="col-img" (click)="gotoFoodOrderDetail(food)" tappable>
+                            <img src="{{food.food.image}}" alt="image">
+                        </ion-col>
+                        <ion-col col-8 class="col-detail">
+                            <div class="name" (click)="gotoFoodOrderDetail(food)" tappable><span class="code">({{food.food.id}})</span> {{food.food.name}}</div>
+                            <!-- <div class="table">
+                                    <ion-icon name="fs-table-3-o"></ion-icon>
+                                    <span>{{food.orderId}}</span>
+                                </div> -->
+                        </ion-col>
+                        <ion-col col-2 class="col-number" (click)="gotoFoodOrderDetail(food)" tappable>
+                            <span>{{food.amountReturn}} suất</span>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row class="row-action">
+                        <ion-col col-2 class="col-time">
+                            <span class="time">{{getDiffTime(food.timeCreate)}}</span>
+                        </ion-col>
+                        <ion-col col-2 offset-8 class="col-textType">
+                            <span>Đã giao</span>
                         </ion-col>
                     </ion-row>
                 </div>

@@ -61,7 +61,7 @@ export class FsChefFoodOrdersPage {
         if (+foodOrder.food.state != FOOD_STATE.OUT_OF_STOCK.id && foodOrder.amountProcessing > 0) {
           this.chefFoodOrderCollection.get(CHEF_FOOD_STATE.COOKING.id).push(foodOrder);
         }
-        if (+foodOrder.food.state != FOOD_STATE.OUT_OF_STOCK.id && foodOrder.amountDone > 0) {
+        if (+foodOrder.food.state != FOOD_STATE.OUT_OF_STOCK.id && (foodOrder.amountDone > 0 || foodOrder.amountReturn > 0)) {
           this.chefFoodOrderCollection.get(CHEF_FOOD_STATE.DELIVERABLE.id).push(foodOrder);
         }
       }
@@ -72,7 +72,9 @@ export class FsChefFoodOrdersPage {
   search() {
 
   }
-
+  showDoneFoodOrder: Array<FoodOrder> = [];
+  showReturnFoodOrder: Array<FoodOrder> = [];
+  
   filterFoodOrders() {
     this.showFoodOrders = this.chefFoodOrderCollection.get(+this.selectedOrderStatus);
     this.showFoodOrders.sort((a, b) => {
@@ -83,7 +85,19 @@ export class FsChefFoodOrdersPage {
         return a.timeCreate.getTime() - b.timeCreate.getTime();
       }
       return 0;
-    })
+    });
+    if(+this.selectedOrderStatus == CHEF_FOOD_STATE.DELIVERABLE.id){
+      this.showReturnFoodOrder = [];
+      this.showDoneFoodOrder = [];
+      this.showFoodOrders.forEach(food => {
+          if(food.amountDone > 0){
+            this.showDoneFoodOrder.push(food);
+          }
+          if(food.amountReturn > 0){
+            this.showReturnFoodOrder.push(food);
+          }
+      })
+    }
   }
 
   getDiffTime(time: Date) {
