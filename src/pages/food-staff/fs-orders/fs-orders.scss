@@ -11,10 +11,11 @@ page-fs-orders {
         font-size: map-get($map: $FSSizes, $key: small);
         .number {
             font-size: 0.8em;
-            padding: 4px;
+            padding: 3px 6px;
             border-radius: 20px;
             box-sizing: content-box;
             // transition: all 1s ease-in-out;
+            border: none !important;
         }
         .segment-button {
             color: map-get($map: $FSColors, $key: black);

@@ -22,12 +22,8 @@ export class FsOrdersPage {
   orderStatusData = [
     {
       id: ORDER_STATE.CREATED,
-      name: "Đang đợi món"
-    },
-    {
-      id: ORDER_STATE.FOOD_DONE,
-      name: "Đã đủ món"
-    },
+      name: "Đang phục vụ" //Nhóm này gồm những order có state = CREATED || FOOD_DONE
+    }, 
     {
       id: ORDER_STATE.PAID,
       name: "Đã thanh toán"
@@ -68,7 +64,9 @@ export class FsOrdersPage {
     this.orderCollection.clear();
     this.orderStatusData.forEach(element => {
       this.orderCollection.set(element.id, this.allOrders.filter(order => {
-        return order.state == element.id;
+        if(element.id == ORDER_STATE.CREATED){
+          return (order.state == ORDER_STATE.CREATED || order.state == ORDER_STATE.FOOD_DONE)
+        } 
       }));
     });
 

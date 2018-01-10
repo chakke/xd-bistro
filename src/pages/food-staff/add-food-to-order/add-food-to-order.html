@@ -19,6 +19,7 @@
                 <span>{{menu.name}}</span>
             </div>
         </div>
+
         <div class="segment-content">
             <div class="ordered-zone">
                 <div class="item food" [class.highlight]="food.highlight" *ngFor="let food of orderedFood;let i = index" [hidden]="food.remove">
@@ -72,5 +73,6 @@
                 </div>
             </div>
         </div>
+
     </div>
 </ion-content>
