@@ -1,45 +1,4 @@
-page-order-detail {
-    $headerRowHeight: 45px;
-    .a-back-button {
-        color: white;
-        width: auto;
-        height: $headerRowHeight;
-        line-height: $headerRowHeight;
-        font-size: 1.8em;
-        padding: 0 map-get($FSSizes, defaultPadding);
-        position: absolute;
-        top: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        ion-icon {
-            vertical-align: text-bottom;
-        }
-        .icon {
-            font-size: 1em;
-        }
-        &.button-left {
-            left: 0;
-        }
-    }
-    .fs-segment {
-        background-color: map-get($map: $FSColors, $key: white);
-        .segment-button {
-            color: map-get($map: $FSColors, $key: black);
-            border-bottom: solid 1px map-get($map: $FSColors, $key: lightgray);
-            font-weight: bold;
-            &.segment-activated,
-            {
-                color: map-get($map: $FSColors, $key: primary);
-                border-bottom: solid 2px;
-                font-weight: bold;
-            }
-            &.activated {
-                border: none;
-                color: map-get($map: $FSColors, $key: primary);
-            }
-        }
-    }
+page-fs-payment-detail {
     .detail-bar {
         display: flex;
         height: 2 * map-get($map: $FSSizes, $key: lineheight);
@@ -74,57 +33,6 @@ page-order-detail {
         .edit {
             max-width: map-get($map: $FSSizes, $key: lineheight)*2;
             background-color: #4f4f4f;
-        }
-    }
-    .choosen-list {
-        padding-bottom: 10vh;
-        .item {
-            padding: 10px;
-            .col-image {
-                padding: 5px;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                img {
-                    width: 100%;
-                    border-radius: 50%;
-                }
-            }
-            .col-detail {
-                padding-left: 5px;
-                display: flex;
-                flex-direction: column;
-                justify-content: space-evenly;
-                .name {
-                    font-weight: 500;
-                }
-                .quantity {
-                    .quantity-processing {
-                        color: map-get($map: $FSColors, $key: red)
-                    }
-                    .quantity-done {
-                        color: map-get($map: $FSColors, $key: blue);
-                    }
-                    .quantity-ordered {
-                        color: map-get($map: $FSColors, $key: black);
-                    }
-                }
-                .button-group {
-                    display: flex;
-                    width: 100%;
-                    justify-content: space-evenly;
-                    align-items: center;
-                    margin-top: 5px;
-                    .fs-button,
-                    .fs-button-outline {
-                        padding: 4px 8px;
-                        white-space: nowrap;
-                        margin: 3px;
-                        font-size: .9em;
-                        font-weight: bold;
-                    }
-                }
-            }
         }
     }
     .order-detail {
@@ -196,10 +104,6 @@ page-order-detail {
         .fs-button-outline {
             margin-right: 10px;
         }
-    }
-    .fab-button.high {
-        bottom: $footerHeight;
-        margin-bottom: 16px;
     }
     .footer-md::before,
     .tabs-md[tabsPlacement="bottom"]>.tabbar::before {

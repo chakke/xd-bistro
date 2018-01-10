@@ -106,6 +106,9 @@ export class FsServePage {
       amount_return: foodOrder.amountReturn + foodOrder.amountDone
     }).then(() => {
       this.appController.hideLoading();
+    }).catch(err=>{
+      console.log("error khi trả món",err);
+      
     })
   }
 

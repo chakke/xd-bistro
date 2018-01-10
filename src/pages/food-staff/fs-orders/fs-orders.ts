@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController} from 'ionic-angular';
 import { Order } from '../../../providers/food-staff/classes/order';
 import { AppControllerProvider } from '../../../providers/food-staff/app-controller/app-controller';
 import { Utils } from '../../../providers/app-utils';
@@ -53,6 +53,7 @@ export class FsOrdersPage {
       console.log("Page Order - Order in app controller change", data);
       this.loadOrders();
     })
+   
   }
 
   loadOrders() {
@@ -162,6 +163,30 @@ export class FsOrdersPage {
   }
 
   respone(order : Order){
+    let alert = this.mAlertController.create({
+      message:"Bạn có chắc muốn khôi phục hóa đơn này ?",
+      title:"Khôi phục hóa đơn",
+      buttons:[
+        {
+          text: "Hủy",
+          handler:()=>{
+            console.log("Click cancel");
+            
+          }
+        },
+        {
+          text:"Khôi phục",
+          handler:()=>{
+            console.log("Click khôi phục");
+            this.restore(order);
+          }
+        }
+      ]
+    })
+    alert.present();
+  }
+
+  restore(order: Order){
     if(order.tables && order.tables.length > 0){
       for(let i = 0;i<order.tables.length;i++){
         if(order.tables[i].status != "0"){

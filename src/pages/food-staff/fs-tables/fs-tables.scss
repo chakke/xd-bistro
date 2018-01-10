@@ -83,6 +83,7 @@ page-fs-tables {
         position: relative;
         .owner-zone {
             .item {
+                position: relative;
                 padding: 10px;
                 border-bottom: solid 1px map-get($map: $FSColors, $key: lightgray);
                 &:last-of-type {
@@ -132,10 +133,7 @@ page-fs-tables {
         .content-block {
             width: $iconSize;
             height: $iconSize;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            position: relative;
             .icon {
                 color: map-get($map: $FSColors, $key: primary);
                 font-size: 4em;
@@ -168,9 +166,10 @@ page-fs-tables {
         }
         .all-zone {
             .item {
-                width: 25%;
                 height: 25vw;
-                float: left;
+                display: flex;
+                align-items: center;
+                justify-content: center;
             }
         }
         .status-2 {

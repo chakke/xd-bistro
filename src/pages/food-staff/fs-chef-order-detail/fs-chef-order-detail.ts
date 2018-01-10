@@ -20,6 +20,8 @@ export class FsChefOrderDetailPage {
   chefFoodStateData = CHEF_FOOD_STATE;
   chefFoodOrderCollection: Map<number, Array<FoodOrder>> = new Map<number, Array<FoodOrder>>();
   showFoodOrders: Array<FoodOrder> = [];
+  showDoneFoodOrder: Array<FoodOrder> = [];
+  showReturnFoodOrder: Array<FoodOrder> = [];
   order: Order;
 
   constructor(
@@ -58,7 +60,7 @@ export class FsChefOrderDetailPage {
       if (foodOrder.orderId == this.order.id && +foodOrder.food.state != FOOD_STATE.OUT_OF_STOCK.id && foodOrder.amountProcessing > 0) {
         this.chefFoodOrderCollection.get(CHEF_FOOD_STATE.COOKING.id).push(foodOrder);
       }
-      if (foodOrder.orderId == this.order.id && +foodOrder.food.state != FOOD_STATE.OUT_OF_STOCK.id && foodOrder.amountDone > 0) {
+      if (foodOrder.orderId == this.order.id && +foodOrder.food.state != FOOD_STATE.OUT_OF_STOCK.id && (foodOrder.amountDone > 0 || foodOrder.amountReturn > 0)) {
         this.chefFoodOrderCollection.get(CHEF_FOOD_STATE.DELIVERABLE.id).push(foodOrder);
       }
     });
@@ -71,8 +73,6 @@ export class FsChefOrderDetailPage {
 
   filterFoodOrders() {
     this.showFoodOrders = this.chefFoodOrderCollection.get(+this.selectedOrderStatus);
-    this.appController.foodOrders.forEach(food => {
-    })
     this.showFoodOrders.sort((a, b) => {
       if (a.timeCreate && b.timeCreate) {
         if (+this.selectedOrderStatus == this.chefFoodStateData.DELIVERABLE.id) {
@@ -82,6 +82,19 @@ export class FsChefOrderDetailPage {
       }
       return 0;
     })
+    
+    if(+this.selectedOrderStatus == CHEF_FOOD_STATE.DELIVERABLE.id){
+      this.showReturnFoodOrder = [];
+      this.showDoneFoodOrder = [];
+      this.showFoodOrders.forEach(food => {
+          if(food.amountDone > 0){
+            this.showDoneFoodOrder.push(food);
+          }
+          if(food.amountReturn > 0){
+            this.showReturnFoodOrder.push(food);
+          }
+      })
+    }
   }
 
   getDiffTime(time: Date) {

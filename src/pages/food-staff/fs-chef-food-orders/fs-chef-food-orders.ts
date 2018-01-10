@@ -160,7 +160,14 @@ export class FsChefFoodOrdersPage {
           this.appController.showLoading();
           //Update product state
           this.appController.updateProduct(food.food.firebaseId, { state: FOOD_STATE.OUT_OF_STOCK.id }).then(() => {
-            this.appController.hideLoading();
+            this.appController.updateFoodOrder(food.firebaseId,{
+              amount_processing:0
+            }).then(()=>{
+              this.appController.hideLoading();
+            }).catch(err=>{
+              this.appController.hideLoading();
+            })
+           
           }, error => {
             this.appController.hideLoading();
           });

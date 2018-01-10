@@ -273,5 +273,8 @@ export const ORDER_STATE = {
     /**Đã thanh toán */
     PAID: 2,
     /**Đã hủy */
-    CANCELLED: 3
+    CANCELLED: 3,
+    /**Chờ thanh toán */
+    WAITING: 4
+
 }

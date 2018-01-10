@@ -128,6 +128,13 @@
                     "icon": "ios-cog",
                     "page": "FsSettingPage",
                     "link": "fs-setting"
+                },
+                {
+                    "id": 7,
+                    "name": "Thanh toán",
+                    "icon": "fs-order-o",
+                    "page": "FsPaymentPage",
+                    "link": "fs-payment"
                 }
             ]
         },
