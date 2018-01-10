@@ -273,6 +273,14 @@
         color: map-get($FSColors, white);
         background-color: map-get($FSColors, primary);
         border: solid 1px map-get($map: $FSColors, $key: primary);
+        transition: 300ms;
+        transform: scale(1);
+        filter: brightness(100%);
+    }
+    
+    .fs-button:active {
+        transform: scale(.96);
+        filter: brightness(110%);
     }
     
     .fs-button-outline {

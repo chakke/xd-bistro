@@ -1,0 +1,178 @@
+page-fs-payment {
+    .search-bar {
+        .searchbar-ios {
+            border: none;
+        }
+        .searchbar-input {
+            border: solid 1px lightgray;
+        }
+    }
+    .fs-segment {
+        font-size: map-get($map: $FSSizes, $key: small);
+        .number {
+            font-size: 0.8em;
+            padding: 4px 8px;
+            border-radius: 50%;
+            box-sizing: content-box;
+            // transition: all 1s ease-in-out;
+        }
+        .segment-button {
+            color: map-get($map: $FSColors, $key: black);
+            &.segment-activated {
+                background-color: map-get($map: $FSColors, $key: white);
+                font-weight: bold;
+            }
+            .status-0 {
+                background-color: map-get($map: $FSColors, $key: primary);
+                color: map-get($map: $FSColors, $key: white);
+            }
+            .status-1 {
+                background-color: map-get($map: $FSColors, $key: green);
+                color: map-get($map: $FSColors, $key: white);
+            }
+        }
+    }
+    .segment-content {
+        background-color: map-get($map: $FSColors, $key: white);
+        $iconSize: 4em;
+        position: relative;
+        .order-list {
+            .order-item {
+                padding: 10px;
+                border-bottom: solid 1px map-get($map: $FSColors, $key: lightgray);
+                .item-detail {
+                    &:last-of-type {
+                        border-bottom: 0;
+                    }
+                    .col-table {
+                        min-width: $iconSize;
+                        min-height: $iconSize;
+                        padding: 0;
+                        flex: 0;
+                        position: relative;
+                        .icon {
+                            font-size: 4em;
+                            z-index: 1;
+                            position: absolute;
+                            top: 50%;
+                            left: 50%;
+                            transform: translate(-50%, -50%);
+                        }
+                        .table-number {
+                            position: absolute;
+                            top: 50%;
+                            left: 50%;
+                            transform: translate(-50%, -50%);
+                            z-index: 2;
+                            text-align: center;
+                            width: 100%;
+                        }
+                    }
+                    .col-detail {
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: space-evenly;
+                        flex: 1;
+                        padding-left: 10px;
+                        .icon {
+                            color: map-get($map: $FSColors, $key: primary);
+                            vertical-align: text-bottom;
+                        }
+                        .staff {
+                            color: map-get($map: $FSColors, $key: black);
+                            font-weight: bold;
+                        }
+                        .detail {
+                            color: map-get($map: $FSColors, $key: gray);
+                            display: flex;
+                            .person {
+                                margin-right: auto;
+                            }
+                            .time {
+                                margin-left: auto;
+                            }
+                        }
+                    }
+                    .col-price {
+                        display: flex;
+                        flex-direction: column;
+                        flex-flow: column;
+                        text-align: right;
+                        line-height: 1.6em !important;
+                        .price {
+                            white-space: nowrap;
+                            color: map-get($map: $FSColors, $key: orange);
+                            font-weight: bold;
+                        }
+                        .price-sale {
+                            white-space: nowrap;
+                            color: map-get($map: $FSColors, $key: gray);
+                            text-decoration: line-through;
+                        }
+                        .price-percent {
+                            white-space: nowrap;
+                            color: map-get($map: $FSColors, $key: primary);
+                            font-weight: bold;
+                        }
+                    }
+                }
+                .item-action {
+                    .col-id {
+                        flex: 0;
+                        min-width: $iconSize;
+                        max-height: $iconSize;
+                        text-overflow: ellipsis;
+                        overflow: hidden;
+                        white-space: nowrap;
+                        text-align: left;
+                        display: flex;
+                        justify-content: left;
+                        align-items: center;
+                        span {
+                            background-color: map-get($map: $FSColors, $key: lightgray);
+                            color: map-get($map: $FSColors, $key: black);
+                            padding: 0px 5px;
+                            border-radius: 20px;
+                        }
+                    }
+                    .col-button {
+                        text-align: right;
+                        justify-content: flex-end;
+                        display: flex;
+                        align-items: center;
+                        .fs-button {
+                            padding: 3px 8px;
+                            font-size: .9em;
+                            border: solid 1px map-get($map: $FSColors, $key: primary);
+                            margin: 0 5px;
+                        }
+                    }
+                }
+            }
+        }
+        .status-0 {
+            .table-number {
+                color: map-get($map: $FSColors, $key: white);
+                text-transform: uppercase;
+                font-weight: bold;
+            }
+            .icon {
+                color: map-get($map: $FSColors, $key: primary);
+            }
+        }
+        .status-1 {
+            .table-number {
+                color: map-get($map: $FSColors, $key: white);
+            }
+            .icon {
+                color: map-get($map: $FSColors, $key: green);
+            }
+        }
+    }
+    .header-md::after,
+    .tabs-md[tabsPlacement="top"]>.tabbar::after,
+    .footer-md::before,
+    .tabs-md[tabsPlacement="bottom"]>.tabbar::before {
+        height: 0px !important;
+    }
+}

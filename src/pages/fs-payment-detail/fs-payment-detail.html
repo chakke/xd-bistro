@@ -1,0 +1,78 @@
+<!--
+  Generated template for the FsPaymentDetailPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+    <fs-header *ngIf="orderId.length > 10" [showBackButton]="1" title="Order #{{orderId.substring(0,10)}}"></fs-header>
+    <fs-header *ngIf="orderId.length <= 10" [showBackButton]="1" title="Order #{{orderId}}"></fs-header>
+</ion-header>
+
+
+<ion-content *ngIf="order">
+    <div class="fs-content">
+        <div class="detail-bar">
+            <div class="detail-item table">
+                <ion-icon name="fs-table-3-o"></ion-icon>
+                <span class="table-name">{{order.tables.length > 0 ? order.tables[0].name: ""}}</span>
+                <span class="floor">{{order.areaName}}</span>
+            </div>
+            <div class="detail-item person">
+                <ion-icon class="fs-green" name="fs-group-o"></ion-icon>
+                <span>{{order.numberCustormer}} người</span>
+            </div>
+            <div class="detail-item time">
+                <ion-icon class="fs-orange" name="fs-time-o"></ion-icon>
+                <span>{{order.timeCreate | date :  "hh:mm:ss"}}</span>
+            </div>
+            <div class="detail-item edit">
+                <ion-icon name="fs-note-o"></ion-icon>
+            </div>
+        </div>
+        <div class="order-detail-container">
+            <ion-grid class="order-detail">
+                <ion-row class="row-title">
+                    <ion-col col-2 class="stt">STT</ion-col>
+                    <ion-col col-5>Tên món</ion-col>
+                    <ion-col col-2> Số lượng</ion-col>
+                    <ion-col col-3 class="stt">Thành tiền</ion-col>
+                </ion-row>
+                <ion-row class="row-item" *ngFor="let food of order.foods; let i = index">
+                    <ion-col col-2 class="stt">{{i+1}}</ion-col>
+                    <ion-col col-5 class="food-name">{{food.food._name}}</ion-col>
+                    <ion-col col-2 class="number">{{food.amountOrder}}</ion-col>
+                    <ion-col col-3 class="fs-price">{{ food.price * food.amountOrder | number }} đ</ion-col>
+                    <ion-col col-12 *ngIf="food.option">
+                        <ion-row class="row-bonus" *ngFor="let opt of food.option">
+                            <ion-col col-2></ion-col>
+                            <ion-col col-5 class="food-name">{{opt}}</ion-col>
+                            <ion-col col-2 class="number"></ion-col>
+                            <ion-col col-3 class="fs-price">0 đ</ion-col>
+                        </ion-row>
+                    </ion-col>
+                </ion-row>
+
+                <ion-row class="row-gift">
+                    <ion-col col-7 class="food-name">
+                        <span class="fs-blue">
+                        Tặng:  
+                    </span> Kem dừa (Ly)
+                    </ion-col>
+                    <ion-col class="number" col-2>2</ion-col>
+                    <ion-col col-3 class="fs-price">0 đ</ion-col>
+                </ion-row>
+                <ion-row class="row-total">
+                    <ion-col col-4 class="title">
+                        Tổng tiền
+                    </ion-col>
+                    <ion-col col-8 class="fs-price">{{order.totalPrice | number }} đ</ion-col>
+                </ion-row>
+            </ion-grid>
+        </div>
+    </div>
+</ion-content>
+
+<ion-footer class="fs-footer">
+    <button class="fs-button">Thanh toán</button>
+</ion-footer>

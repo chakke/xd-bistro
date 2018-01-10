@@ -1,0 +1,79 @@
+<!--
+  Generated template for the FsPaymentPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header style="background: whitesmoke;">
+    <fs-header [showBackButton]="2" [title]="'Danh sách order'"></fs-header>
+    <div class="search-bar">
+        <!-- (ionInput)="search()" -->
+        <ion-searchbar class="searchbar-ios" [class.searchbar-md]="false" placeholder="{{placholder}}" [(ngModel)]="searchKeyword" (ionInput)="search()"></ion-searchbar>
+    </div>
+    <div class="fs-segment">
+        <!-- (ionChange)="filterOrders()" -->
+        <ion-segment class="segment-md" [class.segment-ios]="false" [(ngModel)]="selectedOrderStatus" (ionChange)="testfilterOrders()">
+            <ion-segment-button value="{{status.id}}" *ngFor="let status of orderStatusData">
+                <!-- {{ orderCollection.get(status.id)?.length}} -->
+                <span class="number status-{{status.id}}">{{showOrders.length}}</span>
+                <span class="text"> {{status.shortName || status.name}} </span>
+            </ion-segment-button>
+        </ion-segment>
+    </div>
+</ion-header>
+<ion-content>
+    <div class="fs-content list-zone">
+        <div class="segment-content">
+            <div class="order-list">
+                <div class="order-item" *ngFor="let order of showOrders;let i = index">
+                    <ion-row class="item-detail">
+                        <!-- col-table -->
+                        <ion-col col-2 class="col-table status-0">
+                            <ion-icon name="fs-table"></ion-icon>
+                            <span class="table-number">{{order.tables ? order.tables.join(" ") :  ""}}</span>
+                        </ion-col>
+                        <!-- col-detail -->
+                        <ion-col col-6 class="col-detail">
+                            <div class="staff">
+                                <ion-icon name="fs-service-o"></ion-icon>
+                                <span class="staff-name">({{order.staffId}}) {{order.staffName}}</span>
+                            </div>
+                            <div class="detail">
+                                <div class="person">
+                                    <ion-icon name="fs-group-o"></ion-icon>
+                                    <span>{{order.numberCustormer}} người</span>
+                                </div>
+                                <div class="time">
+                                    <ion-icon name="fs-time-o"></ion-icon>
+                                    <span>{{order.timeCreate | date: 'hh:mm:ss'}}</span>
+                                </div>
+                            </div>
+                        </ion-col>
+                        <!-- col price -->
+                        <ion-col col-4 class="col-price">
+                            <div class="price">
+                                <span>{{order.totalPrice | number}} đ</span>
+                            </div>
+                            <div class="price-down" *ngIf="i==0">
+                                <span class="price-sale">{{priceSale | number }} đ</span>
+                                <span class="price-percent">(-{{pricePercent}} %)</span>
+                            </div>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row class="item-action">
+                        <ion-col class="col-id">
+                            <span>#{{order.id.substring(0,3).toUpperCase()}}</span>
+                        </ion-col>
+                        <ion-col class="col-button">
+                            <!-- " -->
+                            <button *ngIf="selectedOrderStatus == '0'" class="fs-button" (click)="pay(order)">Thanh toán</button>
+                            <!-- (click)="exportBill(order)" -->
+                            <button *ngIf="selectedOrderStatus == '1'" class="fs-button ">In hóa đơn</button>
+                        </ion-col>
+                    </ion-row>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</ion-content>
