@@ -314,33 +314,46 @@
     }
     
     $menuItemHeight: 4em;
+    $textSize: 1.02em;
     .fs-menu {
         height: 100%;
         overflow: auto;
         background-color: map-get($map: $FSColors, $key: primary);
         .profile-item {
-            height: 2.5*$menuItemHeight;
+            min-height: 3*$menuItemHeight;
             overflow: hidden;
             background-image: url(../assets/food-staff/images/icon/top_bar_3.png);
             background-position: 0 0;
             background-size: cover;
             background-repeat: no-repeat;
-            font-size: .8em;
+            padding-bottom: 4px;
+            line-height: 1.5em;
+            // font-size: .8em;
             .avatar {
-                width: 1.5 * $menuItemHeight;
-                height: 1.5 * $menuItemHeight;
+                width: 1.8 * $menuItemHeight;
+                height: 1.8 * $menuItemHeight;
                 border-radius: 50%;
                 margin: 10px auto;
                 display: flex;
-                border: solid 2px map-get($map: $FSColors, $key: primary);
+                border: solid 2px #993333;
                 img {
                     object-fit: cover;
                 }
             }
-            .name {
+            .username {
                 text-align: center;
                 color: map-get($map: $FSColors, $key: white);
-                font-size: 1.1em;
+                font-size: $textSize;
+                text-transform: uppercase;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                overflow: hidden;
+            }
+            .position {
+                text-align: center;
+                color: #efe4e4;
+                font-size: $textSize * 0.8;
+                font-style: italic;
                 white-space: nowrap;
                 text-overflow: ellipsis;
                 overflow: hidden;
@@ -354,11 +367,14 @@
         }
         .menu-item {
             height: 1.3*$menuItemHeight;
+            font-size: $textSize;
             flex-direction: column;
             color: map-get($map: $FSColors, $key: white);
             position: relative;
+            line-height: 1.8em;
             .icon {
                 color: map-get($map: $FSColors, $key: yellow);
+                font-size: 1.8em;
             }
             &::after {
                 display: block;
@@ -399,11 +415,12 @@
             font-size: 1em;
             font-weight: normal;
             color: map-get($map: $FSColors, $key: gray);
-            border: none;
+            // border: none;
             text-transform: none;
             padding: 0;
             &.segment-activated {
-                color: map-get($map: $FSColors, $key: black);
+                color: map-get($map: $FSColors, $key: primary);
+                border-color: map-get($map: $FSColors, $key: primary);
                 font-weight: 500;
             }
         }

@@ -1,6 +1,7 @@
 import { Component, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 import { NavController, Content } from 'ionic-angular';
 import { AppControllerProvider } from '../../../providers/food-staff/app-controller/app-controller';
+import { AppModule } from '../../../providers/app-module';
 
 @Component({
   selector: 'fs-header',
@@ -62,7 +63,7 @@ export class FsHeaderComponent {
   }
   scrollToTop() {
    if(this.scrollContent){
-     this.scrollContent.scrollTop = 0;
+    AppModule.getInstance().getScrollController().doScrollTop("",this.scrollContent);
    }
   }
 

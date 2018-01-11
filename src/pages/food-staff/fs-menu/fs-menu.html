@@ -1,14 +1,19 @@
 <ion-header>
     <fs-header [showBackButton]="2" [showSearchBar]="true" (onSearch)="search($event)"></fs-header>
-    <div class="menu">
+    <menu-bar [menuItems]="menus" (menuChange)="selectMenu($event)"></menu-bar>
+    <!-- <div class="menu">
         <div class="menu-item" [class.active]="menu.id == selectedMenu.id" (click)="selectMenu(menu)" *ngFor="let menu of menuItems">
             <span>{{menu.name}}</span>
         </div>
-    </div>
+    </div> -->
 </ion-header>
 
 
 <ion-content>
+    <ion-refresher (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content pullingIcon="arrow-dropdown" refreshingSpinner="ios-small">
+        </ion-refresher-content>
+    </ion-refresher>
     <scroll-to-top></scroll-to-top>
     <div class="fs-content">
         <div class="segment-content">
@@ -21,19 +26,19 @@
                         <ion-col col-9 class="col-detail">
                             <div class="name">
                                 <span class="fs-tilt">
-                                        ({{product.id}})
-                                      </span> {{product.name | title}}
+                                                        ({{product.id}})
+                                                      </span> {{product.name | title}}
                             </div>
                             <div class="price">
                                 <span class="new-price fs-price">{{product.price | price}} đ</span>
                                 <!-- <span class="old-price">59.000 đ</span>
-                                <span class="sale-off">(-10%)</span> -->
+                                                <span class="sale-off">(-10%)</span> -->
                             </div>
                             <!-- <div class="price">
-                                <span class="new-price fs-price"> (L) 80.000 đ</span>
-                                <span class="old-price">100.000 đ</span>
-                                <span class="sale-off">(-10%)</span>
-                            </div> -->
+                                                <span class="new-price fs-price"> (L) 80.000 đ</span>
+                                                <span class="old-price">100.000 đ</span>
+                                                <span class="sale-off">(-10%)</span>
+                                            </div> -->
                         </ion-col>
                         <div class="sold-out" *ngIf="product.state == productState.OUT_OF_STOCK.id">
                             <img src="assets/food-staff/images/icon/out_stock.png" alt="">
@@ -44,50 +49,51 @@
                     </ion-row>
                 </div>
                 <!-- <div class="item food">
-                    <ion-row>
-                        <ion-col col-3 class="col-image">
-                            <img src="https://cdn5.norecipes.com/wp-content/uploads/2012/10/23052346/recipespaghetti-meat-sauce-recipe.1024x1024-1.jpg" alt="">
-                        </ion-col>
-                        <ion-col col-7 class="col-detail">
-                            <div class="name">
-                                <span class="fs-tilt">
-                                (BS05)
-                              </span> Mỳ Ý sốt bò băm
-                            </div>
-                            <div class="price">
-                                <span class="fs-price">
-                                  (S) 99.000 đ - (L) 155.000 đ
-                              </span>
-                            </div>
-                        </ion-col>
-                        <div class="sold-out">
-                            <img src="assets/food-staff/images/icon/out_stock.png" alt="">
-                        </div>
-                    </ion-row>
-                </div> -->
+                                    <ion-row>
+                                        <ion-col col-3 class="col-image">
+                                            <img src="https://cdn5.norecipes.com/wp-content/uploads/2012/10/23052346/recipespaghetti-meat-sauce-recipe.1024x1024-1.jpg" alt="">
+                                        </ion-col>
+                                        <ion-col col-7 class="col-detail">
+                                            <div class="name">
+                                                <span class="fs-tilt">
+                                                (BS05)
+                                              </span> Mỳ Ý sốt bò băm
+                                            </div>
+                                            <div class="price">
+                                                <span class="fs-price">
+                                                  (S) 99.000 đ - (L) 155.000 đ
+                                              </span>
+                                            </div>
+                                        </ion-col>
+                                        <div class="sold-out">
+                                            <img src="assets/food-staff/images/icon/out_stock.png" alt="">
+                                        </div>
+                                    </ion-row>
+                                </div> -->
                 <!-- <div class="item food out-of-business">
-                    <ion-row>
-                        <ion-col col-3 class="col-image">
-                            <img src="https://cdn5.norecipes.com/wp-content/uploads/2012/10/23052346/recipespaghetti-meat-sauce-recipe.1024x1024-1.jpg" alt="">
-                        </ion-col>
-                        <ion-col col-7 class="col-detail">
-                            <div class="name">
-                                <span class="fs-tilt">
-                                (BS05)
-                              </span> Mỳ Ý sốt bò băm
-                            </div>
-                            <div class="price">
-                                <span class="fs-price">
-                                  40.000 đ
-                              </span>
-                            </div>
-                        </ion-col>
-                        <div class="stop-business">
-                            <span>Ngừng kinh doanh</span>
-                        </div>
-                    </ion-row>
-                </div> -->
+                                    <ion-row>
+                                        <ion-col col-3 class="col-image">
+                                            <img src="https://cdn5.norecipes.com/wp-content/uploads/2012/10/23052346/recipespaghetti-meat-sauce-recipe.1024x1024-1.jpg" alt="">
+                                        </ion-col>
+                                        <ion-col col-7 class="col-detail">
+                                            <div class="name">
+                                                <span class="fs-tilt">
+                                                (BS05)
+                                              </span> Mỳ Ý sốt bò băm
+                                            </div>
+                                            <div class="price">
+                                                <span class="fs-price">
+                                                  40.000 đ
+                                              </span>
+                                            </div>
+                                        </ion-col>
+                                        <div class="stop-business">
+                                            <span>Ngừng kinh doanh</span>
+                                        </div>
+                                    </ion-row>
+                                </div> -->
             </div>
         </div>
     </div>
+
 </ion-content>

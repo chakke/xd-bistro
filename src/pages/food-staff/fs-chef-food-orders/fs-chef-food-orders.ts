@@ -69,6 +69,15 @@ export class FsChefFoodOrdersPage {
     this.filterFoodOrders();
   }
 
+  doRefresh(refresher) {
+    // console.log('Begin async operation', refresher);
+    setTimeout(() => {
+      // console.log('Async operation has ended');
+      this.loadFoodOrder();
+      refresher.complete();
+    }, 1000);
+  }
+
   search() {
 
   }

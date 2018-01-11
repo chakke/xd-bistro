@@ -6,7 +6,7 @@
     <div class="fs-segment">
         <ion-segment class="segment-md" [class.segment-ios]="false" [(ngModel)]="selectedOrderStatus" (ionChange)="filterFoodOrders()">
             <ion-segment-button value="{{state.id}}" *ngFor="let state of chefFoodState">
-                <span class="number status-{{state.id}}">{{showFoodOrders.length}}</span>
+                <!-- <span class="number status-{{state.id}}">{{showFoodOrders.length}}</span> -->
                 <span class="text"> {{state.name}} </span>
             </ion-segment-button>
         </ion-segment>
@@ -14,6 +14,11 @@
 </ion-header>
 
 <ion-content>
+    <ion-refresher (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content pullingIcon="arrow-dropdown" refreshingSpinner="ios-small">
+        </ion-refresher-content>
+    </ion-refresher>
+
     <scroll-to-top></scroll-to-top>
     <div class="fs-content">
         <div class="segment-content">
@@ -105,9 +110,9 @@
                         <ion-col col-8 class="col-detail">
                             <div class="name" (click)="gotoFoodOrderDetail(food)" tappable><span class="code">({{food.food.id}})</span> {{food.food.name}}</div>
                             <!-- <div class="table">
-                                    <ion-icon name="fs-table-3-o"></ion-icon>
-                                    <span>{{food.orderId}}</span>
-                                </div> -->
+                                                    <ion-icon name="fs-table-3-o"></ion-icon>
+                                                    <span>{{food.orderId}}</span>
+                                                </div> -->
                         </ion-col>
                         <ion-col col-2 class="col-number" (click)="gotoFoodOrderDetail(food)" tappable>
                             <span>{{food.amountReturn}} suất</span>
@@ -125,4 +130,5 @@
             </div>
         </div>
     </div>
+
 </ion-content>

@@ -52,7 +52,7 @@ page-fs-chef-food-orders {
             border: solid 1px lightgray;
         }
     }
-    .fs-segment {
+    .fs-segments {
         font-size: map-get($map: $FSSizes, $key: small);
         display: flex;
         justify-content: center;
@@ -108,6 +108,28 @@ page-fs-chef-food-orders {
     .fs-content {
         background-color: map-get($map: $FSColors, $key: white);
     }
+    // ion-refresher.refresher-active {
+    //     z-index: 1000;
+    // }
+    // ion-refresher {
+    //     bottom: 0;
+    //     background: rgba($color: #000000, $alpha: .8);
+    //     height: 100%;
+    //     top: 0 !important;
+    //     .refresher-pulling-icon,
+    //     .refresher-refreshing-icon {
+    //         color: white;
+    //     }
+    //     .refresher-pulling-text,
+    //     .refresher-refreshing-text {
+    //         color: white;
+    //     }
+    //     .refresher-refreshing .spinner-bubbles circle,
+    //     .refresher-refreshing .spinner-circles circle,
+    //     .refresher-refreshing .spinner-dots circle {
+    //         fill: #f9f9f9;
+    //     }
+    // }
     .segment-content {
         background-color: map-get($map: $FSColors, $key: white);
         $iconSize: 4em;
@@ -117,7 +139,7 @@ page-fs-chef-food-orders {
             padding: 0;
         }
         .food-list {
-            padding-top: 5px;
+            // padding-top: 5px;
             // &:last-child {
             //     .fs-divider {
             //         display: none;

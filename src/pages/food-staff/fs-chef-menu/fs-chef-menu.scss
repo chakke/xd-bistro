@@ -82,6 +82,7 @@ page-fs-chef-menu {
                 display: flex;
                 justify-content: center;
                 align-items: center;
+                min-height: 10vh;
                 img {
                     width: 100%;
                     border-radius: 50%;
@@ -92,8 +93,12 @@ page-fs-chef-menu {
                 display: flex;
                 flex-direction: column;
                 justify-content: space-evenly;
+                font-size: 1.2em;
                 .name {
                     font-weight: 500;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                    overflow: hidden;
                 }
             }
             .col-button {
