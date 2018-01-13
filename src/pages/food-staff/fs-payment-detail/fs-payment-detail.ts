@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { Order } from '../../providers/food-staff/classes/order';
-import { AppControllerProvider } from '../../providers/food-staff/app-controller/app-controller';
+import { Order } from '../../../providers/food-staff/classes/order';
+import { AppControllerProvider } from '../../../providers/food-staff/app-controller/app-controller';
 
 /**
  * Generated class for the FsPaymentDetailPage page.

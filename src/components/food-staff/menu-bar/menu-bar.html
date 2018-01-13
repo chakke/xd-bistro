@@ -1,0 +1,5 @@
+<!-- Generated template for the MenuBarComponent component -->
+<div class="menu-container" id="menuBar">
+    <div class="menu-item" *ngFor="let item of menuItems;let i =index" (click)="selectItem(item,i)" tappable [class.menu-item-active]="i==selectedItem">{{item.name}}</div>
+    <div *ngIf="menuItems && menuItems.length>0" class="animateBar" id="animateBar"></div>
+</div>

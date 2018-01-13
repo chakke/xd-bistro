@@ -139,9 +139,15 @@ export class ScrollDiv {
     left: number = 0;
     mCallback = null;
 
-    constructor(id: string) {
+    constructor(id: string , element ?: HTMLElement) {
+        if(element){
+            this.element = element;
+            this.id = id;
+            return;
+        }
         this.id = id;
         this.element = <HTMLElement>document.querySelector(id);
+        
     }
 
     setOption(option: ScrollOption) {
@@ -248,11 +254,11 @@ export class ScrollController {
             this.items.set(divID, item);
         }
     }
-    doScrollTop(divID: string, option?: ScrollOption) {
+    doScrollTop( divID: string, element?:HTMLElement ,option?: ScrollOption ) {
         this.checkUpdate();
         let item = this.getItem(divID);
         if (!item) {
-            item = new ScrollDiv(divID);
+            item = new ScrollDiv(divID,element);
             item.setOption(option);
             item.scrollToTop();
             this.items.set(divID, item);

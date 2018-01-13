@@ -51,7 +51,7 @@
         <div class="fs-segment">
             <ion-segment class="segment-md" [class.segment-ios]="false" [(ngModel)]="tableStatus" (ionChange)="filterTable()">
                 <ion-segment-button value="{{status.id}}" *ngFor="let status of tableStatusData">
-                    <span class="number status-{{status.id}}">{{tableCollection.get(status.id)?.length}}</span>
+                    <!-- <span class="number status-{{status.id}}">{{tableCollection.get(status.id)?.length}}</span> -->
                     <span class="text"> {{status.shortName || status.name}} </span>
                 </ion-segment-button>
             </ion-segment>

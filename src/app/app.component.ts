@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { Platform, MenuController, NavController, App } from 'ionic-angular';
+import { Component,ViewChild } from '@angular/core';
+import { Platform, MenuController, NavController, App,Nav } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { AppControllerProvider } from "../providers/food-staff/app-controller/app-controller";
@@ -8,6 +8,7 @@ import { User } from "../providers/food-staff/classes/user";
   templateUrl: 'app.html'
 })
 export class MyApp {
+  @ViewChild(Nav) nav: Nav;
   user: User;
   rootPage: any = "FsLoginPage";
   // rootPage: any = "FsServePage";
@@ -40,9 +41,12 @@ export class MyApp {
     });
     this.getMenu();
     this.getUser();
+    
   }
+  
 
   getMenu() {
+  
     this.appController.menuChanel.asObservable().subscribe(data => {
       this.menuItems = data;
       console.log("subcrise menu", data);
@@ -54,6 +58,7 @@ export class MyApp {
   getUser() {
     this.appController.userChanel.asObservable().subscribe(data => {
       this.user = data;
+      this.user.userName = "Nguyen van D";
       console.log("subcrise user", data);
     }, error => {
       console.log("user subcries error");
@@ -75,6 +80,11 @@ export class MyApp {
   gotoMenu(item) {
     this.appController.setRootPage(item.page);
     this.menuCtrl.close();
+  }
+
+  goToUserDetail(){
+    console.log("CLick avartar");
+    
   }
 
   logout() {

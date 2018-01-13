@@ -41,6 +41,10 @@ export class FsLoginPage {
       password: ["", Validators.compose([Validators.minLength(6), Validators.required])]
     });
   }
+  
+  example(){
+
+  }
 
   loginWithFacebook() {
     this.appController.loginWithFacebook().then(success => {
@@ -49,6 +53,7 @@ export class FsLoginPage {
     }, error => {
       this.appController.showToast(error);
     })
+
   }
 
   loginWithGoogle() {
