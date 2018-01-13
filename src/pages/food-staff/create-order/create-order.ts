@@ -86,7 +86,9 @@ export class CreateOrderPage {
     this.selectedFloor = this.floors[0];
 
     this.maps = this.appController.maps;
-    this.selectedMap = this.maps[0];
+    if (this.maps && this.maps.length > 0) {
+      this.selectedMap = this.maps[0];
+    }
     this.backdropRef.nativeElement.addEventListener('click', () => {
       this.viewCtrl.dismiss();
     })
@@ -107,7 +109,7 @@ export class CreateOrderPage {
 
   loadTables() {
     let tables = this.appController.tables;
-    
+
     for (let i = 0; i < this.floors.length; i++) {
       let tables = [];
       let floorId = this.floors[i].id;
@@ -192,7 +194,7 @@ export class CreateOrderPage {
 
   selectFloor(floor: Floor) {
     this.selectedFloor = floor;
-    this.showTables = this.tableCollection.get(floor.id); 
+    this.showTables = this.tableCollection.get(floor.id);
   }
 
   showTableList() {
@@ -204,7 +206,7 @@ export class CreateOrderPage {
   }
 
   onClickToggleView() {
-    this.viewMode = 1 - this.viewMode; 
+    this.viewMode = 1 - this.viewMode;
   }
 
   selectTable(table: Table) {
@@ -225,10 +227,10 @@ export class CreateOrderPage {
 
   }
   isClickSelectNumberPerson: boolean = false;
-  selectNumberPerson(){
-    if(!this.isClickSelectNumberPerson)this.isClickSelectNumberPerson = true;
+  selectNumberPerson() {
+    if (!this.isClickSelectNumberPerson) this.isClickSelectNumberPerson = true;
   }
-  updateNumberOfPerson(number) { 
+  updateNumberOfPerson(number) {
     if (!number || number == 0) {
       this.numberOfPerson = 0;
       this.mChangeDetectorRef.detectChanges();
@@ -237,15 +239,15 @@ export class CreateOrderPage {
       this.numberOfPerson = number;
     }
     this.mChangeDetectorRef.detectChanges();
-    this.order.numberCustormer = number; 
+    this.order.numberCustormer = number;
   }
 
   createOrder() {
     if (this.checkForm()) {
       this.appController.showLoading();
       this.order.custormerName = this.custormerName;
-      this.order.custormerPhone = this.custormerPhone; 
-      this.appController.addOrder(this.order).then(data => { 
+      this.order.custormerPhone = this.custormerPhone;
+      this.appController.addOrder(this.order).then(data => {
         //Update table state
         this.order.tableIds.forEach(id => {
           this.appController.updateTable(id, {
@@ -254,7 +256,7 @@ export class CreateOrderPage {
         })
         this.appController.hideLoading();
         this.viewCtrl.dismiss();
-      }, error => { 
+      }, error => {
         this.appController.hideLoading();
         this.viewCtrl.dismiss();
       })
@@ -266,7 +268,7 @@ export class CreateOrderPage {
       this.errorMessage = "Bạn phải chọn ít nhất 1 bàn";
       return false;
     }
-    if(!this.isClickSelectNumberPerson){
+    if (!this.isClickSelectNumberPerson) {
       this.errorMessage = "Bạn chưa chọn số lượng người";
       return false;
     }
@@ -279,7 +281,7 @@ export class CreateOrderPage {
     return true;
   }
 
-  cancelOrder() { 
+  cancelOrder() {
     this.viewCtrl.dismiss();
   }
   cancelTable() {

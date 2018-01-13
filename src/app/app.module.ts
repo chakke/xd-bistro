@@ -32,6 +32,15 @@ import { FirebaseServiceProvider } from '../providers/food-staff/firebase-servic
 //   messagingSenderId: "773087969883"
 // };
 
+//backup project
+// export const firebaseConfig = {
+//   apiKey: "AIzaSyADH7xZZdoVLadnk4GOux5I5OjDcclrc7c",
+//   authDomain: "bistro-backup-e5bc1.firebaseapp.com",
+//   databaseURL: "https://bistro-backup-e5bc1.firebaseio.com",
+//   projectId: "bistro-backup-e5bc1",
+//   storageBucket: "bistro-backup-e5bc1.appspot.com",
+//   messagingSenderId: "160393617494"
+// };
 // firebase.initializeApp(firebaseConfig);
 
 @NgModule({

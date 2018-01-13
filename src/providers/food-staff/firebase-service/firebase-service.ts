@@ -21,28 +21,23 @@ export class FirebaseServiceProvider {
   constructor(
     // private agf: AngularFirestore
   ) {
-    // firebase.initializeApp({
-    //   apiKey: "AIzaSyDG_pauTdXELEjd-kB2FuEji4PJUURVQ78",
-    //   authDomain: "bistro-dancer.firebaseapp.com",
-    //   databaseURL: "https://bistro-dancer.firebaseio.com",
-    //   projectId: "bistro-dancer",
-    //   storageBucket: "bistro-dancer.appspot.com",
-    //   messagingSenderId: "796575514827"
+    //main project
+    // firebase.initializeApp({  
+    //   apiKey: "AIzaSyDMEZoEtmor-T166lP9bGCR9FxqQP4eGik",
+    //   authDomain: "bistrodancerapp.firebaseapp.com",
+    //   databaseURL: "https://bistrodancerapp.firebaseio.com",
+    //   projectId: "bistrodancerapp",
+    //   storageBucket: "bistrodancerapp.appspot.com",
+    //   messagingSenderId: "773087969883"
     // });
+    //backup project
     firebase.initializeApp({
-      // apiKey: "AIzaSyDG_pauTdXELEjd-kB2FuEji4PJUURVQ78",
-      // authDomain: "bistro-dancer.firebaseapp.com",
-      // databaseURL: "https://bistro-dancer.firebaseio.com",
-      // projectId: "bistro-dancer",
-      // storageBucket: "bistro-dancer.appspot.com",
-      // messagingSenderId: "796575514827"
-  
-      apiKey: "AIzaSyDMEZoEtmor-T166lP9bGCR9FxqQP4eGik",
-      authDomain: "bistrodancerapp.firebaseapp.com",
-      databaseURL: "https://bistrodancerapp.firebaseio.com",
-      projectId: "bistrodancerapp",
-      storageBucket: "bistrodancerapp.appspot.com",
-      messagingSenderId: "773087969883"
+      apiKey: "AIzaSyADH7xZZdoVLadnk4GOux5I5OjDcclrc7c",
+      authDomain: "bistro-backup-e5bc1.firebaseapp.com",
+      databaseURL: "https://bistro-backup-e5bc1.firebaseio.com",
+      projectId: "bistro-backup-e5bc1",
+      storageBucket: "bistro-backup-e5bc1.appspot.com",
+      messagingSenderId: "160393617494"
     });
     this.db = firebase.firestore();
 
@@ -317,12 +312,12 @@ export class FirebaseServiceProvider {
     });
   }
 
-  removeOrder(resId: string,order: Order) : Promise<any>{
+  removeOrder(resId: string, order: Order): Promise<any> {
     return this.deleteDocument(FIREBASE_PATH.ORDER + "/" + resId + "/" + this.todayString + "/" + order.firebaseId);
   }
 
-  updateOrder(resId: string,firebaseId: string, value: any){
-    return this.updateDocument(FIREBASE_PATH.ORDER  + "/" + resId + "/" + this.todayString + "/" + firebaseId, value);
+  updateOrder(resId: string, firebaseId: string, value: any) {
+    return this.updateDocument(FIREBASE_PATH.ORDER + "/" + resId + "/" + this.todayString + "/" + firebaseId, value);
   }
 
   addFoodOrder(restId: string, orderId: string, staffId: string, product: FoodOrder): Promise<any> {
@@ -345,7 +340,7 @@ export class FirebaseServiceProvider {
     }, newId);
   }
 
-  removeFoodOrder(restId: string,firebaseId: string): Promise<any>{
+  removeFoodOrder(restId: string, firebaseId: string): Promise<any> {
     return this.deleteDocument(FIREBASE_PATH.FOOD_ORDER + "/" + restId + "/" + this.todayString + "/" + firebaseId);
   }
 
